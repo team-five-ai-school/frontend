@@ -133,10 +133,30 @@ Build everything from shadcn components and theme tokens. The goal is a product 
 - **Hierarchy through type and spacing, not boxes.** One clear primary action per screen. Related items close, groups further apart. Body ~16px, line length ≤ 75ch (`max-w-prose`), headings `text-balance`.
 - **Every async view has all states:** loading (skeleton with the final shape), empty (`Empty` component with a next action), error (message + retry), success. Disable or mark pending actions.
 - **Accessibility:** semantic HTML, labels on every input (`Field` + `FieldLabel`), `aria-label` on icon-only buttons and links, visible focus (don't remove outlines), keyboard reachable, WCAG AA contrast in both themes.
-- **Responsive & themes:** check 375px width and both light/dark before calling UI done.
+- **Responsive & themes:** required on every screen, see [Responsive layout](#responsive-layout-required). Check both light and dark before calling UI done.
 - **Motion:** short (150–250ms), purposeful (feedback, continuity), no bouncy easing on routine dialogs. `prefers-reduced-motion` is respected globally.
 - **Copy:** English, specific and short. No marketing filler ("revolutionary", "seamless", "unlock"), avoid em-dash chains.
 - Use `tabular-nums` for changing numbers. Format dates/numbers with `Intl.*` on the server with a fixed `timeZone`, or after hydration on the client, to avoid hydration mismatches.
+
+## Responsive layout (required)
+
+Every screen must work from **360px to 1440px+**. Judges and teammates will open the demo on their phones. Agents tend to build desktop-only layouts, so follow these rules from the first line of markup, not as a fix at the end.
+
+- **Mobile-first.** Base classes describe the phone layout; add `sm:` / `md:` / `lg:` for larger screens. Never write a desktop layout and patch it later.
+- **No horizontal page scroll at 360px.** No fixed widths (`w-[600px]`, `min-w-[...]` on layout blocks): use `w-full max-w-*`. Add `min-w-0` to flex/grid children that contain text, and `break-words` for user content.
+- **Standard patterns:**
+  - page container: `mx-auto w-full max-w-* px-4 sm:px-6`;
+  - stack → row: `flex flex-col gap-4 sm:flex-row`;
+  - grids: `grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3`;
+  - header actions wrap: `flex flex-wrap gap-2`.
+- **Navigation:** on mobile collapse into a `Sheet`. The shadcn `Sidebar` already does this.
+- **Wide content:** wrap tables in `overflow-x-auto`, or render a card/list layout below `md`. Charts get a responsive container and fewer ticks on small screens.
+- **Overlays:** prefer `Drawer` (bottom sheet) on mobile and `Dialog` on desktop for forms and menus. Prefer CSS breakpoints; use `useIsMobile()` from `@/hooks/use-mobile` only when the markup must differ.
+- **Touch:** nothing may be reachable only on hover; anything revealed on hover must also work on tap and keyboard focus. Keep shadcn control sizes (they meet WCAG 2.2 target size); don't shrink them, and use `size="lg"` for the main action on mobile.
+- **Inputs:** keep the shadcn input font size (`text-base md:text-sm`); smaller text makes iOS zoom in on focus.
+- **Full-height layouts:** use `min-h-dvh` / `h-dvh`, not `h-screen` (`100vh` breaks with mobile browser toolbars).
+- **Images:** responsive `next/image` needs a `sizes` prop that matches the layout (e.g. `sizes="(min-width: 768px) 50vw, 100vw"`).
+- **Verify** in the browser at **375px, 768px and 1280px** (DevTools device toolbar) before calling a screen done.
 
 ## Skills
 
