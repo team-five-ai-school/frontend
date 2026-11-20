@@ -97,3 +97,9 @@ Vercel is connected to this repo:
 - `main` → https://team5-ai.vercel.app
 - `dev` → https://team5-ai-dev.vercel.app
 - every PR → its own preview link (Vercel posts it as a PR comment)
+
+If a push or merge does not show up on Vercel:
+
+- Vercel → project `team5` → Settings → Environments: **Preview** must track "All unassigned git branches" (not "Disabled"), and **Production** must track `main`.
+- Redeploy manually: Vercel → Deployments → latest deployment of the branch → ⋯ → Redeploy.
+- Build logs: Vercel → Deployments → the failed deployment → Build Logs. Check the same with `npm run build` locally.
