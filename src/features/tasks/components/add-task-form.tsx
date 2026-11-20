@@ -10,6 +10,10 @@ import { Input } from "@/components/ui/input";
 import { newTaskSchema } from "../task-cache";
 import { useAddTask } from "../use-task-mutations";
 
+/**
+ * Form pattern: native <form> + FormData + Zod `safeParse` + shadcn Field.
+ * The same schema is validated again in the Server Action. No form library needed.
+ */
 export function AddTaskForm() {
   const [error, setError] = useState<string>();
   const addTask = useAddTask();
@@ -32,12 +36,12 @@ export function AddTaskForm() {
   return (
     <form onSubmit={handleSubmit} noValidate>
       <Field data-invalid={error ? true : undefined}>
-        <FieldLabel htmlFor="task-title">Нова задача</FieldLabel>
+        <FieldLabel htmlFor="task-title">New task</FieldLabel>
         <div className="flex gap-2">
           <Input
             id="task-title"
             name="title"
-            placeholder="Напр.: зверстати онбординг"
+            placeholder="What needs doing?"
             autoComplete="off"
             maxLength={120}
             aria-invalid={error ? true : undefined}
@@ -46,7 +50,7 @@ export function AddTaskForm() {
           />
           <Button type="submit">
             <PlusIcon data-icon="inline-start" />
-            Додати
+            Add
           </Button>
         </div>
         {error ? <FieldError id="task-title-error">{error}</FieldError> : null}

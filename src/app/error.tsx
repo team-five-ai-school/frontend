@@ -13,13 +13,13 @@ export default function Error({ error, retry }: { error: unknown; retry: () => v
 
   return (
     <div className="mx-auto flex w-full max-w-md flex-1 flex-col items-start justify-center gap-4 px-4 py-16">
-      <h1 className="text-xl font-semibold tracking-tight">Щось пішло не так</h1>
+      <h1 className="text-xl font-semibold tracking-tight">Something went wrong</h1>
       <p className="text-muted-foreground">
-        Сторінку не вдалося завантажити. Спробуйте ще раз; якщо помилка повториться, оновіть сторінку.
+        This page failed to load. Try again; if it keeps happening, reload the page.
       </p>
       <Button onClick={() => retry()}>
         <RotateCcwIcon data-icon="inline-start" />
-        Спробувати ще раз
+        Try again
       </Button>
     </div>
   );

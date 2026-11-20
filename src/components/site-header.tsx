@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { ThemeToggle } from "@/components/theme-toggle";
-import { siteConfig } from "@/lib/site";
+import { routes, siteConfig } from "@/lib/site";
 
 export function SiteHeader() {
   return (
@@ -10,10 +10,14 @@ export function SiteHeader() {
         <Link href="/" className="font-heading font-semibold tracking-tight">
           {siteConfig.name}
         </Link>
-        <nav aria-label="Основна навігація" className="flex items-center gap-4 text-sm text-muted-foreground">
-          <Link href="/examples/tasks" className="transition-colors hover:text-foreground">
-            Приклад
-          </Link>
+        <nav aria-label="Main" className="flex items-center gap-4 text-sm text-muted-foreground">
+          {routes
+            .filter((route) => route.nav)
+            .map((route) => (
+              <Link key={route.href} href={route.href} className="transition-colors hover:text-foreground">
+                {route.label}
+              </Link>
+            ))}
         </nav>
         <div className="ml-auto">
           <ThemeToggle />
