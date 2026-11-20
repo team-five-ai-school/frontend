@@ -6,4 +6,4 @@
 
 - [ ] `npm run check` passes locally
 - [ ] Checked in light and dark theme
-- [ ] Checked at mobile width (375px)
+- [ ] Checked at 375px, 768px and 1280px (no horizontal scroll)
