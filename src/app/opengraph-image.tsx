@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 import { siteConfig } from "@/lib/site";
 
 // Link preview for Slack / Telegram / X. Generated at build time.
-// Note: the built-in font has no Cyrillic; load a font file if the copy is in Ukrainian.
+// The built-in font covers Latin only: load a font file (ttf/otf/woff) if the copy needs other scripts.
 export const alt = siteConfig.name;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
