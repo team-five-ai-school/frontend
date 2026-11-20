@@ -12,6 +12,20 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Hackathon frontend for Team Five. The product task is decided on the day, so build fast but keep the codebase coherent. When `PRODUCT.md` / `DESIGN.md` exist (created by `/impeccable init`), read them before any UI work and follow them over the defaults below.
 
+## Setup check (start of every session until done)
+
+Before any other work, check these and **remind the user** about each one that is missing. Do not skip the reminder, even if the user asked for something else:
+
+1. **Impeccable is not installed** (no `.claude/skills/impeccable` and no `.agents/skills/impeccable`). Ask the user to run this in the repo root, then restart the agent:
+
+   ```bash
+   npx impeccable install --providers=claude,codex,cursor --scope=project
+   ```
+
+2. **No `PRODUCT.md` / `DESIGN.md`** in the repo root. Once the hackathon task is known, ask the user to run `/impeccable init` and describe the product, so every agent builds UI in one style.
+
+After both exist, commit them in a PR and delete this section.
+
 ## Stack
 
 - Next.js 16 App Router, React 19, TypeScript, Turbopack. **Cache Components** + **Partial Prefetching** + **React Compiler** are on (`next.config.ts`).
