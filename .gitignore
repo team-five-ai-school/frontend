@@ -44,3 +44,6 @@ next-env.d.ts
 # local agent settings
 .claude/settings.local.json
 .claude/launch.json
+
+# editors
+.idea/

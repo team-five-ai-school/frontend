@@ -1,88 +1,99 @@
 # Team Five: frontend
 
-Шаблон для хакатону: Next.js 16, shadcn/ui, TanStack Query, налаштовані кешування й оптимізація картинок, правила для AI-агентів.
+Hackathon template: Next.js 16, shadcn/ui, TanStack Query, caching and image optimization set up, rules for AI coding agents.
 
-## Старт
+- Production: https://team5-ai.vercel.app (`main`)
+- Dev: https://team5-ai-dev.vercel.app (`dev`)
+
+## Getting started
 
 ```bash
 git clone https://github.com/team-five-ai-school/frontend.git
 cd frontend
+git switch dev
 npm install
 cp .env.example .env.local
 npm run dev
 ```
 
-Відкрийте http://localhost:3000. Потрібен Node 20.9+ (рекомендовано 24, див. `.nvmrc`).
+Open http://localhost:3000. Requires Node 24 (see `.nvmrc`; `nvm use` picks it up).
 
-## Команди
+## Commands
 
-| Команда                        | Що робить                                               |
-| ------------------------------ | ------------------------------------------------------- |
-| `npm run dev`                  | dev-сервер                                              |
-| `npm run check`                | lint + typecheck + prettier. Запускайте перед кожним PR |
-| `npm run build`                | продакшн-збірка                                         |
-| `npm run format`               | форматування (сортує Tailwind-класи)                    |
-| `npm run images`               | `assets/images/*` → AVIF + WebP у `public/images/`      |
-| `npx shadcn@latest add <name>` | додати shadcn-компонент                                 |
+| Command                        | What it does                                        |
+| ------------------------------ | --------------------------------------------------- |
+| `npm run dev`                  | Dev server                                          |
+| `npm run check`                | Lint + typecheck + Prettier. Run before every PR    |
+| `npm run build`                | Production build                                    |
+| `npm start`                    | Serve the production build (test caching here)      |
+| `npm run format`               | Format code (also sorts Tailwind classes)           |
+| `npm run images`               | `assets/images/*` → AVIF + WebP in `public/images/` |
+| `npx shadcn@latest add <name>` | Add a shadcn component (most are already installed) |
 
-## Що всередині
+## What's inside
 
-- **Next.js 16** з Cache Components (`"use cache"`, `cacheLife`, `cacheTag`), Partial Prefetching, React Compiler, typed routes.
-- **shadcn/ui** (Radix, стиль Nova) з ~30 компонентами в `src/components/ui`, світла/темна тема, toasts.
-- **TanStack Query** з гідрацією із сервера й оптимістичними мутаціями.
-- **Картинки:** `next/image` віддає AVIF → WebP, SVG без оптимізації, скрипт для попередньої конвертації.
-- **SEO:** metadata, OG-картинка, `robots.txt`, `sitemap.xml`, SVG-фавікон.
-- **UX-база:** skip-link, error/404 сторінки, skeleton-и, empty states, `prefers-reduced-motion`.
-- **CI:** GitHub Actions (lint, typecheck, format, build) на кожен PR.
+- **Next.js 16** with Cache Components (`"use cache"`, `cacheLife`, `cacheTag`), Partial Prefetching, React Compiler, typed routes.
+- **shadcn/ui** (Radix, Nova style): ~45 components in `src/components/ui`, light/dark theme, toasts.
+- **TanStack Query** hydrated from the server, with optimistic mutations.
+- **Backend helpers:** typed `api()` client with Zod validation, validated env vars, a result type for Server Actions.
+- **Images:** `next/image` serves AVIF → WebP, SVGs pass through, a script pre-converts originals.
+- **SEO:** metadata, OG image, `robots.txt`, `sitemap.xml`, SVG favicon. Only production is indexable.
+- **UX baseline:** skip link, error/404 pages, skeletons, empty states, `prefers-reduced-motion`.
+- **Guardrails:** ESLint fails on raw palette colors, gradients and hex values, so UI stays on theme tokens.
+- **CI:** GitHub Actions (lint, typecheck, format, build) on every PR.
 
-Референс усіх патернів даних: [`src/app/examples/tasks`](src/app/examples/tasks/page.tsx) + [`src/features/tasks`](src/features/tasks). Скопіюйте підхід, а потім видаліть приклад.
+The reference for every data pattern is [`src/app/examples/tasks`](src/app/examples/tasks/page.tsx) + [`src/features/tasks`](src/features/tasks). Copy the approach, then delete the example.
 
-## Коли стане відома умова
+## When the task is announced
 
-1. `src/lib/site.ts`: назва, опис продукту.
-2. Встановіть Impeccable і запустіть `/impeccable init` в агенті (див. нижче). Він створить `PRODUCT.md` і `DESIGN.md`, і всі агенти будуть генерувати UI в одному стилі.
-3. `src/app/globals.css`: кольори бренду (`--primary` тощо в `:root` і `.dark`), шрифт у `src/lib/fonts.ts`.
-4. Замініть `src/app/page.tsx` і видаліть `examples`.
+1. Install Impeccable and run `/impeccable init` in your agent (see below). It writes `PRODUCT.md` and `DESIGN.md`, so every agent builds UI in one style.
+2. `src/lib/site.ts`: product name, description, routes.
+3. `src/app/globals.css`: brand colors (`--primary` etc. in `:root` and `.dark`); font in `src/lib/fonts.ts`.
+4. Backend: set `API_URL` in `.env.local` and Vercel, call it through `src/lib/api.ts`.
+5. Replace `src/app/page.tsx` and delete `examples`.
 
-## Робота з AI-агентами
+## Working with AI agents
 
-Правила проєкту в [`AGENTS.md`](AGENTS.md) (Claude Code читає їх через `CLAUDE.md`). Там стек, патерни кешування й даних, правила для картинок і anti-slop правила для UI.
+Project rules live in [`AGENTS.md`](AGENTS.md) (Claude Code reads it via `CLAUDE.md`): stack, caching and data patterns, backend and auth, images, anti-slop UI rules, and how to work in parallel without conflicts.
 
-Скіли вже в репо (`.claude/skills`, `.agents/skills`):
+Skills already in the repo (`.claude/skills`, `.agents/skills`):
 
-- `vercel-react-best-practices`: продуктивність React/Next.
-- `vercel-composition-patterns`: API компонентів.
-- `web-design-guidelines`: аудит UI та доступності («review my UI»).
-- `deploy-to-vercel`: деплой.
+- `vercel-react-best-practices`: React/Next performance.
+- `vercel-composition-patterns`: component APIs.
+- `web-design-guidelines`: UI and accessibility audit ("review my UI").
+- `deploy-to-vercel`: deployment.
 
-**Impeccable** ([impeccable.style](https://impeccable.style/)) дає дизайн-команди для агентів (`critique`, `audit`, `polish`, `distill`…) і детектор «AI slop». Встановлюється однією командою в корені репо:
+**Impeccable** ([impeccable.style](https://impeccable.style/)) adds design commands for agents (`critique`, `audit`, `polish`, `distill`…) and an "AI slop" detector. Install it from the repo root:
 
 ```bash
 npx impeccable install --providers=claude,codex,cursor --scope=project
 ```
 
-Після цього перезапустіть агента й виконайте `/impeccable init`.
+Then restart your agent and run `/impeccable init`.
 
-## Git-процес
+`.claude/settings.json` pre-approves safe commands (`npm run check`, `build`, `git diff`…) so Claude Code doesn't ask every time.
 
-- `main` — продакшн, `dev` — спільна гілка розробки. Обидві змінюються тільки через PR.
-- Нова гілка від `dev` (`feat/...`, `fix/...`) → PR у `dev` → зелений CI → merge.
-- Реліз: PR `dev` → `main`.
+## Git workflow
+
+- `main` is production, `dev` is the shared development branch. Both change only through PRs.
+- Branch off `dev` (`feat/...`, `fix/...`) → PR into `dev` → green CI → **squash merge**.
+- Release: PR `dev` → `main`, merged with **"Create a merge commit"**.
 
 ```bash
 git switch dev && git pull
 git switch -c feat/my-feature
-# ... робота ...
+# ... work ...
 npm run check
-git push -u origin feat/my-feature   # і відкрити PR у dev
+git push -u origin feat/my-feature   # then open a PR into dev
 ```
 
-- Репозиторій публічний: **жодних секретів у коді**. Ключі тільки в `.env.local` і в Vercel → Settings → Environment Variables.
+- Shared files (`globals.css`, `package.json`, `src/components/ui`) change in small separate PRs. For a `package-lock.json` conflict, take the incoming version and run `npm install`.
+- The repo is public: **no secrets in code**. Keys go only in `.env.local` and Vercel → Settings → Environment Variables.
 
-## Деплой
+## Deploys
 
-Vercel, підключений до цього репозиторію:
+Vercel is connected to this repo:
 
-- `main` → продакшн-домен;
-- `dev` → сталий dev-домен;
-- кожен PR → окреме preview-посилання (Vercel пише його коментарем у PR).
+- `main` → https://team5-ai.vercel.app
+- `dev` → https://team5-ai-dev.vercel.app
+- every PR → its own preview link (Vercel posts it as a PR comment)

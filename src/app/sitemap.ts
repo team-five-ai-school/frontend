@@ -1,10 +1,8 @@
 import type { MetadataRoute } from "next";
 
-import { siteConfig } from "@/lib/site";
+import { routes, siteConfig } from "@/lib/site";
 
-// Add public routes here as the product grows.
-const routes = ["/"];
-
+// Generated from `routes` in src/lib/site.ts.
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.map((route) => ({ url: `${siteConfig.url}${route}` }));
+  return routes.filter((route) => route.sitemap).map((route) => ({ url: `${siteConfig.url}${route.href}` }));
 }
