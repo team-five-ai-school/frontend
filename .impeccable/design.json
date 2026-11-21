@@ -1,0 +1,461 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-21T14:43:06.680821+00:00",
+  "title": "Design System: Team Five",
+  "extensions": {
+    "colorMeta": {
+      "ballpoint": {
+        "role": "primary",
+        "displayName": "Ballpoint Blue",
+        "canonical": "#2638c9",
+        "tonalRamp": [
+          "#171a35",
+          "#21285e",
+          "#27328b",
+          "#2939bc",
+          "#5260d6",
+          "#949cdb",
+          "#cacde8",
+          "#eeeff6"
+        ]
+      },
+      "marker": {
+        "role": "secondary",
+        "displayName": "Highlighter Yellow",
+        "canonical": "#ffe03d",
+        "tonalRamp": [
+          "#3c3510",
+          "#6c5e13",
+          "#a28b10",
+          "#dfbc07",
+          "#f5d633",
+          "#ecdb83",
+          "#efe8c3",
+          "#f8f6ec"
+        ]
+      },
+      "pencil": {
+        "role": "secondary",
+        "displayName": "Pencil Graphite",
+        "canonical": "#8c92a3",
+        "tonalRamp": [
+          "#242529",
+          "#3b3d45",
+          "#515561",
+          "#676d7f",
+          "#898f9f",
+          "#b2b5bd",
+          "#d6d8db",
+          "#f2f2f3"
+        ]
+      },
+      "stamp": {
+        "role": "tertiary",
+        "displayName": "Stamp Green",
+        "canonical": "#1d7a4c",
+        "tonalRamp": [
+          "#193426",
+          "#245b40",
+          "#2c865a",
+          "#30b573",
+          "#58d095",
+          "#97d8b8",
+          "#cbe6d9",
+          "#eff6f2"
+        ]
+      },
+      "correction": {
+        "role": "tertiary",
+        "displayName": "Correction Red",
+        "canonical": "#cf3426",
+        "tonalRamp": [
+          "#361917",
+          "#5f2621",
+          "#8c2f27",
+          "#bd3528",
+          "#d75c51",
+          "#dc9993",
+          "#e8ccc9",
+          "#f6efee"
+        ]
+      },
+      "sticky-note": {
+        "role": "tertiary",
+        "displayName": "Sticky-Note Orange",
+        "canonical": "#f08a24",
+        "tonalRamp": [
+          "#3a2613",
+          "#674019",
+          "#995919",
+          "#d17315",
+          "#e8943f",
+          "#e5b88a",
+          "#ecd9c5",
+          "#f7f2ed"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Blue-Black Ink",
+        "canonical": "#171b2e",
+        "tonalRamp": [
+          "#1f212e",
+          "#31364f",
+          "#414972",
+          "#4f5b97",
+          "#747fb4",
+          "#a6acc9",
+          "#d1d4e0",
+          "#f0f1f4"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "#5f6577",
+        "tonalRamp": [
+          "#242529",
+          "#3b3d45",
+          "#515561",
+          "#676d7f",
+          "#898e9f",
+          "#b2b5bd",
+          "#d6d8db",
+          "#f2f2f3"
+        ]
+      },
+      "desk": {
+        "role": "neutral",
+        "displayName": "Desk Grey",
+        "canonical": "#eceee8",
+        "tonalRamp": [
+          "#272a23",
+          "#424639",
+          "#5d644e",
+          "#788363",
+          "#99a285",
+          "#babfb0",
+          "#dadcd5",
+          "#f3f3f1"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#fdfdfb",
+        "tonalRamp": [
+          "#2e2e1f",
+          "#4f4f31",
+          "#727241",
+          "#97974f",
+          "#b4b474",
+          "#c9c9a6",
+          "#e0e0d1",
+          "#f4f4f0"
+        ]
+      },
+      "fog": {
+        "role": "neutral",
+        "displayName": "Fog",
+        "canonical": "#f4f5f1",
+        "tonalRamp": [
+          "#282a23",
+          "#434738",
+          "#5f654d",
+          "#7c8561",
+          "#9ca484",
+          "#bcc0af",
+          "#dbdcd5",
+          "#f3f3f1"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#d6d9d1",
+        "tonalRamp": [
+          "#272824",
+          "#41443c",
+          "#5b6052",
+          "#757d68",
+          "#969d8b",
+          "#b9bdb3",
+          "#d9dbd7",
+          "#f2f3f2"
+        ]
+      },
+      "field-edge": {
+        "role": "neutral",
+        "displayName": "Field Edge",
+        "canonical": "#858b98",
+        "tonalRamp": [
+          "#242628",
+          "#3c3e44",
+          "#53575f",
+          "#6a6f7c",
+          "#8c919c",
+          "#b3b6bc",
+          "#d7d8db",
+          "#f2f2f3"
+        ]
+      },
+      "grid": {
+        "role": "neutral",
+        "displayName": "Grid Blue",
+        "canonical": "#c9d3e6",
+        "tonalRamp": [
+          "#1e242e",
+          "#2f3b50",
+          "#3e5174",
+          "#4b669a",
+          "#7089b7",
+          "#a4b2cb",
+          "#d1d6e1",
+          "#f0f2f4"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Hours, streaks and percentages; the main graphic element of a metric screen."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "The one h1 headline on a page."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings (h2)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles and panel headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All reading text; 17px base."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Small buttons, badges, nav links, field labels."
+      },
+      "micro": {
+        "displayName": "Micro",
+        "purpose": "Timestamps and dense metadata only."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Prompts and code the person copies. Never labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "paper",
+        "value": "0 1px 0 rgb(23 27 46 / 0.06), 0 3px 0 -1px rgb(23 27 46 / 0.06)",
+        "purpose": "A sheet lying on the desk: cards, answer cards, checked segments."
+      },
+      {
+        "name": "lifted",
+        "value": "0 1px 0 rgb(23 27 46 / 0.06), 0 10px 24px -10px rgb(23 27 46 / 0.28)",
+        "purpose": "A sheet picked up: popovers, menus, dialogs."
+      },
+      {
+        "name": "pressed-edge",
+        "value": "0 2px 0 0 var(--info-strong)",
+        "purpose": "Primary button's ballpoint edge; removed on :active."
+      }
+    ],
+    "motion": [
+      {
+        "name": "duration-fast",
+        "value": "120ms",
+        "purpose": "Hover and color changes."
+      },
+      {
+        "name": "duration-base",
+        "value": "200ms",
+        "purpose": "Default state transitions."
+      },
+      {
+        "name": "duration-slow",
+        "value": "320ms",
+        "purpose": "Panels and larger moves."
+      },
+      {
+        "name": "duration-chaos",
+        "value": "900ms",
+        "purpose": "Chaos map Now/With AI transition."
+      },
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.2, 0, 0, 1)",
+        "purpose": "Default easing."
+      },
+      {
+        "name": "ease-enter",
+        "value": "cubic-bezier(0, 0, 0.2, 1)",
+        "purpose": "Elements entering."
+      },
+      {
+        "name": "ease-exit",
+        "value": "cubic-bezier(0.4, 0, 1, 1)",
+        "purpose": "Elements leaving."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ballpoint action with a pressed-into-paper edge; one per screen.",
+      "html": "<button class=\"ds-btn-primary\">Continue</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 16px;border:1px solid transparent;border-radius:8px;background:var(--primary,#2638c9);color:var(--primary-foreground,#fff);font:500 1.0625rem/1.65rem Geologica,system-ui,sans-serif;box-shadow:0 2px 0 0 var(--info-strong,#1c2a99);cursor:pointer;transition:background-color 120ms cubic-bezier(0.2,0,0,1)}.ds-btn-primary:hover{background:color-mix(in srgb,var(--primary,#2638c9) 92%,transparent)}.ds-btn-primary:active{box-shadow:none;transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2px solid var(--ring,#2638c9);outline-offset:2px}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action: ink outline on paper, never filled.",
+      "html": "<button class=\"ds-btn-outline\">Not now</button>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;height:44px;padding:0 16px;border:1px solid color-mix(in srgb,var(--foreground,#171b2e) 70%,transparent);border-radius:8px;background:var(--card,#fdfdfb);color:var(--foreground,#171b2e);font:500 1.0625rem/1.65rem Geologica,system-ui,sans-serif;cursor:pointer;transition:background-color 120ms cubic-bezier(0.2,0,0,1)}.ds-btn-outline:hover{background:var(--accent,#e7eaf9)}.ds-btn-outline:active{transform:translateY(1px)}.ds-btn-outline:focus-visible{outline:2px solid var(--ring,#2638c9);outline-offset:2px}"
+    },
+    {
+      "name": "Destructive Button",
+      "kind": "button",
+      "refersTo": "button-destructive",
+      "description": "Red-ink outline; never a red slab.",
+      "html": "<button class=\"ds-btn-destructive\">Delete</button>",
+      "css": ".ds-btn-destructive{display:inline-flex;align-items:center;height:44px;padding:0 16px;border:1px solid var(--destructive,#cf3426);border-radius:8px;background:transparent;color:var(--destructive-strong,#a3261b);font:500 1.0625rem/1.65rem Geologica,system-ui,sans-serif;cursor:pointer;transition:background-color 120ms}.ds-btn-destructive:hover{background:var(--destructive-soft,#fbe6e3)}.ds-btn-destructive:focus-visible{outline:2px solid var(--ring,#2638c9);outline-offset:2px}"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "44px field with a 3:1 field-edge outline and ballpoint focus ring.",
+      "html": "<input class=\"ds-input\" placeholder=\"you@school.org\" />",
+      "css": ".ds-input{height:44px;width:100%;max-width:320px;padding:4px 12px;border:1px solid var(--input,#858b98);border-radius:3px;background:transparent;color:var(--foreground,#171b2e);font:400 1.0625rem/1.65rem Geologica,system-ui,sans-serif;outline:none;transition:border-color 120ms,box-shadow 120ms}.ds-input::placeholder{color:var(--muted-foreground,#5f6577)}.ds-input:focus-visible{border-color:var(--ring,#2638c9);box-shadow:0 0 0 3px color-mix(in srgb,var(--ring,#2638c9) 50%,transparent)}"
+    },
+    {
+      "name": "Paper Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "A sheet on the desk: paper, hairline border, short contact shadow.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-title\">Lesson 3: Prompt basics</div><p class=\"ds-card-desc\">12 min \u00b7 4 exercises</p></div>",
+      "css": ".ds-card{display:flex;flex-direction:column;gap:4px;max-width:340px;padding:16px;border:1px solid var(--border,#d6d9d1);border-radius:14px;background:var(--card,#fdfdfb);color:var(--card-foreground,#171b2e);box-shadow:0 1px 0 rgb(23 27 46 / .06),0 3px 0 -1px rgb(23 27 46 / .06)}.ds-card-title{font:600 1.25rem/1.8rem Geologica,system-ui,sans-serif;letter-spacing:-.02em}.ds-card-desc{margin:0;font:400 .9375rem/1.4rem Geologica,system-ui,sans-serif;color:var(--muted-foreground,#5f6577)}"
+    },
+    {
+      "name": "Role Badges",
+      "kind": "chip",
+      "refersTo": "badge-needs-you",
+      "description": "Needs-you (marker), AI (pencil hatching) and success (stamp) tags.",
+      "html": "<span class=\"ds-badge ds-badge-needs\">Needs you</span> <span class=\"ds-badge ds-badge-ai\">AI handles</span> <span class=\"ds-badge ds-badge-ok\">Done</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;height:24px;padding:2px 10px;border:1px solid transparent;border-radius:3px;font:500 .9375rem/1.4rem Geologica,system-ui,sans-serif;white-space:nowrap}.ds-badge-needs{background:var(--marker,#ffe03d);color:var(--needs-you-foreground,#171b2e)}.ds-badge-ai{background-color:var(--ai-soft,#eceef2);background-image:repeating-linear-gradient(-45deg,var(--pencil,#8c92a3) 0 1px,transparent 1px 5px);border-color:color-mix(in srgb,var(--ai,#8c92a3) 50%,transparent);color:var(--ai-strong,#4b5163);text-shadow:0 0 2px var(--ai-soft,#eceef2),0 0 2px var(--ai-soft,#eceef2)}.ds-badge-ok{background:var(--success-soft,#e2f1e8);color:var(--success-strong,#165f3b)}"
+    },
+    {
+      "name": "Segmented Control",
+      "kind": "nav",
+      "refersTo": "segmented-control",
+      "description": "2\u20134 views of one thing; the checked segment becomes a paper sheet.",
+      "html": "<div class=\"ds-seg\" role=\"radiogroup\" aria-label=\"View\"><button class=\"ds-seg-item\" role=\"radio\" aria-checked=\"true\">Now</button><button class=\"ds-seg-item\" role=\"radio\" aria-checked=\"false\">With AI</button></div>",
+      "css": ".ds-seg{display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;padding:4px;border:1px solid color-mix(in srgb,var(--foreground,#171b2e) 15%,transparent);border-radius:14px;background:color-mix(in srgb,var(--foreground,#171b2e) 5%,transparent)}.ds-seg-item{min-height:44px;padding:0 16px;border:0;border-radius:8px;background:transparent;color:var(--muted-foreground,#5f6577);font:500 1.0625rem/1.65rem Geologica,system-ui,sans-serif;cursor:pointer;transition:color 120ms cubic-bezier(0.2,0,0,1)}.ds-seg-item:hover{color:var(--foreground,#171b2e)}.ds-seg-item[aria-checked=true]{background:var(--card,#fdfdfb);color:var(--foreground,#171b2e);box-shadow:0 1px 0 rgb(23 27 46 / .06),0 3px 0 -1px rgb(23 27 46 / .06),0 0 0 1px color-mix(in srgb,var(--foreground,#171b2e) 10%,transparent)}.ds-seg-item:focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--ring,#2638c9) 60%,transparent)}"
+    },
+    {
+      "name": "Choice Card",
+      "kind": "custom",
+      "refersTo": "choice-card",
+      "description": "Tappable answer card; lifts on hover, ballpoint when selected.",
+      "html": "<label class=\"ds-choice\"><input type=\"radio\" name=\"q\"><span class=\"ds-choice-dot\"></span><span>Ask the AI to summarise first</span></label><label class=\"ds-choice ds-choice-on\"><input type=\"radio\" name=\"q\" checked><span class=\"ds-choice-dot\"></span><span>Give it an example of the output</span></label>",
+      "css": ".ds-choice{position:relative;display:flex;align-items:flex-start;gap:12px;max-width:380px;min-height:56px;margin-bottom:8px;padding:12px 16px;border:1px solid color-mix(in srgb,var(--foreground,#171b2e) 20%,transparent);border-radius:8px;background:var(--card,#fdfdfb);color:var(--foreground,#171b2e);font:400 1.0625rem/1.65rem Geologica,system-ui,sans-serif;box-shadow:0 1px 0 rgb(23 27 46 / .06),0 3px 0 -1px rgb(23 27 46 / .06);cursor:pointer;transition:border-color 120ms,background-color 120ms,translate 120ms}.ds-choice input{position:absolute;opacity:0}.ds-choice:hover{translate:0 -1px;border-color:color-mix(in srgb,var(--foreground,#171b2e) 50%,transparent)}.ds-choice:has(:focus-visible){box-shadow:0 0 0 3px color-mix(in srgb,var(--ring,#2638c9) 60%,transparent)}.ds-choice-dot{flex:none;width:24px;height:24px;margin-top:2px;border:2px solid var(--input,#858b98);border-radius:9999px;box-sizing:border-box}.ds-choice-on{border-color:var(--primary,#2638c9);background:var(--accent,#e7eaf9)}.ds-choice-on .ds-choice-dot{border-color:var(--primary,#2638c9);background:radial-gradient(circle,var(--primary-foreground,#fff) 0 5px,var(--primary,#2638c9) 5px)}"
+    },
+    {
+      "name": "Highlighted Phrase",
+      "kind": "custom",
+      "refersTo": "badge-needs-you",
+      "description": "Marker stroke under text for the needs-you role; wraps like a real highlighter.",
+      "html": "<p class=\"ds-hl-p\">Before you send it, <mark class=\"ds-hl\">check the numbers yourself</mark>.</p>",
+      "css": ".ds-hl-p{font:400 1.0625rem/1.65rem Geologica,system-ui,sans-serif;color:var(--foreground,#171b2e)}.ds-hl{background-color:transparent;background-image:linear-gradient(to top,transparent 0 .04em,var(--marker,#ffe03d) .04em .62em,transparent .62em);border-radius:.15em .45em .25em .6em;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding-inline:.18em;margin-inline:-.18em;color:var(--ink,#171b2e)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Working Desk",
+    "overview": "The app is a desk, and everything the person reads or works on is a sheet of paper lying on it. The page background is the desk: a cool, slightly green office grey. Cards, panels and dialogs are sheets: near-white paper, crisp corners and a short contact shadow, as if they were set down rather than floating. Nothing glows or hovers in a haze. The desk is where work gets done, so the interface feels like a tool, not a showcase.\n\nColor is not decoration here. Each hue is a writing tool with one job. Ballpoint blue is the person's own hand: it signs off, presses and moves on. Marker yellow is the highlighter, used only on work that still needs the person. Pencil graphite is work the AI already handles: light, quiet, done. Stamp green means progress and hours saved, and correction red means errors. A screen is read by asking which tool made each mark.\n\nComponents are tactile and feel pressed into paper. The primary button has a hard 2px edge underneath that flattens when pressed. Answer cards lift a pixel on hover. Secondary actions are outlined in ink, not filled. Density is comfortable rather than compact: a 17px body, 44px minimum targets and generous sheet padding, because people are learning here, not processing a queue. At night the same desk sits under a lamp: deep blue-black paper, a lighter ballpoint, and less marker on the page.",
+    "keyCharacteristics": [
+      "Desk-and-sheet surfaces: grey desk background, paper sheets with hairline borders and short hard shadows.",
+      "Color as tool roles (ballpoint, marker, pencil, stamp, correction), never as decoration.",
+      "One variable family (Geologica), whose sharpness axis sharpens headings and numerals while body text stays soft.",
+      "Big tabular numerals as the main graphic element on metric screens.",
+      "Hand-made marks drawn in CSS: highlighter strokes, pencil hatching, ballpoint strike-throughs, squared notebook paper.",
+      "Light and dark themes with the same roles; motion is short and switched off under reduced-motion."
+    ],
+    "rules": [
+      {
+        "name": "The Highlighter Rule",
+        "body": "Yellow means \"this still needs you\" and nothing else. If an element doesn't need the person's action, it isn't yellow: no yellow decoration, illustration, chart accent or brand flourish.",
+        "section": "colors"
+      },
+      {
+        "name": "The Quiet Pencil Rule",
+        "body": "AI-handled work is drawn in pencil (gray hatching, low contrast) so it never competes with the person's own work. AI work never takes ballpoint blue or a filled primary look.",
+        "section": "colors"
+      },
+      {
+        "name": "The Role-Token Rule",
+        "body": "Components use role tokens (`needs-you`, `ai`, `success`, `info`, \u2026), never raw palette hex. A new color need means a new token in `globals.css`, mirrored in `src/lib/design-tokens.ts`.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Hierarchy comes from Geologica's weight, size and sharpness, not from a second display face. Mono is for copyable text only, never for labels or decoration.",
+        "section": "typography"
+      },
+      {
+        "name": "The Numbers-as-Image Rule",
+        "body": "When a screen has a key number, set it as a numeral and let it be the screen's main visual, instead of adding an illustration or chart.",
+        "section": "typography"
+      },
+      {
+        "name": "The Set-Down Rule",
+        "body": "A sheet at rest gets the paper shadow and nothing more. Only things that are temporarily picked up (popovers, menus, dialogs) get the lifted shadow. No glows, no colored shadows, no blur behind cards.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** put content on paper sheets (`sheet`, or Card) over the desk background; the page itself is never a white canvas.",
+      "**Do** use role tokens (`bg-needs-you`, `text-ai-strong`, `bg-success-soft`) and add new tokens to `globals.css` and `src/lib/design-tokens.ts`, never hardcoded hex in components.",
+      "**Do** set ink text on marker yellow, and switch to a marker underline in dark mode so light text never sits on yellow (the `highlight` utility does this).",
+      "**Do** pair every status color with an icon or text; correct, incorrect and missed answers each carry a mark.",
+      "**Do** keep targets at least 44px and focus always visible (2px ballpoint outline, 2px offset).",
+      "**Do** keep motion short (120/200/320ms with the standard easing `cubic-bezier(0.2, 0, 0, 1)`) and rely on the global reduced-motion override; use `prefersReducedMotion()` for imperative animations.",
+      "**Do** design and check at 360, 768 and 1280px, in both themes."
+    ],
+    "donts": [
+      "**Don't** use marker yellow for anything that doesn't need the person: no decorative yellow, no yellow chart accents, no yellow warnings (warnings are sticky-note orange).",
+      "**Don't** give AI-handled work ballpoint blue, a filled button or high contrast; it stays in pencil.",
+      "**Don't** use pencil (`pencil`) for body text; it is decorative-only contrast.",
+      "**Don't** fill secondary or destructive buttons; they are outlined in ink or red ink.",
+      "**Don't** use soft blurry drop shadows, glows or colored shadows on resting sheets.",
+      "**Don't** add a second display typeface, or use JetBrains Mono for labels.",
+      "**Don't** round paper beyond the sheet radius (14px) or make cards pill-shaped."
+    ]
+  }
+}
