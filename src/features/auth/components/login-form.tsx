@@ -12,6 +12,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { loginAction } from "../actions";
 import { afterAuthPath, loginSchema } from "../auth-schemas";
 import { AuthField, fieldErrors, type FieldErrors } from "./auth-form-fields";
+import { onboardingSessionStore } from "@/features/onboarding/session-storage";
 
 export function LoginForm() {
   const router = useRouter();
@@ -37,7 +38,8 @@ export function LoginForm() {
         return;
       }
       queryClient.clear(); // cached guest data (e.g. progress = null) must not outlive the login
-      router.replace(afterAuthPath(result.data));
+      // An onboarding taken as a guest in this browser: go to the plan, which links it to the account.
+      router.replace(onboardingSessionStore.get() ? "/plan" : afterAuthPath(result.data));
       router.refresh();
     });
   }
