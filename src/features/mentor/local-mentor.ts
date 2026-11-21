@@ -58,7 +58,6 @@ function message(
 
 export function localMentor(detail: LessonDetail) {
   const cards = detail.steps.filter((s): s is Card => s.type === "card");
-  const keyPoints = cards.map((c) => c.title);
 
   return {
     review(mistake: Mistake): MentorMessage {
@@ -80,13 +79,18 @@ export function localMentor(detail: LessonDetail) {
 
     ask(text: string): MentorMessage {
       const card = bestCard(cards, text);
-      if (!card) return message([{ type: "text", text: "Ask me about anything in this lesson." }]);
+      // Say plainly that this is not an AI answer, so a quote from the lesson isn't mistaken for one.
       return message(
         [
-          { type: "text", text: plain(card.body) },
-          ...(keyPoints.length > 1 ? [{ type: "steps" as const, items: keyPoints }] : []),
+          {
+            type: "text",
+            text:
+              "The AI Mentor isn't connected right now, so I can't answer in my own words yet." +
+              (card ? " Here's the part of the lesson that looks closest to your question:" : ""),
+          },
+          ...(card ? [{ type: "example" as const, title: card.title, text: plain(card.body) }] : []),
         ],
-        { suggestions: ["Show an example", "Why does this matter at work?"] },
+        { suggestions: [] },
       );
     },
   };
