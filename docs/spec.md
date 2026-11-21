@@ -34,7 +34,7 @@ POST /lessons/{id}/mentor            → streamed hint
 POST /lessons/{id}/practice          → streamed output, then grade
 ```
 
-Course content comes from `content/courses.json` (`npm run courses:build`), not from parsing Markdown in Python.
+Course content comes from `content/courses.json` (`npm run courses:build`); the backend (Node + Fastify, TypeScript) loads that JSON instead of parsing Markdown.
 
 **AI is essential where the demo shows it:** the mentor and the grader. The roadmap is honest: code builds the plan, AI explains it in the person's own words.
 
@@ -197,6 +197,6 @@ Course Markdown, including answers, is in a public repo: say that content is ope
 
 ## Pitch artefacts this feeds
 
-- **Architecture slide**: browser → Next.js (Vercel) → `/api/backend` proxy → FastAPI (Railway) → model + Postgres; hybrid roadmap diagram from `docs/roadmap.md`.
+- **Architecture slide**: browser → Next.js (Vercel) → `/api/backend` proxy → Fastify (Node, Railway) → model + Postgres; hybrid roadmap diagram from `docs/roadmap.md`.
 - **Evals slide**: numbers from `evals/results/`.
 - **Unit economics slide**: cost per user from the `ai_calls` log.

@@ -112,7 +112,7 @@ Rules:
 
 ## Backend, env and auth
 
-The backend is a separate service (`API_URL`, FastAPI on Railway; docs at `${API_URL}/docs`). We use a **hybrid** setup:
+The backend is a separate service: repo `team-five-ai-school/backend`, Node 24 + Fastify + Postgres (Drizzle) + Zod on Railway (`API_URL`; Swagger at `${API_URL}/docs`). It can import `content/courses.json` and share Zod schemas with this repo. We use a **hybrid** setup:
 
 ```
 first render (Server Components)  ──api()──────────────────────────────▶ backend   cached with "use cache"
