@@ -125,13 +125,11 @@ writes to server-cached data      ──Server Action──api()──▶ backen
 
 ## PWA (optional for users)
 
-The app is a web app first. Installing it to the home screen is an **optional** offer, never a requirement.
+The app is a web app first. Installing it to the home screen is an **optional** offer, never a requirement. No push notifications.
 
-- `src/app/manifest.ts` + icons from `npm run icons` (`scripts/generate-icons.mjs`) make it installable; `public/sw.js` only handles push notifications (no offline caching).
+- `src/app/manifest.ts` + icons from `npm run icons` (`scripts/generate-icons.mjs`) make it installable; `public/sw.js` is a minimal no-op service worker (no caching, no push).
 - Offer installation **once, at the end of onboarding**, with `<InstallAppCard onDone={next} />` from `src/components/pwa/install-app-card.tsx`. It always has "Not now". Skip the step when `usePwaInstall().available` is false. No install banners on other pages.
-- iOS has no install API: the card shows "Share → Add to Home Screen" instructions. On iOS, push works only inside the installed app.
-- Lesson reminders: `usePushSubscription()` sends the subscription to the backend (`POST /push/subscriptions`); the backend stores it and sends pushes with its VAPID private key. The UI is hidden until `NEXT_PUBLIC_VAPID_PUBLIC_KEY` is set.
-- Push payload the service worker expects: `{ "title": "...", "body": "...", "url": "/lessons/2" }`.
+- iOS has no install API: the card shows "Share → Add to Home Screen" instructions instead of a button.
 
 ## Server Actions
 

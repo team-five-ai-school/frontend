@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-/** Registers /sw.js (push notifications). Renders nothing. Mounted once in <Providers>. */
+/** Registers the minimal /sw.js that makes the app installable. Renders nothing. Mounted once in <Providers>. */
 export function ServiceWorker() {
   useEffect(() => {
     if (!("serviceWorker" in navigator)) return;
