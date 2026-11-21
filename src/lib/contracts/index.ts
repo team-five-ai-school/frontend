@@ -462,8 +462,8 @@ export const PlanItem = z.object({
   skillTitle: z.string(),
   lessonId: z.string().nullable(),
   lessonTitle: z.string().nullable(),
-  /** Content lesson id: the lesson opens at /lessons/:lessonSlug. */
-  lessonSlug: z.string().nullable(),
+  /** Content lesson id: the lesson opens at /lessons/:lessonSlug. Defaults to null for older backends. */
+  lessonSlug: z.string().nullable().default(null),
   status: PlanItemStatus,
   sourceTaskIds: z.array(z.string()),
   estimatedHoursSaved: z.number(),
