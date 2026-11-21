@@ -14,6 +14,7 @@ const toc = [
 const demos = [
   { href: "/design-system/demo/onboarding-result", label: "Onboarding result" },
   { href: "/design-system/demo/lesson", label: "Lesson: mistake → Mentor" },
+  { href: "/design-system/demo/quest", label: "Progress quest: plan and course" },
 ] as const;
 
 export default function DesignSystemPage() {

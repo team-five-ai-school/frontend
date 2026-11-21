@@ -6,8 +6,8 @@ import { Suspense } from "react";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { CourseCover } from "@/features/courses/components/course-cover";
-import { LessonList } from "@/features/courses/components/lesson-list";
 import { getCourse } from "@/features/courses/data";
+import { CourseQuest } from "@/features/quest/components/quest-progress";
 import { t } from "@/lib/i18n";
 
 export async function generateMetadata({ params }: PageProps<"/courses/[courseId]">): Promise<Metadata> {
@@ -55,7 +55,7 @@ async function CourseContent({ params }: Pick<PageProps<"/courses/[courseId]">, 
         <h2 id="lessons-heading" className="text-lg font-bold">
           {t("course.lessonsTitle")}
         </h2>
-        <LessonList lessons={lessons} />
+        <CourseQuest courseId={course.id} lessons={lessons} />
       </section>
     </>
   );

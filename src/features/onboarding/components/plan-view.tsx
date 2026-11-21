@@ -7,12 +7,11 @@ import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
 import { EmptyState, ErrorState } from "@/components/state-views";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { formatHours } from "@/features/chaos-map/chaos-meta";
+import { PlanQuest } from "@/features/quest/components/quest-progress";
 import { ApiError } from "@/lib/api-error";
-import { firstLesson, type LearningPlan, type PlanItem } from "@/lib/contracts";
+import type { LearningPlan } from "@/lib/contracts";
 import { t } from "@/lib/i18n";
 
 import { onboardingApi, onboardingKeys } from "../onboarding-api";
@@ -79,14 +78,9 @@ export function PlanView() {
     );
   }
 
-  const next = firstLesson(plan);
   return (
     <div className="flex flex-col gap-8">
-      <ol className="flex flex-col">
-        {plan.items.map((item) => (
-          <PlanRow key={item.id} item={item} next={item.id === next?.id} />
-        ))}
-      </ol>
+      <PlanQuest plan={plan} guest={anonymous} />
       {anonymous && (
         <section className="flex max-w-prose flex-col items-start gap-3 border-t pt-6">
           <p className="text-muted-foreground">{t("plan.signInHint")}</p>
@@ -96,50 +90,6 @@ export function PlanView() {
         </section>
       )}
     </div>
-  );
-}
-
-const statusLabel: Record<PlanItem["status"], string> = {
-  slot: t("plan.slot"),
-  ready: t("plan.ready"),
-  in_progress: t("plan.inProgress"),
-  done: t("plan.done"),
-};
-const statusVariant = { slot: "outline", ready: "ai", in_progress: "info", done: "success" } as const;
-
-function PlanRow({ item, next }: { item: PlanItem; next: boolean }) {
-  return (
-    <li className="flex gap-4 border-t border-input py-4">
-      <span className="w-6 shrink-0 text-right text-lg font-medium text-muted-foreground tabular-nums">
-        {item.order}
-      </span>
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <h2 className="min-w-0 text-lg font-medium break-words">{item.skillTitle}</h2>
-          <Badge variant={statusVariant[item.status]}>{statusLabel[item.status]}</Badge>
-        </div>
-        {item.lessonTitle &&
-          (item.lessonSlug ? (
-            <Link
-              href={`/lessons/${item.lessonSlug}`}
-              className="w-fit text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-            >
-              {t("plan.lesson", { title: item.lessonTitle })}
-            </Link>
-          ) : (
-            <p className="text-muted-foreground">{t("plan.lesson", { title: item.lessonTitle })}</p>
-          ))}
-        {item.rationale && <p className="max-w-prose text-muted-foreground">{item.rationale}</p>}
-        <p className="text-sm text-muted-foreground tabular-nums">
-          {t("plan.hoursSaved", { hours: formatHours(item.estimatedHoursSaved) })}
-        </p>
-        {next && item.lessonSlug && (
-          <Button asChild size="lg" className="mt-2 w-full sm:w-fit">
-            <Link href={`/lessons/${item.lessonSlug}`}>{t("plan.start")}</Link>
-          </Button>
-        )}
-      </div>
-    </li>
   );
 }
 
