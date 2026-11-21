@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import { useEffect } from "react";
 
 // Keep in sync with --background in globals.css (light / dark).
-const colors = { light: "#ffffff", dark: "#0a0a0a" } as const;
+const colors = { light: "#eceee8", dark: "#0f1220" } as const;
 
 /**
  * The <meta name="theme-color"> tags from `viewport` follow the OS setting.

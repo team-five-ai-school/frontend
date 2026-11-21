@@ -4,13 +4,129 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * Design tokens: single source of truth.
+ * Raw values live in :root (light) and .dark below; @theme maps them to Tailwind utilities;
+ * src/lib/design-tokens.ts mirrors them for JS (charts, animations).
+ *
+ * Concept: «Канцелярія». The app is a desk; content sits on paper sheets. Every color is a tool:
+ *   ballpoint (blue)   = actions: the person signs off, presses, moves on
+ *   marker (yellow)    = needs-you: ONLY work that still needs the person. Never decoration.
+ *   pencil (graphite)  = ai: work AI already handles. Light, quiet, done.
+ *   stamp (green)      = done, progress, hours saved
+ *   correction (red)   = errors
+ *   squared paper      = the chaos map (a school «зошит у клітинку»)
+ */
+
+/* Static scale tokens (theme-independent). */
+@theme {
+  /* Type: a 1.25 modular scale on a 17px body. Display sizes are for numerals and the one headline. */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.2rem;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.4rem;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.65rem;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.8rem;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 2rem;
+  --text-2xl: 1.875rem;
+  --text-2xl--line-height: 2.3rem;
+  --text-3xl: 2.375rem;
+  --text-3xl--line-height: 2.7rem;
+  --text-4xl: 3rem;
+  --text-4xl--line-height: 3.1rem;
+  --text-5xl: 4.5rem;
+  --text-5xl--line-height: 4.25rem;
+  --text-6xl: 7rem;
+  --text-6xl--line-height: 6.25rem;
+
+  /* Motion. Every animation is disabled under prefers-reduced-motion (see bottom). */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  --animate-mentor-dot: mentor-dot 1.2s var(--ease-standard) infinite;
+  --animate-soft-pulse: soft-pulse 1.6s var(--ease-standard) infinite;
+
+  @keyframes mentor-dot {
+    0%,
+    80%,
+    100% {
+      opacity: 0.3;
+    }
+    40% {
+      opacity: 1;
+    }
+  }
+  @keyframes soft-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 var(--marker);
+    }
+    50% {
+      box-shadow: 0 0 0 6px transparent;
+    }
+  }
+}
+
+/* Theme-dependent tokens mapped to utilities (bg-needs-you, text-ai-strong, …). */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   /* next/font variables from src/lib/fonts.ts */
-  --font-sans: var(--font-onest), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geologica), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
-  --font-heading: var(--font-onest), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-geologica), ui-sans-serif, system-ui, sans-serif;
+
+  --color-raised: var(--popover);
+  --color-marker: var(--marker);
+  --color-mentor: var(--mentor);
+  --color-sage: var(--sage);
+  --color-line: var(--border);
+  --shadow-raised: var(--shadow-lifted-value);
+  --shadow-lifted: var(--shadow-lifted-value);
+  --color-desk: var(--desk);
+  --color-paper: var(--paper);
+  --color-pencil: var(--pencil);
+  --color-ballpoint: var(--ballpoint);
+  --color-grid: var(--grid);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-border-strong: var(--input);
+
+  --color-needs-you: var(--needs-you);
+  --color-needs-you-foreground: var(--needs-you-foreground);
+  --color-needs-you-soft: var(--needs-you-soft);
+  --color-needs-you-strong: var(--needs-you-strong);
+  --color-ai: var(--ai);
+  --color-ai-foreground: var(--ai-foreground);
+  --color-ai-soft: var(--ai-soft);
+  --color-ai-strong: var(--ai-strong);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-success-strong: var(--success-strong);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-strong: var(--warning-strong);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-destructive-strong: var(--destructive-strong);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-soft: var(--info-soft);
+  --color-info-strong: var(--info-strong);
+
+  --color-progress: var(--progress);
+  --color-progress-track: var(--progress-track);
+  --color-streak: var(--streak);
+  --color-streak-soft: var(--streak-soft);
+  --color-streak-strong: var(--streak-strong);
+  --color-focus: var(--ring);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -40,90 +156,267 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-sm: var(--radius-strip);
+  --radius-md: var(--radius-strip);
+  --radius-lg: var(--radius-block);
+  --radius-xl: var(--radius-block);
+  --radius-2xl: var(--radius-sheet);
+  --radius-3xl: var(--radius-sheet);
+  --radius-4xl: var(--radius-sheet);
+  --shadow-paper: var(--shadow-paper-value);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Stationery. */
+  --desk: #eceee8; /* the table under the sheets: cool, slightly green office grey */
+  --paper: #fdfdfb;
+  --ink: #171b2e; /* blue-black ink, not a neutral near-black */
+  --graphite: #5f6577; /* secondary text: 6.3:1 on paper */
+  --pencil: #8c92a3; /* AI-handled marks: deliberately quiet (decorative use only, not body text) */
+  --fog: #f4f5f1;
+  --line: #d6d9d1;
+  --grid: #c9d3e6; /* squared-paper rules */
+  --marker: #ffe03d;
+  --ballpoint: #2638c9;
+  --stamp: #1d7a4c;
+  --correction: #cf3426;
+
+  /* Surfaces. The desk is the page; paper sheets (cards, panels) sit on it. */
+  --background: var(--desk);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --muted: var(--fog);
+  --muted-foreground: var(--graphite);
+  --subtle-foreground: var(--graphite);
+  --border: var(--line);
+  /* Field outlines are darker than the line: interactive borders need 3:1 (WCAG 1.4.11). */
+  --input: #858b98;
+
+  /* Main action: ballpoint blue. Secondary actions: outline in ink. */
+  --primary: var(--ballpoint);
+  --primary-foreground: #ffffff;
+  --secondary: var(--fog);
+  --secondary-foreground: var(--ink);
+  --accent: #e7eaf9;
+  --accent-foreground: var(--ink);
+  --ring: var(--ballpoint);
+
+  /* Role: needs you = the highlighter. Text on it is always ink. Reserved: nothing else is yellow. */
+  --needs-you: var(--marker);
+  --needs-you-foreground: var(--ink);
+  --needs-you-soft: #fff5bf;
+  --needs-you-strong: var(--ink);
+  /* Role: AI handles it = pencil. Light and quiet so it never competes with the person's work. */
+  --ai: var(--pencil);
+  --ai-foreground: var(--ink);
+  --ai-soft: #eceef2;
+  --ai-strong: #4b5163;
+
+  /* Status. */
+  --success: var(--stamp);
+  --success-foreground: #ffffff;
+  --success-soft: #e2f1e8;
+  --success-strong: #165f3b;
+  /* Warning is sticky-note orange, so it never reads as "needs you". */
+  --warning: #f08a24;
+  --warning-foreground: var(--ink);
+  --warning-soft: #fde9d4;
+  --warning-strong: #8a4300;
+  --destructive: var(--correction);
+  --destructive-foreground: #ffffff;
+  --destructive-soft: #fbe6e3;
+  --destructive-strong: #a3261b;
+  --info: var(--ballpoint);
+  --info-foreground: #ffffff;
+  --info-soft: #e7eaf9;
+  --info-strong: #1c2a99;
+
+  --progress: var(--stamp);
+  --progress-track: #dfe3db;
+  /* Streak = ballpoint ticks in a calendar, not the marker. */
+  --streak: var(--ballpoint);
+  --streak-soft: #e7eaf9;
+  --streak-strong: #1c2a99;
+
+  --chart-1: var(--marker);
+  --chart-2: var(--pencil);
+  --chart-3: var(--stamp);
+  --chart-4: var(--ballpoint);
+  --chart-5: var(--ink);
+  --sidebar: var(--fog);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+
+  /* Radius by hierarchy. Paper has crisp corners; only controls are softened. */
+  --radius-strip: 3px;
+  --radius-block: 8px;
+  --radius-sheet: 14px;
+  --radius: var(--radius-block);
+  /* A sheet lying on the desk: hairline contact shadow + a short, hard offset (no soft blur cloud). */
+  --shadow-paper-value: 0 1px 0 rgb(23 27 46 / 0.06), 0 3px 0 -1px rgb(23 27 46 / 0.06);
+  --shadow-lifted-value: 0 1px 0 rgb(23 27 46 / 0.06), 0 10px 24px -10px rgb(23 27 46 / 0.28);
+
+  /* Motion durations. */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --duration-chaos: 900ms;
+
+  /* Layers. */
+  --z-sticky: 30;
+  --z-header: 40;
+  --z-mentor: 45;
+  --z-overlay: 50;
+  --z-toast: 60;
+
+  /* The Mentor's avatar is ink with a marker letter in both themes. */
+  --mentor: #171b2e;
+
+  --target-min: 2.75rem;
 }
 
+/* The same desk at night, under a lamp. The marker covers less area: thinner highlight. */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --desk: #0f1220;
+  --paper: #181c2c;
+  --ink: #eceef5;
+  --graphite: #a2a8ba;
+  --pencil: #737a8f;
+  --fog: #1d2234;
+  --line: #2c3248;
+  --grid: #26304d;
+  --marker: #f5d63a;
+  --ballpoint: #8e9bff;
+  --stamp: #5cc38c;
+  --correction: #f07a6c;
+
+  --popover: #20253a;
+  --input: #6b7287;
+  --primary-foreground: #0f1220;
+  --accent: #252c4a;
+
+  --needs-you-foreground: #0f1220;
+  --needs-you-soft: #3a3418;
+  --needs-you-strong: #eceef5;
+  --ai-foreground: #0f1220;
+  --ai-soft: #232838;
+  --ai-strong: #c3c8d6;
+
+  --success-foreground: #0f1220;
+  --success-soft: #16301f;
+  --success-strong: #8fdcb1;
+  --warning: #f5a04a;
+  --warning-soft: #3a2a17;
+  --warning-strong: #f8bd80;
+  --destructive-foreground: #0f1220;
+  --destructive-soft: #3a1f22;
+  --destructive-strong: #f6a99f;
+  --info-foreground: #0f1220;
+  --info-soft: #232a4d;
+  --info-strong: #b4bdff;
+
+  --progress-track: #2a3044;
+  --streak-soft: #232a4d;
+  --streak-strong: #b4bdff;
+
+  --mentor: #0f1220;
+
+  --shadow-paper-value: 0 1px 0 rgb(0 0 0 / 0.35), 0 3px 0 -1px rgb(0 0 0 / 0.3);
+  --shadow-lifted-value: 0 1px 0 rgb(0 0 0 / 0.35), 0 12px 28px -10px rgb(0 0 0 / 0.6);
+}
+
+/* Highlighter stroke under text: the "needs you" role. Wraps across lines like a real marker. */
+@utility highlight {
+  /* A real marker stroke: sits low over the baseline, chisel-tip ends from uneven radii. */
+  background-image: linear-gradient(
+    to top,
+    transparent 0 0.04em,
+    var(--marker) 0.04em var(--highlight-height, 0.62em),
+    transparent var(--highlight-height, 0.62em)
+  );
+  border-radius: 0.15em 0.45em 0.25em 0.6em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding-inline: 0.18em;
+  margin-inline: -0.18em;
+  color: var(--ink);
+  /* Evening desk: a thick marker line under the words, so light text never sits on yellow. */
+  :where(.dark) & {
+    background-image: none;
+    text-decoration-line: underline;
+    text-decoration-color: var(--marker);
+    text-decoration-thickness: 0.18em;
+    text-underline-offset: 0.16em;
+    text-decoration-skip-ink: none;
+  }
+}
+
+/* The marker lifted off (animates from `highlight`: the stroke wipes away). */
+@utility highlight-off {
+  background-size: 0% 100%;
+  :where(.dark) & {
+    text-decoration-color: transparent;
+  }
+}
+
+/* Pencil hatching: the fill for anything AI handles (bars, tiles, map strips). */
+@utility hatch {
+  background-color: var(--ai-soft);
+  background-image: repeating-linear-gradient(-45deg, var(--pencil) 0 1px, transparent 1px 5px);
+}
+
+/* Squared exercise-book paper (5 mm grid) for the chaos map and other "working" surfaces. */
+@utility squared {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: -1px -1px;
+}
+
+/* A sheet of paper on the desk: the default container for content. */
+@utility sheet {
+  background-color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sheet);
+  box-shadow: var(--shadow-paper-value);
+}
+
+/* Ballpoint strike-through: an old value crossed out by hand (hours before AI, a wrong answer). */
+@utility struck {
+  text-decoration-line: line-through;
+  text-decoration-color: var(--ballpoint);
+  text-decoration-thickness: 0.09em;
+  text-decoration-skip-ink: none;
+}
+
+/* Big numbers (hours, streak, percent): the main graphic element of a screen. */
+@utility numeral {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-variation-settings: "SHRP" 100;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/60;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-base text-foreground;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
@@ -142,12 +435,23 @@
   h4 {
     @apply font-heading;
     text-wrap: balance;
+    /* Geologica's sharpness axis: headings get crisp ink-trap corners, body text stays soft. */
+    font-variation-settings: "SHRP" 60;
+    letter-spacing: -0.02em;
+  }
+  h1 {
+    letter-spacing: -0.035em;
   }
   p {
     text-wrap: pretty;
   }
   :target {
     scroll-margin-top: 4.5rem; /* sticky header height + gap */
+  }
+  /* Focus is always visible, also for elements without their own ring styles. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
   }
 }
 

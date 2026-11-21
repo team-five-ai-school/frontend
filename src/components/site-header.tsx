@@ -6,11 +6,14 @@ import { routes, siteConfig } from "@/lib/site";
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60">
-      <div className="mx-auto flex h-14 w-full max-w-5xl items-center gap-6 px-4 sm:px-6">
-        <Link href="/" className="font-heading font-semibold tracking-tight">
+      <div className="mx-auto flex h-14 w-full max-w-5xl items-center gap-4 px-4 sm:gap-6 sm:px-6">
+        <Link href="/" className="font-heading font-semibold tracking-tight whitespace-nowrap">
           {siteConfig.name}
         </Link>
-        <nav aria-label="Main" className="flex items-center gap-4 text-sm text-muted-foreground">
+        <nav
+          aria-label="Main"
+          className="flex items-center gap-3 text-sm whitespace-nowrap text-muted-foreground sm:gap-4"
+        >
           {routes
             .filter((route) => route.nav)
             .map((route) => (
