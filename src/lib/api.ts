@@ -31,7 +31,6 @@ export async function api<T>(path: string, schema: z.ZodType<T>, options: ApiOpt
       Accept: "application/json",
       ...(body !== undefined && { "Content-Type": "application/json" }),
       ...(token && { Authorization: `Bearer ${token}` }),
-      ...(env.API_KEY && { "X-Api-Key": env.API_KEY }),
       ...headers,
     },
     body: body === undefined ? undefined : JSON.stringify(body),

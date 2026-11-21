@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
@@ -11,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatHours } from "@/features/chaos-map/chaos-meta";
 import { ApiError } from "@/lib/api-error";
-import type { LearningPlan, PlanItem } from "@/lib/contracts";
+import { firstLesson, type LearningPlan, type PlanItem } from "@/lib/contracts";
 import { t } from "@/lib/i18n";
 
 import { onboardingApi, onboardingKeys } from "../onboarding-api";
@@ -23,6 +24,7 @@ import { onboardingSessionStore, useStoredSessionId } from "../session-storage";
  */
 export function PlanView() {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const storedId = useStoredSessionId();
 
   const me = useQuery({
@@ -44,6 +46,7 @@ export function PlanView() {
     onSuccess: () => {
       onboardingSessionStore.clear();
       toast.success(t("plan.saved"));
+      router.refresh(); // the header drops its "Take the onboarding" link
       return queryClient.invalidateQueries({ queryKey: onboardingKeys.myPlan });
     },
   });
@@ -76,11 +79,12 @@ export function PlanView() {
     );
   }
 
+  const next = firstLesson(plan);
   return (
     <div className="flex flex-col gap-8">
       <ol className="flex flex-col">
         {plan.items.map((item) => (
-          <PlanRow key={item.id} item={item} />
+          <PlanRow key={item.id} item={item} next={item.id === next?.id} />
         ))}
       </ol>
       {anonymous && (
@@ -103,7 +107,7 @@ const statusLabel: Record<PlanItem["status"], string> = {
 };
 const statusVariant = { slot: "outline", ready: "ai", in_progress: "info", done: "success" } as const;
 
-function PlanRow({ item }: { item: PlanItem }) {
+function PlanRow({ item, next }: { item: PlanItem; next: boolean }) {
   return (
     <li className="flex gap-4 border-t border-input py-4">
       <span className="w-6 shrink-0 text-right text-lg font-medium text-muted-foreground tabular-nums">
@@ -114,13 +118,26 @@ function PlanRow({ item }: { item: PlanItem }) {
           <h2 className="min-w-0 text-lg font-medium break-words">{item.skillTitle}</h2>
           <Badge variant={statusVariant[item.status]}>{statusLabel[item.status]}</Badge>
         </div>
-        {item.lessonTitle && (
-          <p className="text-muted-foreground">{t("plan.lesson", { title: item.lessonTitle })}</p>
-        )}
+        {item.lessonTitle &&
+          (item.lessonSlug ? (
+            <Link
+              href={`/lessons/${item.lessonSlug}`}
+              className="w-fit text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+            >
+              {t("plan.lesson", { title: item.lessonTitle })}
+            </Link>
+          ) : (
+            <p className="text-muted-foreground">{t("plan.lesson", { title: item.lessonTitle })}</p>
+          ))}
         {item.rationale && <p className="max-w-prose text-muted-foreground">{item.rationale}</p>}
         <p className="text-sm text-muted-foreground tabular-nums">
           {t("plan.hoursSaved", { hours: formatHours(item.estimatedHoursSaved) })}
         </p>
+        {next && item.lessonSlug && (
+          <Button asChild size="lg" className="mt-2 w-full sm:w-fit">
+            <Link href={`/lessons/${item.lessonSlug}`}>{t("plan.start")}</Link>
+          </Button>
+        )}
       </div>
     </li>
   );

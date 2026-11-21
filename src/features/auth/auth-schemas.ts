@@ -32,7 +32,10 @@ export const registerSchema = z.object({
 export type RegisterInput = z.infer<typeof registerSchema>;
 
 /**
- * Where to send a user after login / sign-up.
- * TODO: point to the real page once it exists (e.g. onboarding until `user.onboardingCompletedAt` is set).
+ * Where to send a user after login / sign-up: the onboarding until it is done, then home.
+ * `onboardingCompletedAt` is set by the backend when an onboarding is claimed. /onboarding resumes an
+ * onboarding started before sign-up (session id in localStorage), and its result leads to /plan, which
+ * links it to the account.
  */
-export const AFTER_AUTH_PATH = "/";
+export const afterAuthPath = (user: Pick<User, "onboardingCompletedAt">) =>
+  user.onboardingCompletedAt ? ("/" as const) : ("/onboarding" as const);

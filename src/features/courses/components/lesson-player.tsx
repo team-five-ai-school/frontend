@@ -1,8 +1,9 @@
 "use client";
 
-import { ArrowLeftIcon, PartyPopperIcon } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowLeftIcon, PartyPopperIcon, RotateCcwIcon } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 
@@ -14,27 +15,79 @@ import {
   QuestionSingle,
   QuestionTrueFalse,
 } from "@/features/exercises/components/questions";
-import type { AnswerResult, LessonDetail, LessonStep } from "@/lib/contracts";
+import { MentorEntry } from "@/features/mentor/components/mentor-entry";
+import { MentorPanel } from "@/features/mentor/components/mentor-panel";
+import { MentorProvider, useOptionalMentor } from "@/features/mentor/mentor-context";
+import { createMentorTransport } from "@/features/mentor/mentor-transport";
+import { Skeleton } from "@/components/ui/skeleton";
+import type {
+  AnswerResult,
+  Exercise,
+  LessonDetail,
+  LessonReview,
+  LessonStep,
+  Mistake,
+} from "@/lib/contracts";
 import { ApiError } from "@/lib/api-error";
 import { t } from "@/lib/i18n";
 
-import { useCheckAnswer, useCompleteLesson, type AnswerInput } from "../progress";
+import {
+  lessonReviewQuery,
+  useCheckAnswer,
+  useCompleteLesson,
+  useRetakeLesson,
+  type AnswerInput,
+} from "../progress";
+import { LessonReviewCard } from "./lesson-review";
 
 /**
- * Steps through a lesson: theory cards and exercises one by one, then completes it.
- * AI features plug in here later:
- *   - Mentor: pass `onOpenMentor` to the exercise components and render a panel; a wrong answer's
- *     `result.mistakeId` is the mistake to send to the mentor.
- *   - Practice: add a final step after the last block (see docs/spec.md → Personalized practice).
+ * Lesson page: the player plus, for logged-in learners, the Mentor (side panel on desktop, bottom sheet
+ * on phones). Every wrong answer is handed to the Mentor automatically (see mentor-transport.ts).
+ * Still to plug in: personalized practice after the last step (docs/spec.md → Personalized practice).
  */
 export function LessonPlayer({ detail, loggedIn }: { detail: LessonDetail; loggedIn: boolean }) {
+  // One transport per lesson page: it keeps the short question history for the Mentor.
+  const [transport] = useState(() => createMentorTransport(detail));
+  if (!loggedIn) return <PlayerBody detail={detail} loggedIn={false} />;
+  return (
+    <MentorProvider
+      transport={transport}
+      defaultContext={{ source: "lesson", lessonId: detail.lesson.id, exerciseId: null }}
+    >
+      <PlayerBody detail={detail} loggedIn />
+      <MentorEntry variant="global" />
+    </MentorProvider>
+  );
+}
+
+/** What the learner picked, in words, for the Mentor's mistake note. */
+function describeAnswer(exercise: Exercise, answer: AnswerInput) {
+  if (exercise.kind === "true_false") {
+    const marks = (answer.cardAnswers ?? []).map((a) => (a ? t("player.trueLabel") : t("player.falseLabel")));
+    return `${t("player.yourAnswer")}: ${marks.join(", ")}`;
+  }
+  if ("options" in exercise) {
+    const labels = exercise.options.filter((o) => answer.optionIds?.includes(o.id)).map((o) => o.label);
+    return `${t("player.yourAnswer")}: ${labels.join("; ")}`;
+  }
+  return "";
+}
+
+function PlayerBody({ detail, loggedIn }: { detail: LessonDetail; loggedIn: boolean }) {
   const { lesson, steps, courseId, courseTitle } = detail;
+  const mentor = useOptionalMentor();
+  const feedbackRef = useRef<HTMLDivElement>(null);
+  // A finished lesson opens on its saved review; «Retake» clears the answers and starts over.
+  const savedReview = useQuery({ ...lessonReviewQuery(detail.lesson.id), enabled: loggedIn });
+  const retake = useRetakeLesson(detail.lesson.id);
+  const [started, setStarted] = useState(false);
   const [index, setIndex] = useState(0);
   const [results, setResults] = useState<Record<string, AnswerResult>>({});
   const check = useCheckAnswer(lesson.id);
   const complete = useCompleteLesson(lesson.id);
   const [needsLogin, setNeedsLogin] = useState(!loggedIn);
 
+  const showingSaved = loggedIn && !started && index === 0 && Boolean(savedReview.data);
   const step = steps[index];
   const finished = index >= steps.length;
   const percent = steps.length ? Math.round((Math.min(index, steps.length) / steps.length) * 100) : 100;
@@ -50,7 +103,23 @@ export function LessonPlayer({ detail, loggedIn }: { detail: LessonDetail; logge
     check.mutate(
       { exerciseId, answer },
       {
-        onSuccess: (result) => setResults((r) => ({ ...r, [exerciseId]: result })),
+        onSuccess: (result) => {
+          setResults((r) => ({ ...r, [exerciseId]: result }));
+          const exercise = steps.find((s) => s.type === "exercise" && s.id === exerciseId);
+          if (!result.mistakeId || !mentor || exercise?.type !== "exercise") return;
+          const mistake: Mistake = {
+            id: result.mistakeId,
+            exerciseId,
+            exerciseTitle: exercise.exercise.title || exercise.exercise.prompt,
+            lessonId: lesson.id,
+            createdAt: new Date().toISOString(),
+            what: describeAnswer(exercise.exercise, answer),
+            why: result.feedback ?? "",
+            how: "", // filled by the Mentor's review
+          };
+          // Next frame: the feedback block exists, so the mistake can fly from it to the Mentor.
+          requestAnimationFrame(() => mentor.reportMistake(mistake, feedbackRef.current));
+        },
         onError: (error) => {
           if (error instanceof ApiError && error.status === 401) setNeedsLogin(true);
           else toast.error(t("player.answerFailed"));
@@ -67,8 +136,8 @@ export function LessonPlayer({ detail, loggedIn }: { detail: LessonDetail; logge
     });
   }
 
-  return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8 sm:px-6 sm:py-12">
+  const content = (
+    <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-col gap-6">
       <header className="flex flex-col gap-3">
         <Link
           href={`/courses/${courseId}`}
@@ -80,12 +149,12 @@ export function LessonPlayer({ detail, loggedIn }: { detail: LessonDetail; logge
         <h1 className="text-2xl font-bold text-balance sm:text-3xl">{lesson.title}</h1>
         <div className="flex items-center gap-3">
           <ProgressBar
-            value={percent}
+            value={showingSaved ? 100 : percent}
             className="h-1.5"
             aria-label={t("player.stepOf", { current: index + 1, total: steps.length })}
           />
           <span className="shrink-0 text-xs text-muted-foreground tabular-nums">
-            {finished
+            {finished || showingSaved
               ? `${steps.length}/${steps.length}`
               : t("player.stepOf", { current: index + 1, total: steps.length })}
           </span>
@@ -102,13 +171,32 @@ export function LessonPlayer({ detail, loggedIn }: { detail: LessonDetail; logge
         </div>
       )}
 
-      {finished ? (
+      {loggedIn && !started && index === 0 && savedReview.isPending ? (
+        <Skeleton className="h-64 rounded-xl" />
+      ) : loggedIn && !started && index === 0 && savedReview.data ? (
+        <SavedReview
+          review={savedReview.data}
+          courseId={courseId}
+          retaking={retake.isPending}
+          onRetake={() =>
+            retake.mutate(undefined, {
+              onSuccess: () => {
+                setResults({});
+                setIndex(0);
+                setStarted(true);
+              },
+              onError: () => toast.error(t("player.answerFailed")),
+            })
+          }
+        />
+      ) : finished ? (
         <Completion
           detail={detail}
           pending={complete.isPending}
           failed={complete.isError}
           onRetry={() => complete.mutate()}
           score={complete.data ?? null}
+          review={complete.data?.review ?? null}
           loggedIn={loggedIn}
         />
       ) : step?.type === "exercise" && needsLogin ? (
@@ -122,8 +210,23 @@ export function LessonPlayer({ detail, loggedIn }: { detail: LessonDetail; logge
           onSubmit={submit}
           onRetry={retry}
           onNext={next}
+          nextLabel={index === steps.length - 1 ? t("lesson.finish") : undefined}
+          feedbackRef={feedbackRef}
+          onOpenMentor={
+            mentor && step.type === "exercise"
+              ? () => mentor.openMentor({ source: "exercise", exerciseId: step.id })
+              : undefined
+          }
         />
       ) : null}
+    </div>
+  );
+
+  if (!mentor) return <div className="w-full px-4 py-8 sm:px-6 sm:py-12">{content}</div>;
+  return (
+    <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 px-4 pt-8 pb-28 sm:px-6 sm:pt-12 lg:grid-cols-[minmax(0,1fr)_24rem] lg:pb-12">
+      {content}
+      <MentorPanel starterSuggestions={["Explain this lesson in simple words", "Show me an example"]} />
     </div>
   );
 }
@@ -135,6 +238,9 @@ function StepView({
   onSubmit,
   onRetry,
   onNext,
+  feedbackRef,
+  onOpenMentor,
+  nextLabel,
 }: {
   step: LessonStep;
   result: AnswerResult | null;
@@ -142,6 +248,9 @@ function StepView({
   onSubmit: (exerciseId: string, answer: AnswerInput) => void;
   onRetry: (exerciseId: string) => void;
   onNext: () => void;
+  feedbackRef: React.Ref<HTMLDivElement>;
+  onOpenMentor?: () => void;
+  nextLabel?: string;
 }) {
   if (step.type === "card") {
     return (
@@ -160,7 +269,15 @@ function StepView({
   }
 
   const { exercise } = step;
-  const common = { result, submitting, onRetry: () => onRetry(exercise.id), onNext };
+  const common = {
+    result,
+    submitting,
+    onRetry: () => onRetry(exercise.id),
+    onNext,
+    feedbackRef,
+    onOpenMentor,
+    nextLabel,
+  };
   switch (exercise.kind) {
     case "single":
       return (
@@ -205,6 +322,7 @@ function Completion({
   failed,
   onRetry,
   score,
+  review,
   loggedIn,
 }: {
   detail: LessonDetail;
@@ -212,6 +330,7 @@ function Completion({
   failed: boolean;
   onRetry: () => void;
   score: { correctFirstTry: number; total: number } | null;
+  review: LessonReview | null;
   loggedIn: boolean;
 }) {
   return (
@@ -229,10 +348,11 @@ function Completion({
         ) : (
           <p className="text-muted-foreground tabular-nums" aria-live="polite">
             {pending || !score
-              ? t("player.saving")
+              ? t("player.writingReview")
               : t("player.completeScore", { correct: score.correctFirstTry, total: score.total })}
           </p>
         ))}
+      {loggedIn && review && <LessonReviewCard review={review} />}
       <div className="flex flex-wrap gap-2">
         {detail.nextLessonId && (
           <Button asChild>
@@ -259,6 +379,40 @@ function LoginGate() {
         </Button>
         <Button asChild variant="outline">
           <Link href="/login">{t("player.login")}</Link>
+        </Button>
+      </div>
+    </section>
+  );
+}
+
+/** A finished lesson: the saved review, with a way to retake the lesson (which rewrites the review). */
+function SavedReview({
+  review,
+  courseId,
+  retaking,
+  onRetake,
+}: {
+  review: LessonReview;
+  courseId: string;
+  retaking: boolean;
+  onRetake: () => void;
+}) {
+  return (
+    <section className="flex flex-col items-start gap-4 rounded-xl border bg-card p-6">
+      <div className="flex flex-col gap-1">
+        <h2 className="text-2xl font-bold">{t("player.lastResult")}</h2>
+        <p className="text-muted-foreground tabular-nums">
+          {t("player.completeScore", { correct: review.correctFirstTry, total: review.total })}
+        </p>
+      </div>
+      <LessonReviewCard review={review} />
+      <div className="flex flex-wrap gap-2">
+        <Button onClick={onRetake} loading={retaking}>
+          <RotateCcwIcon data-icon="inline-start" aria-hidden />
+          {t("player.retake")}
+        </Button>
+        <Button asChild variant="outline">
+          <Link href={`/courses/${courseId}`}>{t("player.backToCourse")}</Link>
         </Button>
       </div>
     </section>

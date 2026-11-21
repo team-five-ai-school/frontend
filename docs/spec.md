@@ -30,7 +30,7 @@ Everything below this section is the full product. **Today we build only this pa
 POST /onboarding                     → { profile, roadmap }            (roadmap by code + AI "why", see docs/roadmap.md)
 GET  /lessons/{id}                   → lesson without answers
 POST /lessons/{id}/exercises/{exId}  → check answer (see "Exercise answers" below)
-POST /lessons/{id}/mentor            → streamed hint
+POST /mentor/mistakes/{id}/review   → structured hint (MentorMessage)
 POST /lessons/{id}/practice          → streamed output, then grade
 ```
 
@@ -49,7 +49,7 @@ A subscription web app (optional PWA) that teaches office workers to use AI in t
 ### 1. Onboarding
 
 > **Update (skills-based onboarding):** the live flow is now `/onboarding` → role (accountant, sales manager,
-> café/salon owner) → 6–8 quiz questions → optional free text → «AI розкладає твій день» (streamed tasks) →
+> café/salon owner) → 6–8 quiz questions → optional free text → "AI is laying out your day" (streamed tasks) →
 > chaos map → `/plan`. A skill taxonomy links work tasks to lessons; plan items without a lesson are slots,
 > filled when a lesson with that skill is published. Contracts: backend `docs/api-contracts.md`. The steps
 > below describe the earlier course-based design and will be reconciled with it.
@@ -95,7 +95,7 @@ A side panel (bottom sheet on mobile) inside every lesson.
 
 - Knows: the lesson content, the current block, the learner's answers so far, their profile (role, pains, tools) and the recent journal.
 - Gives hints that point toward the answer without stating it; explains a card again in other words; stays on the lesson topic; declines legal, medical or financial advice and requests to process real personal data.
-- **Mistakes go to the mentor automatically**: after a wrong first attempt the frontend calls the mentor with `{ block_id, learner_answer }` and no message; the mentor explains what to look at (without the answer) and may offer one follow-up mini-task from `mentor.follow_up_tasks`, adapted to the person's role.
+- **Mistakes go to the mentor automatically**: after a wrong answer the frontend calls `POST /mentor/mistakes/{mistakeId}/review` (the server loads the stored answer); the mentor explains what to look at (without the answer) and may offer one follow-up mini-task from `mentor.follow_up_tasks`, adapted to the person's role.
 - Uses the lesson's `mentor` block (`common_mistakes`, `key_points`, `follow_up_tasks`) as grounding.
 
 ### 6. Personalized practice
@@ -162,7 +162,8 @@ GET  /courses                       → catalog with lock state and progress
 GET  /courses/{id}                  → course with lessons and progress
 GET  /lessons/{id}                  → cards and exercises WITHOUT answers
 POST /lessons/{id}/exercises/{exId} { answer } → { correct, attempt, explanation?, correct_answer? }   (see Exercise answers)
-POST /lessons/{id}/mentor           { block_id, learner_answer?, message? } → streamed text   (no message = proactive help after a mistake)
+POST /mentor/mistakes/{mistakeId}/review                     → MentorMessage   (proactive review after a wrong answer; server loads the stored attempt)
+POST /mentor/messages               { text, context, history≤6 } → MentorMessage   (learner question; no streaming, see src/features/mentor/mentor-transport.ts)
 GET  /lessons/{id}/practice         → personalized task (cached per user)
 POST /lessons/{id}/practice         { prompt } → streamed model output, then { scores, quotes, feedback, improved_prompt, passed }   (prompt max 2,000 chars)
 POST /lessons/{id}/complete         → { journal_entry, progress, roadmap }
