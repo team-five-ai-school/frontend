@@ -44,7 +44,7 @@ Open http://localhost:3000. Requires Node 24 (see `.nvmrc`; `nvm use` picks it u
 - **Guardrails:** ESLint fails on raw palette colors, gradients and hex values, so UI stays on theme tokens.
 - **CI:** GitHub Actions (lint, typecheck, format, build) on every PR.
 
-The reference for every data pattern is [`src/app/examples/tasks`](src/app/examples/tasks/page.tsx) + [`src/features/tasks`](src/features/tasks). Copy the approach, then delete the example.
+The reference for the data patterns is the courses feature: [`src/app/courses`](src/app/courses/page.tsx) + [`src/features/courses`](src/features/courses).
 
 ## When the task is announced
 
@@ -52,7 +52,7 @@ The reference for every data pattern is [`src/app/examples/tasks`](src/app/examp
 2. `src/lib/site.ts`: product name, description, routes.
 3. `src/app/globals.css`: brand colors (`--primary` etc. in `:root` and `.dark`); font in `src/lib/fonts.ts`.
 4. Backend: set `API_URL` (and `API_KEY` if the backend still requires one) in `.env.local` and in Vercel → Settings → Environment Variables, then redeploy. See AGENTS.md → Backend, env and auth.
-5. Replace `src/app/page.tsx` and delete `examples`.
+5. Replace `src/app/page.tsx`.
 
 ## Product docs
 

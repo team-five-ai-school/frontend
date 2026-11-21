@@ -9,7 +9,7 @@ const nextSteps = [
   { file: "src/lib/site.ts", text: "Product name, description, routes" },
   { file: "/impeccable init", text: "Product brief → PRODUCT.md and DESIGN.md for agents" },
   { file: "src/app/globals.css", text: "Brand colors (shadcn theme tokens)" },
-  { file: "src/app/examples/tasks", text: "Reference for data and mutations; delete when no longer needed" },
+  { file: "src/app/courses", text: "Reference for data, caching and mutations (courses feature)" },
 ];
 
 export default function HomePage() {
@@ -22,8 +22,8 @@ export default function HomePage() {
         </p>
         <div className="flex flex-wrap gap-2">
           <Button asChild>
-            <Link href="/examples/tasks">
-              Open the example
+            <Link href="/courses">
+              Browse courses
               <ArrowRightIcon data-icon="inline-end" />
             </Link>
           </Button>

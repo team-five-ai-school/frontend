@@ -1,6 +1,7 @@
 "use client";
 
 import { CircleCheckIcon, CircleDotIcon, CornerDownRightIcon, RotateCcwIcon } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import type { Verdict } from "@/lib/contracts";
@@ -36,6 +37,7 @@ export function AnswerFeedback({
   verdict,
   feedback,
   sentToMentor = false,
+  final = false,
   onOpenMentor,
   onRetry,
   onNext,
@@ -45,6 +47,8 @@ export function AnswerFeedback({
   verdict: Verdict;
   feedback?: string;
   sentToMentor?: boolean;
+  /** The answer is revealed (2nd+ attempt): offer Next instead of Try again. */
+  final?: boolean;
   onOpenMentor?: () => void;
   onRetry?: () => void;
   onNext?: () => void;
@@ -52,9 +56,21 @@ export function AnswerFeedback({
   className?: string;
 }) {
   const { title, body, icon: Icon, tone } = config[verdict];
+  const local = useRef<HTMLDivElement>(null);
+
+  // The result often renders below the fold on small screens: bring it into view once.
+  useEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    local.current?.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
+  }, []);
+
   return (
     <div
-      ref={ref}
+      ref={(node) => {
+        local.current = node;
+        if (typeof ref === "function") ref(node);
+        else if (ref) ref.current = node;
+      }}
       role="status"
       className={cn(
         "flex animate-in flex-col gap-3 rounded-lg border bg-card p-4 duration-(--duration-base) fade-in-0",
@@ -75,13 +91,13 @@ export function AnswerFeedback({
         {verdict !== "correct" && onOpenMentor && (
           <Button onClick={onOpenMentor}>{t("exercise.openMentor")}</Button>
         )}
-        {verdict !== "correct" && onRetry && (
+        {verdict !== "correct" && !final && onRetry && (
           <Button variant="outline" onClick={onRetry}>
             <RotateCcwIcon data-icon="inline-start" aria-hidden />
             {t("exercise.tryAgain")}
           </Button>
         )}
-        {verdict === "correct" && onNext && <Button onClick={onNext}>{t("exercise.next")}</Button>}
+        {(verdict === "correct" || final) && onNext && <Button onClick={onNext}>{t("exercise.next")}</Button>}
       </div>
     </div>
   );

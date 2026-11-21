@@ -117,12 +117,18 @@ export type Track = z.infer<typeof Track>;
 export const Tool = z.object({ id: z.string(), name: z.string() });
 export type Tool = z.infer<typeof Tool>;
 
+export const CourseLevel = z.enum(["beginner", "intermediate", "advanced"]);
+export type CourseLevel = z.infer<typeof CourseLevel>;
+
 export const Course = z.object({
   id: z.string(),
   title: z.string(),
   summary: z.string(),
   trackId: z.string(),
   toolIds: z.array(z.string()),
+  level: CourseLevel,
+  /** Onboarding role ids (content/onboarding.json `roles[].id`) the course is meant for. */
+  roleIds: z.array(z.string()),
   lessonCount: z.number().int(),
   durationMinutes: z.number().int(),
   status: NodeStatus,
@@ -175,6 +181,17 @@ export const Exercise = z.discriminatedUnion("kind", [
     accept: z.array(z.string()),
     sampleFileName: z.string().nullable(),
   }),
+  /** Pick the phrase that fills the `___` gap in `template`. Same option-id shape as single. */
+  ExerciseBase.extend({
+    kind: z.literal("fill_blank"),
+    template: z.string(),
+    options: z.array(ChoiceOption),
+  }),
+  /** A deck of statements answered true/false one by one, checked together. */
+  ExerciseBase.extend({
+    kind: z.literal("true_false"),
+    cards: z.array(z.object({ id: z.string(), statement: z.string() })),
+  }),
 ]);
 export type Exercise = z.infer<typeof Exercise>;
 export type ChoiceOption = z.infer<typeof ChoiceOption>;
@@ -189,8 +206,54 @@ export const AnswerResult = z.object({
   correctOptionIds: z.array(z.string()).nullable(),
   /** Set when verdict !== "correct": the mistake is already queued for the Mentor. */
   mistakeId: z.string().nullable(),
+  /** Backend attempt flow (docs/spec.md → Exercise answers). Optional so mocks without them still parse. */
+  attempt: z.number().int().optional(),
+  /** true once the answer is revealed: correct, or the 2nd+ attempt. Then the learner moves on. */
+  final: z.boolean().optional(),
+  /** true_false only, after the result is final: per-card correctness and explanations. */
+  cardResults: z.array(z.boolean()).nullable().optional(),
+  cardExplanations: z.array(z.string()).nullable().optional(),
 });
 export type AnswerResult = z.infer<typeof AnswerResult>;
+
+/* ───────── Lesson player ───────── */
+
+export const LessonStep = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("card"), id: z.string(), title: z.string(), body: z.string() }),
+  z.object({ type: z.literal("exercise"), id: z.string(), exercise: Exercise }),
+]);
+export type LessonStep = z.infer<typeof LessonStep>;
+
+/** GET /lessons/:lessonId */
+export const LessonDetail = z.object({
+  lesson: Lesson,
+  courseId: z.string(),
+  courseTitle: z.string(),
+  nextLessonId: z.string().nullable(),
+  steps: z.array(LessonStep),
+});
+export type LessonDetail = z.infer<typeof LessonDetail>;
+
+/** GET /courses/:courseId */
+export const CourseDetail = z.object({ course: Course, lessons: z.array(Lesson) });
+export type CourseDetail = z.infer<typeof CourseDetail>;
+
+/** GET /me/progress */
+export const Progress = z.object({
+  completedLessonIds: z.array(z.string()),
+  /** Lessons with at least one answer that are not completed yet. */
+  startedLessonIds: z.array(z.string()),
+  courses: z.record(z.string(), z.object({ progressPercent: z.number(), status: NodeStatus })),
+});
+export type Progress = z.infer<typeof Progress>;
+
+/** POST /lessons/:lessonId/complete */
+export const LessonCompletion = z.object({
+  correctFirstTry: z.number().int(),
+  total: z.number().int(),
+  nextLessonId: z.string().nullable(),
+});
+export type LessonCompletion = z.infer<typeof LessonCompletion>;
 
 /* ───────── Mentor ───────── */
 

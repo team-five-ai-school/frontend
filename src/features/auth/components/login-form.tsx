@@ -1,5 +1,6 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
@@ -14,6 +15,7 @@ import { AuthField, fieldErrors, type FieldErrors } from "./auth-form-fields";
 
 export function LoginForm() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [pending, startTransition] = useTransition();
   const [errors, setErrors] = useState<FieldErrors>({});
   const [formError, setFormError] = useState<string>();
@@ -34,6 +36,7 @@ export function LoginForm() {
         setFormError(result.error);
         return;
       }
+      queryClient.clear(); // cached guest data (e.g. progress = null) must not outlive the login
       router.replace(AFTER_AUTH_PATH);
       router.refresh();
     });

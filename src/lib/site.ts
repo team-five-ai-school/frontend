@@ -35,8 +35,8 @@ export const siteConfig = {
  */
 export const routes: { href: Route; label: string; nav: boolean; sitemap: boolean }[] = [
   { href: "/", label: "Home", nav: false, sitemap: true },
-  { href: "/examples/tasks", label: "Example", nav: true, sitemap: false },
+  { href: "/courses", label: "Courses", nav: true, sitemap: true },
   { href: "/login", label: "Log in", nav: false, sitemap: false },
   { href: "/register", label: "Sign up", nav: false, sitemap: false },
-  { href: "/design-system", label: "Design system", nav: true, sitemap: false },
+  { href: "/design-system", label: "Design system", nav: false, sitemap: false },
 ];
