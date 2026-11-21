@@ -1,6 +1,8 @@
 import { queryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { apiClient } from "@/lib/api-client";
+
 /**
  * Cache contract shared by server and client.
  * - `key`  → TanStack Query key (browser cache)
@@ -11,7 +13,8 @@ export const taskSchema = z.object({
   id: z.string(),
   title: z.string(),
   done: z.boolean(),
-  createdAt: z.iso.datetime(),
+  // Accept "…Z", "…+00:00" and offset-less timestamps, whatever the backend serializes.
+  createdAt: z.iso.datetime({ offset: true, local: true }),
 });
 
 export type Task = z.infer<typeof taskSchema>;
@@ -24,11 +27,9 @@ export const newTaskSchema = z.object({
 export const taskFilterSchema = z.enum(["all", "open", "done"]).catch("all");
 export type TaskFilter = z.infer<typeof taskFilterSchema>;
 
-async function fetchTasks(): Promise<Task[]> {
-  const res = await fetch("/api/tasks");
-  if (!res.ok) throw new Error(`Failed to load tasks (${res.status})`);
-  return z.array(taskSchema).parse(await res.json());
-}
+/** Newest first. Applied on the server and the client so the order never jumps after a refetch. */
+export const sortTasks = (tasks: Task[]) =>
+  [...tasks].sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
 export const taskCache = {
   key: ["tasks"] as const,
@@ -37,7 +38,8 @@ export const taskCache = {
   options: () =>
     queryOptions({
       queryKey: taskCache.key,
-      queryFn: fetchTasks,
+      // Browser refetches go through the /api/backend proxy (see src/proxy.ts).
+      queryFn: async () => sortTasks(await apiClient("/tasks", z.array(taskSchema))),
       staleTime: 30_000,
     }),
 };

@@ -9,6 +9,7 @@ import { TaskFilter } from "@/features/tasks/components/task-filter";
 import { TaskList, TaskListSkeleton } from "@/features/tasks/components/task-list";
 import { getTasks } from "@/features/tasks/data";
 import { taskCache, taskFilterSchema } from "@/features/tasks/task-cache";
+import { env } from "@/lib/env";
 import { dehydrate } from "@/lib/query/hydrate";
 
 export const metadata: Metadata = {
@@ -34,15 +35,17 @@ export default function TasksExamplePage({ searchParams }: PageProps<"/examples/
         </p>
       </header>
 
-      <Alert>
-        <InfoIcon />
-        <AlertTitle>Demo data lives in server memory</AlertTitle>
-        <AlertDescription>
-          It resets on every deploy and is not shared between serverless instances, so on Vercel tasks may
-          appear or disappear. Swap <code className="font-mono text-xs">src/features/tasks/data.ts</code> for
-          your API.
-        </AlertDescription>
-      </Alert>
+      {env.API_URL ? null : (
+        <Alert>
+          <InfoIcon />
+          <AlertTitle>Demo data lives in server memory</AlertTitle>
+          <AlertDescription>
+            It resets on every deploy and is not shared between serverless instances, so on Vercel tasks may
+            appear or disappear. Set <code className="font-mono text-xs">API_URL</code> to use the real
+            backend.
+          </AlertDescription>
+        </Alert>
+      )}
 
       <AddTaskForm />
 
