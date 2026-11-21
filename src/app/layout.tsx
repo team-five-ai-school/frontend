@@ -25,8 +25,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   // Initial value from the OS setting; <ThemeColor /> updates it when the user picks a theme.
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#eceee8" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f1220" },
   ],
 };
 
