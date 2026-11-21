@@ -1,0 +1,234 @@
+{
+  "version": 1,
+  "notes": "Onboarding questions and answer options. Ids are stable and used by the backend (profile, roadmap) and by content/courses frontmatter (recommended_for, tools, pains). See docs/roadmap.md.",
+  "roles": [
+    {
+      "id": "marketing",
+      "label": "Marketing",
+      "track": "marketing",
+      "noun": "a marketing specialist"
+    },
+    {
+      "id": "hr",
+      "label": "HR and recruiting",
+      "track": "hr",
+      "noun": "an HR specialist"
+    },
+    {
+      "id": "teachers",
+      "label": "Teacher or educator",
+      "track": "teachers",
+      "noun": "a teacher"
+    },
+    {
+      "id": "lawyers",
+      "label": "Legal",
+      "track": "lawyers",
+      "noun": "a lawyer"
+    },
+    {
+      "id": "small-business",
+      "label": "Small business owner",
+      "track": "small-business",
+      "noun": "a small business owner"
+    },
+    {
+      "id": "general",
+      "label": "Other office role",
+      "track": "general",
+      "noun": "an office professional"
+    }
+  ],
+  "office_suites": [
+    {
+      "id": "microsoft-365",
+      "label": "Microsoft 365 (Outlook, Word, Excel, Teams)",
+      "roadmap_tool": "microsoft-365",
+      "ai_phrase": "Microsoft 365 Copilot"
+    },
+    {
+      "id": "google-workspace",
+      "label": "Google Workspace (Gmail, Docs, Sheets)",
+      "roadmap_tool": "google-workspace",
+      "ai_phrase": "Gemini in Google Workspace"
+    },
+    {
+      "id": "other",
+      "label": "Something else or not sure",
+      "roadmap_tool": null,
+      "ai_phrase": null
+    }
+  ],
+  "ai_tools": [
+    {
+      "id": "chatgpt",
+      "label": "ChatGPT",
+      "roadmap_tool": "chatgpt",
+      "phrase": "ChatGPT"
+    },
+    {
+      "id": "claude",
+      "label": "Claude",
+      "roadmap_tool": null,
+      "phrase": "Claude"
+    },
+    {
+      "id": "gemini",
+      "label": "Gemini",
+      "roadmap_tool": null,
+      "phrase": "Gemini"
+    },
+    {
+      "id": "copilot",
+      "label": "Microsoft Copilot",
+      "roadmap_tool": null,
+      "phrase": "Microsoft Copilot"
+    },
+    {
+      "id": "none",
+      "label": "I don't use AI tools yet",
+      "roadmap_tool": null,
+      "phrase": null
+    }
+  ],
+  "ai_levels": [
+    {
+      "id": "none",
+      "label": "I haven't really used AI"
+    },
+    {
+      "id": "tried",
+      "label": "I tried it a few times"
+    },
+    {
+      "id": "weekly",
+      "label": "I use it every week"
+    },
+    {
+      "id": "daily",
+      "label": "I use it every day"
+    }
+  ],
+  "goals": [
+    {
+      "id": "save-time",
+      "label": "Spend less time on routine work"
+    },
+    {
+      "id": "better-work",
+      "label": "Do better work, faster"
+    },
+    {
+      "id": "stay-relevant",
+      "label": "Keep up with AI in my field"
+    },
+    {
+      "id": "learn-tool",
+      "label": "Learn the AI in the tools I already use"
+    }
+  ],
+  "chaos_map": {
+    "title": "Map your weekly chaos",
+    "description": "How many hours a week do these routines take? Pick 0 if it doesn't apply.",
+    "hour_options": [0, 1, 2, 4, 8],
+    "routines": [
+      {
+        "pain": "email",
+        "label": "Writing and answering emails and messages",
+        "phrase": "writing and answering a lot of emails and messages"
+      },
+      {
+        "pain": "documents",
+        "label": "Drafting, reading and summarizing documents",
+        "phrase": "drafting and summarizing long documents"
+      },
+      {
+        "pain": "reporting",
+        "label": "Recurring reports and status updates",
+        "phrase": "putting together recurring reports and status updates"
+      },
+      {
+        "pain": "data",
+        "label": "Spreadsheets, exports and numbers",
+        "phrase": "working through spreadsheets and exports"
+      },
+      {
+        "pain": "content",
+        "label": "Posts, copy, presentations or materials",
+        "phrase": "producing posts, copy and presentations"
+      },
+      {
+        "pain": "research",
+        "label": "Finding and checking information",
+        "phrase": "finding and checking information"
+      },
+      {
+        "pain": "customer-communication",
+        "label": "Replying to customers, clients or parents",
+        "phrase": "replying to the same customer questions again and again"
+      },
+      {
+        "pain": "repetitive-tasks",
+        "label": "The same multi-step task every day or week",
+        "phrase": "doing the same multi-step task every week"
+      },
+      {
+        "pain": "meetings",
+        "label": "Preparing for and following up on meetings",
+        "phrase": "preparing for and following up on meetings"
+      },
+      {
+        "pain": "planning",
+        "label": "Plans and schedules (projects, lessons, content)",
+        "phrase": "making plans and schedules"
+      }
+    ],
+    "free_text": {
+      "label": "What eats most of your time? Describe it in your own words.",
+      "placeholder": "e.g. Every Friday I spend 3 hours pulling numbers into a report for my manager",
+      "optional": true
+    }
+  },
+  "placement_quiz": {
+    "description": "3 quick questions. 3/3 correct lets the roadmap skip the basics in AI Assistants 101.",
+    "skip_course_if_all_correct": "ai-assistants-101",
+    "questions": [
+      {
+        "id": "pq1",
+        "question": "An AI assistant gives you a statistic for a client report. What should you do?",
+        "options": [
+          "Use it, AI assistants are trained on reliable data",
+          "Check it in the original source before using it",
+          "Ask the assistant if it is sure, then use it"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "pq2",
+        "question": "Which prompt will most likely give a usable first draft?",
+        "options": [
+          "Write an email about the delay",
+          "Write a short, polite email to a client explaining a 2-day delivery delay and offering a new date",
+          "Email, delay, client, polite"
+        ],
+        "answer": 1
+      },
+      {
+        "id": "pq3",
+        "question": "The first answer is close but too long. What is usually the best next step?",
+        "options": [
+          "Start a new chat and ask again",
+          "Ask a follow-up: shorten it to 5 sentences and keep the key date",
+          "Rewrite it yourself from scratch"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  "placeholders": {
+    "notes": "How practice task_template placeholders are filled. Never insert raw labels or ids.",
+    "role": "roles[].noun",
+    "pain": "chaos_map.routines[].phrase of the person's top pain (most hours); if none, use the lesson's default_context instead of the template",
+    "tool": "ai_tools[].phrase; if null (\"none\"), office_suites[].ai_phrase; if that is null too, \"an AI assistant\""
+  }
+}

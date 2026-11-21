@@ -12,6 +12,15 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Hackathon frontend for Team Five. The product task is decided on the day, so build fast but keep the codebase coherent. When `PRODUCT.md` / `DESIGN.md` exist (created by `/impeccable init`), read them before any UI work and follow them over the defaults below.
 
+## Product docs (read before building a feature)
+
+- `docs/spec.md`: what we build: features, AI components, API contract, data model, screens.
+- `docs/roadmap.md`: the hybrid AI + code roadmap (backend).
+- `content/FORMAT.md` + `content/courses/*.md`: course content and its format; `content/onboarding.json`: onboarding questions and ids.
+- `evals/README.md`: eval sets for every AI component and how to score them.
+
+If a task conflicts with these docs, follow the docs and tell the user; if the docs are missing something, update them in the same PR.
+
 ## Setup check
 
 At the start of a session, check the items below. If one is missing, mention it to the user **once** in your first reply, then continue with their request. Skip this in subagents and non-interactive runs.
@@ -42,6 +51,7 @@ When both exist, commit them in a PR and delete this section.
 - `npm run build`: production build. Also catches Cache Components prerender errors. Some caching bugs only show up here or with `npm run build && npm start`, not in `npm run dev`.
 - `npm run format`: Prettier (sorts Tailwind classes)
 - `npx shadcn@latest add <component>`: add a UI component
+- `npm run courses:build`: after editing `content/courses/*.md`, regenerate `content/courses.json` (backend) and `content/courses.public.json` (browser, no answers). CI fails if they are stale.
 - `npm run images`: convert raw images in `assets/images/` → AVIF + WebP in `public/images/`
 
 ## Structure

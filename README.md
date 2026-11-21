@@ -54,6 +54,13 @@ The reference for every data pattern is [`src/app/examples/tasks`](src/app/examp
 4. Backend: set `API_URL` (and `API_KEY` if the backend still requires one) in `.env.local` and in Vercel → Settings → Environment Variables, then redeploy. See AGENTS.md → Backend, env and auth.
 5. Replace `src/app/page.tsx` and delete `examples`.
 
+## Product docs
+
+- [`docs/spec.md`](docs/spec.md): product spec: features, AI components, API contract, data model, screens.
+- [`docs/roadmap.md`](docs/roadmap.md): hybrid AI + code roadmap.
+- [`content/`](content/): courses, course format, onboarding data.
+- [`evals/`](evals/): test sets for every AI component.
+
 ## Working with AI agents
 
 Project rules live in [`AGENTS.md`](AGENTS.md) (Claude Code reads it via `CLAUDE.md`): stack, caching and data patterns, backend and auth, images, anti-slop UI rules, and how to work in parallel without conflicts.

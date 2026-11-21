@@ -179,7 +179,7 @@ hint: ...
 
 ## Personalization placeholders (practice)
 
-`task_template` may use only these placeholders, filled from the onboarding profile:
+`task_template` may use only these placeholders, filled from the onboarding profile (exact rules: `content/onboarding.json` → `placeholders`; never insert raw labels or ids). Write templates so they read naturally with phrases like the examples below:
 
 | Placeholder | Example value                                               |
 | ----------- | ----------------------------------------------------------- |
@@ -197,14 +197,7 @@ hint: ...
 
 ## Roadmap
 
-The onboarding (role, tools, chaos map of routines) builds a personal roadmap from the frontmatter of all courses:
-
-1. **foundation**: everyone (`ai-assistants-101`, `safe-ai-at-work`).
-2. **tools**: the course matching the user's main tool (`tools` contains their tool).
-3. **role**: the course whose `recommended_for` matches the role.
-4. **advanced**: courses ordered by how many of the user's `pains` they cover; the next level after the first roadmap.
-
-A course is unlocked when all its `prerequisites` are completed. `recommended_for` may list several roles; `general` means any office worker.
+How the roadmap is built from these fields is defined in **`docs/roadmap.md`** (that document wins if anything here disagrees). In short: code picks candidate courses by `stage`, the person's role (`recommended_for`), office suite and AI tool, and `prerequisites`; advanced courses are ordered by the hours the person spends on the course's `pains`; AI adds a personal "why" and focus lessons. `ai-in-office-tools` is catalog-only and never put on a roadmap.
 
 Allowed `pains` (the chaos map categories in onboarding):
 
@@ -220,3 +213,12 @@ Allowed `pains` (the chaos map categories in onboarding):
 | `repetitive-tasks`       | the same multi-step task every day or week  |
 | `meetings`               | preparing for and following up on meetings  |
 | `planning`               | plans, schedules, lesson or project plans   |
+
+## Generated JSON (what the apps read)
+
+Never parse the Markdown in the apps. After editing a course run `npm run courses:build` (validates, then writes):
+
+- `content/courses.json`: full content for the **backend** (answers, explanations, hints, practice rubric and example, mentor notes).
+- `content/courses.public.json`: safe for the **browser**: no `answer`, `answers`, `explanation`, `hint`, true/false card answers, `example_good_prompt`, `task_template` or mentor notes.
+
+Shape: `{ courses: [ { ...frontmatter, lessons: [ { id, title, duration_min, skills, goal, blocks: [...], practice, mentor } ] } ] }`. `blocks` keep the authoring order; a card is `{ "type": "card", "title", "body" }` (Markdown body), an exercise is the exercise YAML plus `"block": "exercise"` (its `type` is the exercise type). CI fails if the JSON is out of date.
