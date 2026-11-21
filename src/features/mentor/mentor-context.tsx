@@ -113,12 +113,19 @@ export function MentorProvider({
     openMentor: (ctx) => {
       if (ctx) setContext((c) => ({ ...c, ...ctx }));
       setOpen(true);
-      // Desktop: the panel is always visible, move focus to the composer instead.
-      document.getElementById("mentor-composer")?.focus();
+      // Move focus to the visible composer: the desktop panel at once, the phone sheet once it has opened.
+      const focusComposer = () => {
+        const desktop = document.getElementById("mentor-composer");
+        if (desktop && desktop.getClientRects().length > 0) return desktop.focus();
+        document.getElementById("mentor-composer-sheet")?.focus();
+      };
+      focusComposer();
+      setTimeout(focusComposer, 350);
     },
     ask: (text) => {
       const trimmed = text.trim();
-      if (!trimmed || pending) return;
+      // A failed reply must not lock the Mentor: a new question replaces it.
+      if (!trimmed || (pending && !pending.error)) return;
       setMessages((list) => [...list, userMessage(trimmed)]);
       run(() => transport.ask(trimmed, context));
     },
