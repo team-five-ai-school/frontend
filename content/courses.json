@@ -6761,9 +6761,7 @@
             ],
             "key_points": [
               "Settings and contracts differ between personal and approved tools.",
-              {
-                "Use four categories": "public, internal, confidential, personal data."
-              },
+              "Use four categories: public, internal, confidential, personal data.",
               "When unsure, ask before pasting."
             ],
             "follow_up_tasks": [

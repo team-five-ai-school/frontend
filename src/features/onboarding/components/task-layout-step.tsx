@@ -14,7 +14,7 @@ import { describeUrl } from "../onboarding-api";
 import { handlerFor } from "../to-chaos-map";
 
 /**
- * «AI розкладає твій день»: streams tasks from the free text as the backend parses them (useObject over
+ * "AI is laying out your day": streams tasks from the free text as the backend parses them (useObject over
  * a growing JSON document). If the model fails, the backend streams the role template instead; if the
  * request itself fails, we continue anyway: complete() falls back to the template. No failure copy.
  */

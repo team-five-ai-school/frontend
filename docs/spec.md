@@ -49,7 +49,7 @@ A subscription web app (optional PWA) that teaches office workers to use AI in t
 ### 1. Onboarding
 
 > **Update (skills-based onboarding):** the live flow is now `/onboarding` → role (accountant, sales manager,
-> café/salon owner) → 6–8 quiz questions → optional free text → «AI розкладає твій день» (streamed tasks) →
+> café/salon owner) → 6–8 quiz questions → optional free text → "AI is laying out your day" (streamed tasks) →
 > chaos map → `/plan`. A skill taxonomy links work tasks to lessons; plan items without a lesson are slots,
 > filled when a lesson with that skill is published. Contracts: backend `docs/api-contracts.md`. The steps
 > below describe the earlier course-based design and will be reconciled with it.
