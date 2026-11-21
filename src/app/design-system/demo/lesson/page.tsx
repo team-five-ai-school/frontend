@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { DemoLesson } from "@/features/design-system/components/demo-lesson";
 
-export const metadata: Metadata = { title: "Демо: урок і Ментор" };
+export const metadata: Metadata = { title: "Demo: lesson and Mentor" };
 
 export default function LessonDemoPage() {
   return (
@@ -12,7 +12,7 @@ export default function LessonDemoPage() {
         href="/design-system"
         className="text-sm text-muted-foreground underline-offset-4 hover:underline"
       >
-        ← Дизайн-система
+        ← Design system
       </Link>
       <DemoLesson />
     </div>

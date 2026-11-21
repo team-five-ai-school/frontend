@@ -7,13 +7,13 @@ import { PreviewSection, SubHeading } from "./preview-kit";
 const roleSwatches = [
   {
     name: "needs-you",
-    note: "Потребує тебе: рішення, задачі, які лишаються людині",
+    note: "Needs you: decisions and tasks that stay with the person",
     solid: "bg-needs-you text-needs-you-foreground",
     soft: "bg-needs-you-soft text-needs-you-strong",
   },
   {
     name: "ai",
-    note: "Робить AI: автоматизовані частини роботи",
+    note: "AI does it: automated parts of the work",
     solid: "hatch text-ai-strong",
     soft: "bg-ai-soft text-ai-strong",
   },
@@ -52,9 +52,9 @@ const surfaces = [
 ];
 
 const textTokens = [
-  { name: "foreground", cls: "text-foreground", note: "основний" },
-  { name: "muted-foreground", cls: "text-muted-foreground", note: "другорядний" },
-  { name: "subtle-foreground", cls: "text-subtle-foreground", note: "приглушений" },
+  { name: "foreground", cls: "text-foreground", note: "primary" },
+  { name: "muted-foreground", cls: "text-muted-foreground", note: "secondary" },
+  { name: "subtle-foreground", cls: "text-subtle-foreground", note: "muted" },
 ];
 
 const typeScale = [
@@ -98,11 +98,11 @@ export function TokensSection() {
   return (
     <PreviewSection
       id="tokens"
-      title="Токени"
-      description="Єдине джерело правди: CSS-змінні в globals.css (світла і темна тема), утиліти Tailwind і TS-експорт у src/lib/design-tokens.ts."
+      title="Tokens"
+      description="Single source of truth: CSS variables in globals.css (light and dark theme), Tailwind utilities and the TS export in src/lib/design-tokens.ts."
     >
       <div className="flex flex-col gap-4">
-        <SubHeading>Кольорові ролі</SubHeading>
+        <SubHeading>Color roles</SubHeading>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {roleSwatches.map((s) => (
             <div key={s.name} className="flex flex-col gap-2">
@@ -117,7 +117,7 @@ export function TokensSection() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <SubHeading>Статуси, прогрес, стрік</SubHeading>
+        <SubHeading>Status, progress, streak</SubHeading>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
           {statusSwatches.map((s) => (
             <div key={s.name} className="flex flex-col gap-2">
@@ -130,7 +130,7 @@ export function TokensSection() {
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <div className="flex flex-col gap-4">
-          <SubHeading>Поверхні</SubHeading>
+          <SubHeading>Surfaces</SubHeading>
           <div className="grid grid-cols-2 gap-2">
             {surfaces.map((s) => (
               <Swatch key={s.name} cls={cn("border text-foreground", s.cls)} label={s.name} />
@@ -138,14 +138,14 @@ export function TokensSection() {
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <SubHeading>Текст і межі</SubHeading>
+          <SubHeading>Text and borders</SubHeading>
           <ul className="flex flex-col gap-2">
             {textTokens.map((s) => (
               <li
                 key={s.name}
                 className={cn("flex items-baseline justify-between gap-4 border-b pb-2", s.cls)}
               >
-                <span>Простий зрозумілий текст</span>
+                <span>Plain, clear text</span>
                 <span className="text-sm">{s.name}</span>
               </li>
             ))}
@@ -159,7 +159,7 @@ export function TokensSection() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <SubHeading>Типографіка: Geologica (вісь SHRP у заголовках і цифрах), модульна шкала 1.25</SubHeading>
+        <SubHeading>Typography: Geologica (SHRP axis in headings and numbers), modular scale 1.25</SubHeading>
         <ul className="flex flex-col gap-4">
           {typeScale.map((s) => (
             <li
@@ -169,7 +169,7 @@ export function TokensSection() {
               <span className="w-48 shrink-0 text-sm text-subtle-foreground">
                 {s.name}, {s.size}
               </span>
-              <span className={cn("min-w-0 break-words", s.cls)}>Ґудзик, їжак і єнот рахують години</span>
+              <span className={cn("min-w-0 break-words", s.cls)}>The quick brown fox counts the hours</span>
             </li>
           ))}
         </ul>
@@ -177,7 +177,7 @@ export function TokensSection() {
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         <div className="flex flex-col gap-4">
-          <SubHeading>Відступи (4px)</SubHeading>
+          <SubHeading>Spacing (4px)</SubHeading>
           <ul className="flex flex-col gap-2">
             {spacing.map((n) => (
               <li key={n} className="flex items-center gap-3 text-sm text-muted-foreground">
@@ -188,7 +188,7 @@ export function TokensSection() {
           </ul>
         </div>
         <div className="flex flex-col gap-4">
-          <SubHeading>Радіуси</SubHeading>
+          <SubHeading>Radii</SubHeading>
           <div className="flex flex-wrap gap-3">
             {radii.map((r) => (
               <div key={r.name} className="flex flex-col items-center gap-1 text-sm text-muted-foreground">
@@ -199,7 +199,7 @@ export function TokensSection() {
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <SubHeading>Рух</SubHeading>
+          <SubHeading>Motion</SubHeading>
           <ul className="flex flex-col gap-1 text-sm text-muted-foreground">
             {Object.entries(motion.duration).map(([k, ms]) => (
               <li key={k}>
@@ -209,7 +209,7 @@ export function TokensSection() {
             {Object.keys(motion.easing).map((k) => (
               <li key={k}>ease-{k}</li>
             ))}
-            <li className="pt-2 font-sans">Усе вимикається при prefers-reduced-motion.</li>
+            <li className="pt-2 font-sans">Everything is disabled under prefers-reduced-motion.</li>
           </ul>
         </div>
       </div>

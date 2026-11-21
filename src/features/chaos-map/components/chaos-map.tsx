@@ -20,7 +20,7 @@ export type ChaosMode = "now" | "ai";
 type Vars = React.CSSProperties & Record<`--${string}`, string | number>;
 
 /**
- * The person's weekly chaos. "Зараз": every task pulls at the person. "З AI": tasks sort into flows,
+ * The person's weekly chaos. "Now": every task pulls at the person. "With AI": tasks sort into flows,
  * AI-handled work stays in its lane, only decisions reach the person.
  * Horizontal on wide containers, vertical on phones (container query, no JS measuring).
  * Has a text alternative (list of flows) one click away.
@@ -106,7 +106,7 @@ export function ChaosMap({
           style={{ "--chaos-h": `${layout.vHeight}px` } as Vars}
           className="relative h-(--chaos-h) w-full overflow-hidden rounded-2xl border squared shadow-paper @2xl:aspect-[16/11] @2xl:h-auto"
         >
-          {/* Trays: one per flow, a row with a thin line on top (only in "З AI"). */}
+          {/* Trays: one per flow, a row with a thin line on top (only in "With AI"). */}
           {layout.lanes.map((lane, i) => (
             <div
               key={lane.flow.id}

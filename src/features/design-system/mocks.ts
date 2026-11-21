@@ -25,36 +25,44 @@ import type {
 } from "@/lib/contracts";
 
 export const roles: Role[] = [
-  { id: "accountant", title: "Бухгалтер", description: "Первинка, таблиці, листування з контрагентами" },
-  { id: "sales_manager", title: "Менеджер з продажу", description: "Клієнти, листи, комерційні пропозиції" },
-  { id: "business_owner", title: "Власник малого бізнесу", description: "Усе потроху і завжди бракує часу" },
-  { id: "office_manager", title: "Офіс-менеджер", description: "Пошта, зустрічі, документи, закупівлі" },
-  { id: "teacher", title: "Вчитель", description: "Плани уроків, перевірка робіт, звʼязок з батьками" },
-  { id: "other", title: "Інше", description: "Розкажи своїми словами" },
+  {
+    id: "accountant",
+    title: "Accountant",
+    description: "Invoices, spreadsheets, correspondence with vendors",
+  },
+  { id: "sales_manager", title: "Sales manager", description: "Clients, emails, proposals" },
+  {
+    id: "business_owner",
+    title: "Small business owner",
+    description: "A bit of everything and never enough time",
+  },
+  { id: "office_manager", title: "Office manager", description: "Mail, meetings, documents, purchasing" },
+  { id: "teacher", title: "Teacher", description: "Lesson plans, grading, contact with parents" },
+  { id: "other", title: "Other", description: "Tell us in your own words" },
 ];
 
 export const quizQuestions: QuizQuestion[] = [
   {
     id: "q1",
     kind: "multi",
-    text: "Що з цього ти робиш щотижня?",
-    hint: "Обери все, що впізнаєш",
+    text: "Which of these do you do every week?",
+    hint: "Pick everything you recognize",
     options: [
-      { id: "o1", label: "Відповідаю на однакові листи", chaosType: "communication" },
-      { id: "o2", label: "Переношу дані з документів у таблиці", chaosType: "data" },
-      { id: "o3", label: "Пишу звіти й протоколи", chaosType: "documents" },
-      { id: "o4", label: "Узгоджую зустрічі", chaosType: "scheduling" },
-      { id: "o5", label: "Шукаю потрібний файл чи лист", chaosType: "search" },
+      { id: "o1", label: "I reply to the same emails", chaosType: "communication" },
+      { id: "o2", label: "I copy data from documents into spreadsheets", chaosType: "data" },
+      { id: "o3", label: "I write reports and meeting minutes", chaosType: "documents" },
+      { id: "o4", label: "I schedule meetings", chaosType: "scheduling" },
+      { id: "o5", label: "I look for a file or an email", chaosType: "search" },
     ],
   },
   {
     id: "q2",
     kind: "single",
-    text: "Скільки часу щодня йде на пошту й месенджери?",
+    text: "How much time a day goes to email and messengers?",
     options: [
-      { id: "a1", label: "До 30 хвилин" },
-      { id: "a2", label: "Від 30 хвилин до 2 годин", description: "Найчастіша відповідь" },
-      { id: "a3", label: "Більше 2 годин" },
+      { id: "a1", label: "Up to 30 minutes" },
+      { id: "a2", label: "30 minutes to 2 hours", description: "Most common answer" },
+      { id: "a3", label: "More than 2 hours" },
     ],
   },
 ];
@@ -63,37 +71,37 @@ export const chaosMap: ChaosMapData = {
   flows: [
     {
       id: "f1",
-      title: "Листи й повідомлення",
+      title: "Emails and messages",
       chaosType: "communication",
       aiSharePercent: 70,
       hoursNow: 6,
       hoursWithAi: 1.8,
       lessonId: "l1",
-      lessonTitle: "Відповіді на типові листи",
+      lessonTitle: "Replies to routine emails",
     },
     {
       id: "f2",
-      title: "Документи й звіти",
+      title: "Documents and reports",
       chaosType: "documents",
       aiSharePercent: 65,
       hoursNow: 6.5,
       hoursWithAi: 2.3,
       lessonId: "l2",
-      lessonTitle: "Протокол зустрічі за 5 хвилин",
+      lessonTitle: "Meeting minutes in 5 minutes",
     },
     {
       id: "f3",
-      title: "Таблиці й дані",
+      title: "Spreadsheets and data",
       chaosType: "data",
       aiSharePercent: 75,
       hoursNow: 6,
       hoursWithAi: 1.5,
       lessonId: "l3",
-      lessonTitle: "Дані з накладних у таблицю",
+      lessonTitle: "Invoice data into a spreadsheet",
     },
     {
       id: "f4",
-      title: "Планування",
+      title: "Scheduling",
       chaosType: "scheduling",
       aiSharePercent: 45,
       hoursNow: 3.5,
@@ -105,7 +113,7 @@ export const chaosMap: ChaosMapData = {
   tasks: [
     {
       id: "t1",
-      title: "Відповідати на типові листи клієнтів",
+      title: "Reply to routine customer emails",
       chaosType: "communication",
       hoursPerWeek: 3,
       handler: "ai",
@@ -113,7 +121,7 @@ export const chaosMap: ChaosMapData = {
     },
     {
       id: "t2",
-      title: "Розбирати вхідну пошту",
+      title: "Sort incoming mail",
       chaosType: "communication",
       hoursPerWeek: 2,
       handler: "ai",
@@ -121,7 +129,7 @@ export const chaosMap: ChaosMapData = {
     },
     {
       id: "t3",
-      title: "Погоджувати нестандартні запити",
+      title: "Approve non-standard requests",
       chaosType: "communication",
       hoursPerWeek: 1,
       handler: "you",
@@ -129,7 +137,7 @@ export const chaosMap: ChaosMapData = {
     },
     {
       id: "t4",
-      title: "Готувати тижневий звіт",
+      title: "Prepare the weekly report",
       chaosType: "documents",
       hoursPerWeek: 3,
       handler: "shared",
@@ -137,7 +145,7 @@ export const chaosMap: ChaosMapData = {
     },
     {
       id: "t5",
-      title: "Складати протоколи зустрічей",
+      title: "Write meeting minutes",
       chaosType: "documents",
       hoursPerWeek: 2,
       handler: "ai",
@@ -145,7 +153,7 @@ export const chaosMap: ChaosMapData = {
     },
     {
       id: "t6",
-      title: "Оформлювати службові записки",
+      title: "Draft internal memos",
       chaosType: "documents",
       hoursPerWeek: 1.5,
       handler: "ai",
@@ -153,7 +161,7 @@ export const chaosMap: ChaosMapData = {
     },
     {
       id: "t7",
-      title: "Переносити дані з накладних у таблицю",
+      title: "Copy invoice data into a spreadsheet",
       chaosType: "data",
       hoursPerWeek: 4,
       handler: "ai",
@@ -161,7 +169,7 @@ export const chaosMap: ChaosMapData = {
     },
     {
       id: "t8",
-      title: "Звіряти списки замовлень",
+      title: "Cross-check order lists",
       chaosType: "data",
       hoursPerWeek: 2,
       handler: "shared",
@@ -169,7 +177,7 @@ export const chaosMap: ChaosMapData = {
     },
     {
       id: "t9",
-      title: "Узгоджувати час зустрічей",
+      title: "Agree on meeting times",
       chaosType: "scheduling",
       hoursPerWeek: 2,
       handler: "ai",
@@ -177,7 +185,7 @@ export const chaosMap: ChaosMapData = {
     },
     {
       id: "t10",
-      title: "Вирішувати, що робити першим",
+      title: "Decide what to do first",
       chaosType: "scheduling",
       hoursPerWeek: 1.5,
       handler: "you",
@@ -196,25 +204,25 @@ export const assessment: AssessmentResult = {
 };
 
 export const tracks: Track[] = [
-  { id: "tr1", title: "Листування", chaosType: "communication" },
-  { id: "tr2", title: "Документи", chaosType: "documents" },
-  { id: "tr3", title: "Таблиці", chaosType: "data" },
-  { id: "tr4", title: "Планування", chaosType: "scheduling" },
+  { id: "tr1", title: "Correspondence", chaosType: "communication" },
+  { id: "tr2", title: "Documents", chaosType: "documents" },
+  { id: "tr3", title: "Spreadsheets", chaosType: "data" },
+  { id: "tr4", title: "Scheduling", chaosType: "scheduling" },
 ];
 
 export const tools: Tool[] = [
   { id: "chatgpt", name: "ChatGPT" },
   { id: "claude", name: "Claude" },
   { id: "gemini", name: "Gemini" },
-  { id: "sheets", name: "Google Таблиці" },
+  { id: "sheets", name: "Google Sheets" },
   { id: "excel", name: "Excel" },
 ];
 
 export const courses: Course[] = [
   {
     id: "c1",
-    title: "Пошта без завалів",
-    summary: "Типові відповіді, сортування вхідних і короткі підсумки довгих листувань.",
+    title: "Inbox under control",
+    summary: "Template replies, inbox sorting and short summaries of long threads.",
     trackId: "tr1",
     toolIds: ["chatgpt", "claude"],
     lessonCount: 4,
@@ -225,8 +233,8 @@ export const courses: Course[] = [
   },
   {
     id: "c2",
-    title: "Таблиці, які заповнюються самі",
-    summary: "Як перенести дані з фото накладної в таблицю і перевірити результат.",
+    title: "Spreadsheets that fill themselves",
+    summary: "How to move data from a photo of an invoice into a spreadsheet and check the result.",
     trackId: "tr3",
     toolIds: ["gemini", "sheets"],
     lessonCount: 5,
@@ -237,8 +245,8 @@ export const courses: Course[] = [
   },
   {
     id: "c3",
-    title: "Протоколи та звіти",
-    summary: "Із нотаток зустрічі в акуратний протокол і тижневий звіт за шаблоном.",
+    title: "Minutes and reports",
+    summary: "From meeting notes to clean minutes and a weekly report from a template.",
     trackId: "tr2",
     toolIds: ["claude", "excel"],
     lessonCount: 3,
@@ -249,8 +257,8 @@ export const courses: Course[] = [
   },
   {
     id: "c4",
-    title: "Календар без переписок",
-    summary: "Узгодження зустрічей і плану тижня з помічником.",
+    title: "Calendar without back-and-forth",
+    summary: "Scheduling meetings and planning the week with an assistant.",
     trackId: "tr4",
     toolIds: ["gemini"],
     lessonCount: 3,
@@ -265,8 +273,8 @@ export const lessons: Lesson[] = [
   {
     id: "l1",
     courseId: "c1",
-    title: "Відповіді на типові листи",
-    summary: "Шаблон промпту, який пише у твоєму стилі.",
+    title: "Replies to routine emails",
+    summary: "A prompt template that writes in your style.",
     order: 1,
     durationMinutes: 12,
     status: "completed",
@@ -275,8 +283,8 @@ export const lessons: Lesson[] = [
   {
     id: "l1b",
     courseId: "c1",
-    title: "Контекст у промпті",
-    summary: "Чому AI відповідає загально і як це виправити.",
+    title: "Context in a prompt",
+    summary: "Why AI answers in generalities and how to fix it.",
     order: 2,
     durationMinutes: 15,
     status: "in_progress",
@@ -285,8 +293,8 @@ export const lessons: Lesson[] = [
   {
     id: "l1c",
     courseId: "c1",
-    title: "Підсумок довгого листування",
-    summary: "Головне з 30 листів за хвилину.",
+    title: "Summary of a long thread",
+    summary: "The key points of 30 emails in a minute.",
     order: 3,
     durationMinutes: 14,
     status: "available",
@@ -295,8 +303,8 @@ export const lessons: Lesson[] = [
   {
     id: "l1d",
     courseId: "c1",
-    title: "Сортування вхідних",
-    summary: "Правила, які розкладають пошту по папках.",
+    title: "Sorting your inbox",
+    summary: "Rules that file your mail into folders.",
     order: 4,
     durationMinutes: 14,
     status: "locked",
@@ -308,7 +316,7 @@ export const roadmap: RoadmapNode[] = [
   {
     id: "n1",
     lessonId: "l1",
-    title: "Відповіді на типові листи",
+    title: "Replies to routine emails",
     status: "completed",
     hoursSavedEstimate: 2,
     unlockAfterTitle: null,
@@ -316,7 +324,7 @@ export const roadmap: RoadmapNode[] = [
   {
     id: "n2",
     lessonId: "l1b",
-    title: "Контекст у промпті",
+    title: "Context in a prompt",
     status: "in_progress",
     hoursSavedEstimate: 1,
     unlockAfterTitle: null,
@@ -324,7 +332,7 @@ export const roadmap: RoadmapNode[] = [
   {
     id: "n3",
     lessonId: "l1c",
-    title: "Підсумок довгого листування",
+    title: "Summary of a long thread",
     status: "available",
     hoursSavedEstimate: 1,
     unlockAfterTitle: null,
@@ -332,18 +340,18 @@ export const roadmap: RoadmapNode[] = [
   {
     id: "n4",
     lessonId: "l2",
-    title: "Протокол зустрічі за 5 хвилин",
+    title: "Meeting minutes in 5 minutes",
     status: "locked",
     hoursSavedEstimate: 1.5,
-    unlockAfterTitle: "Підсумок довгого листування",
+    unlockAfterTitle: "Summary of a long thread",
   },
   {
     id: "n5",
     lessonId: "l3",
-    title: "Дані з накладних у таблицю",
+    title: "Invoice data into a spreadsheet",
     status: "locked",
     hoursSavedEstimate: 3,
-    unlockAfterTitle: "Протокол зустрічі за 5 хвилин",
+    unlockAfterTitle: "Meeting minutes in 5 minutes",
   },
 ];
 
@@ -351,17 +359,17 @@ export const exerciseSingle: Extract<Exercise, { kind: "single" }> = {
   id: "e1",
   kind: "single",
   lessonId: "l1b",
-  title: "Який промпт дасть кращу відповідь клієнту?",
+  title: "Which prompt gives the customer a better reply?",
   prompt:
-    "Клієнт питає, коли буде готове його замовлення. Обери промпт, з яким AI напише точну й теплу відповідь.",
-  hint: "Подумай, що AI має знати про ситуацію, щоб не вигадувати.",
+    "A customer asks when their order will be ready. Pick the prompt that gets AI to write an accurate, warm reply.",
+  hint: "Think about what AI needs to know about the situation so it doesn't make things up.",
   options: [
-    { id: "a", label: "Напиши відповідь клієнту про замовлення" },
-    { id: "b", label: "Відповідай ввічливо і коротко" },
+    { id: "a", label: "Write a reply to the customer about the order" },
+    { id: "b", label: "Reply politely and briefly" },
     {
       id: "c",
       label:
-        "Ти офіс-менеджер. Клієнт питає про замовлення №214. Воно буде готове в четвер. Напиши теплу відповідь на 3 речення",
+        "You are an office manager. The customer asks about order #214. It will be ready on Thursday. Write a warm reply in 3 sentences",
     },
   ],
 };
@@ -370,14 +378,14 @@ export const exerciseMulti: Extract<Exercise, { kind: "multi" }> = {
   id: "e2",
   kind: "multi",
   lessonId: "l1b",
-  title: "Що варто додати в промпт?",
-  prompt: "Обери все, що допоможе AI написати точний підсумок листування.",
-  hint: "Корисне те, чого AI не може знати сам.",
+  title: "What should you add to the prompt?",
+  prompt: "Pick everything that helps AI write an accurate summary of the thread.",
+  hint: "Useful details are the ones AI can't know on its own.",
   options: [
-    { id: "a", label: "Для кого підсумок і навіщо" },
-    { id: "b", label: "Бажана довжина" },
-    { id: "c", label: "Прохання «будь розумним»" },
-    { id: "d", label: "Що вважати головним" },
+    { id: "a", label: "Who the summary is for and why" },
+    { id: "b", label: "Preferred length" },
+    { id: "c", label: "A request to “be smart”" },
+    { id: "d", label: "What counts as important" },
   ],
 };
 
@@ -385,9 +393,9 @@ export const exerciseFree: Extract<Exercise, { kind: "free_text" }> = {
   id: "e3",
   kind: "free_text",
   lessonId: "l1b",
-  title: "Напиши свій промпт",
-  prompt: "Напиши промпт для відповіді на найчастіший лист, який ти отримуєш.",
-  hint: "Роль, ситуація, що потрібно, формат відповіді.",
+  title: "Write your own prompt",
+  prompt: "Write a prompt for replying to the email you get most often.",
+  hint: "Role, situation, what you need, reply format.",
   maxLength: 600,
 };
 
@@ -395,31 +403,31 @@ export const exerciseFile: Extract<Exercise, { kind: "file_task" }> = {
   id: "e4",
   kind: "file_task",
   lessonId: "l3",
-  title: "Перенеси накладну в таблицю",
+  title: "Move an invoice into a spreadsheet",
   prompt:
-    "Сфотографуй або завантаж скриншот однієї своєї накладної. Попроси AI витягти з неї позиції і кількість.",
-  hint: "Перевір, що всі рядки видно на фото.",
+    "Take a photo or upload a screenshot of one of your invoices. Ask AI to extract the items and quantities.",
+  hint: "Check that all rows are visible in the photo.",
   accept: ["image/png", "image/jpeg"],
-  sampleFileName: "накладна-приклад.jpg",
+  sampleFileName: "invoice-sample.jpg",
 };
 
 export const mistake: Mistake = {
   id: "m1",
   exerciseId: "e1",
-  exerciseTitle: "Який промпт дасть кращу відповідь клієнту?",
+  exerciseTitle: "Which prompt gives the customer a better reply?",
   lessonId: "l1b",
   createdAt: "2026-11-21T10:24:00Z",
-  what: "Обрано промпт без деталей замовлення.",
-  why: "AI не знає номера замовлення і дати. Без них він або відповість загально, або вигадає дату.",
-  how: "Дай AI ==роль, факти і формат==: «Ти офіс-менеджер. Замовлення №214 буде готове в четвер. Напиши теплу відповідь на 3 речення».",
+  what: "You picked the prompt without the order details.",
+  why: "AI doesn't know the order number or the date. Without them it either answers in generalities or invents a date.",
+  how: "Give AI a ==role, facts and format==: “You are an office manager. Order #214 will be ready on Thursday. Write a warm reply in 3 sentences.”",
 };
 
 export const extraTasks: ExtraTask[] = [
   {
     id: "x1",
     mistakeId: "m1",
-    title: "Додай факти в промпт",
-    description: "Тобі дадуть розмитий промпт. Допиши в нього 2 факти, яких бракує AI.",
+    title: "Add facts to the prompt",
+    description: "You get a vague prompt. Add the 2 facts AI is missing.",
     estimatedMinutes: 3,
     status: "pending",
     exerciseId: "e5",
@@ -427,8 +435,8 @@ export const extraTasks: ExtraTask[] = [
   {
     id: "x2",
     mistakeId: "m1",
-    title: "Знайди, чого бракує",
-    description: "Три промпти, один з них без контексту. Обери його.",
+    title: "Find what's missing",
+    description: "Three prompts, one without context. Pick it.",
     estimatedMinutes: 2,
     status: "done",
     exerciseId: "e6",
@@ -441,7 +449,7 @@ export const mentorThread: MentorMessage[] = [
     role: "user",
     createdAt: "2026-11-21T10:20:00Z",
     status: "complete",
-    blocks: [{ type: "text", text: "Чому AI іноді вигадує дати у відповідях?" }],
+    blocks: [{ type: "text", text: "Why does AI sometimes invent dates in replies?" }],
     mistake: null,
     extraTasks: [],
     suggestions: [],
@@ -454,24 +462,24 @@ export const mentorThread: MentorMessage[] = [
     blocks: [
       {
         type: "text",
-        text: "AI заповнює прогалини ==найімовірнішим варіантом==. Якщо дати немає в промпті, він її «припускає».",
+        text: "AI fills gaps with the ==most likely option==. If the date isn't in the prompt, it “assumes” one.",
       },
       {
         type: "steps",
         items: [
-          "Дай ==факти==: номер, дату, імʼя.",
-          "Попроси не вигадувати: «якщо чогось не знаєш, запитай».",
-          "Перечитай відповідь перед відправкою.",
+          "Give ==facts==: number, date, name.",
+          "Ask it not to invent: “if you don't know something, ask.”",
+          "Reread the reply before sending.",
         ],
       },
       {
         type: "prompt",
-        text: "Ти офіс-менеджер. Замовлення №214 буде готове в четвер, 27 листопада. Напиши клієнту теплу відповідь на 3 речення. Якщо чогось не знаєш, не вигадуй.",
+        text: "You are an office manager. Order #214 will be ready on Thursday, November 27. Write the customer a warm reply in 3 sentences. If you don't know something, don't make it up.",
       },
     ],
     mistake: null,
     extraTasks: [],
-    suggestions: ["А як попросити коротше?", "Покажи ще приклад", "Як перевірити відповідь?"],
+    suggestions: ["How do I ask for a shorter one?", "Show another example", "How do I check the reply?"],
   },
 ];
 
@@ -483,17 +491,17 @@ export const mentorReview: MentorMessage = {
   blocks: [
     {
       type: "text",
-      text: "Нічого страшного, це найчастіша помилка на старті. Допоможе одне: ==дай AI факти, яких він не знає==.",
+      text: "No worries, this is the most common mistake at the start. One thing helps: ==give AI the facts it doesn't know==.",
     },
     {
       type: "example",
-      title: "Було → стало",
-      text: "«Напиши відповідь про замовлення» → «Ти офіс-менеджер. Замовлення №214 буде готове в четвер. Напиши теплу відповідь на 3 речення».",
+      title: "Before → after",
+      text: "“Write a reply about the order” → “You are an office manager. Order #214 will be ready on Thursday. Write a warm reply in 3 sentences.”",
     },
   ],
   mistake,
   extraTasks: [{ ...extraTasks[0] }],
-  suggestions: ["Чому роль у промпті важлива?", "Дай ще одне тренування"],
+  suggestions: ["Why does the role in a prompt matter?", "Give me another practice task"],
 };
 
 function buildDays(): StreakDay[] {
@@ -511,16 +519,16 @@ function buildDays(): StreakDay[] {
 export const streak: Streak = { current: 12, best: 15, todayDone: false, days: buildDays() };
 
 export const routineEntries: RoutineTimeEntry[] = [
-  { id: "rt1", label: "Типові листи", chaosType: "communication", minutesBefore: 180, minutesAfter: 50 },
-  { id: "rt2", label: "Звіти й протоколи", chaosType: "documents", minutesBefore: 300, minutesAfter: 120 },
-  { id: "rt3", label: "Дані з накладних", chaosType: "data", minutesBefore: 240, minutesAfter: null },
+  { id: "rt1", label: "Routine emails", chaosType: "communication", minutesBefore: 180, minutesAfter: 50 },
+  { id: "rt2", label: "Reports and minutes", chaosType: "documents", minutesBefore: 300, minutesAfter: 120 },
+  { id: "rt3", label: "Invoice data", chaosType: "data", minutesBefore: 240, minutesAfter: null },
 ];
 
 export const certificate: Certificate = {
   id: "cert1",
   verificationCode: "AIW-7Q4K-2M9X",
-  holderName: "Олена Коваль",
-  courseTitle: "Пошта без завалів",
+  holderName: "Emma Clark",
+  courseTitle: "Inbox under control",
   issuedAt: "2026-11-21T12:00:00Z",
   hoursSavedPerWeek: 4,
   verifyUrl: "https://example.com/verify/AIW-7Q4K-2M9X",
@@ -530,11 +538,11 @@ export const teamHeatmap: TeamHeatmapData = {
   minGroupSize: 5,
   chaosTypes: ["communication", "documents", "data", "scheduling", "search"],
   departments: [
-    { id: "d1", name: "Продажі", headcount: 18, hours: [7.5, 3, 2, 2.5, 1.5] },
-    { id: "d2", name: "Бухгалтерія", headcount: 9, hours: [3, 4.5, 8, 1, 2] },
-    { id: "d3", name: "Офіс і адміністрування", headcount: 6, hours: [5, 4, 2.5, 4.5, 3] },
-    { id: "d4", name: "Логістика", headcount: 12, hours: [2.5, 2, 6.5, 3.5, 1] },
-    { id: "d5", name: "Дизайн", headcount: 3, hours: [null, null, null, null, null] },
+    { id: "d1", name: "Sales", headcount: 18, hours: [7.5, 3, 2, 2.5, 1.5] },
+    { id: "d2", name: "Accounting", headcount: 9, hours: [3, 4.5, 8, 1, 2] },
+    { id: "d3", name: "Office and admin", headcount: 6, hours: [5, 4, 2.5, 4.5, 3] },
+    { id: "d4", name: "Logistics", headcount: 12, hours: [2.5, 2, 6.5, 3.5, 1] },
+    { id: "d5", name: "Design", headcount: 3, hours: [null, null, null, null, null] },
   ],
 };
 

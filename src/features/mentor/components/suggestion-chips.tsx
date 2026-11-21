@@ -11,7 +11,7 @@ export function SuggestionChips({
   suggestions: string[];
   onSelect: (text: string) => void;
   disabled?: boolean;
-  /** Accessible name of the group, e.g. «Можна запитати». */
+  /** Accessible name of the group, e.g. «You can ask». */
   label: string;
   className?: string;
 }) {

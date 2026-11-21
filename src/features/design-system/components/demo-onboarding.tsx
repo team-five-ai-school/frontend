@@ -13,7 +13,7 @@ export function DemoOnboardingResult() {
       result={assessment}
       roleTitle={role.title}
       shareUrl="https://team5-ai.vercel.app"
-      onStart={() => toast.success("Тут відкриється перший урок")}
+      onStart={() => toast.success("The first lesson opens here")}
     />
   );
 }

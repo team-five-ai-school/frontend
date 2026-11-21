@@ -16,7 +16,7 @@ const buttonVariants = cva(
         outline:
           "border-foreground/70 bg-card hover:bg-accent aria-expanded:bg-accent",
         secondary:
-          // Secondary actions are outlined, not filled (brief: "другорядні — контур").
+          // Secondary actions are outlined, not filled (brief: "secondary actions are outlined").
           "border-foreground/70 bg-card text-foreground hover:bg-accent aria-expanded:bg-accent",
         ghost:
           "hover:bg-foreground/6 aria-expanded:bg-foreground/6",

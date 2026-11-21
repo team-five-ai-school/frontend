@@ -15,8 +15,8 @@ export function ChaosSection() {
   return (
     <PreviewSection
       id="chaos"
-      title="Карта хаосу"
-      description="Керується даними (ChaosMapData). Горизонтальна від 672px ширини контейнера, вертикальна на телефоні. «Показати списком» дає текстову альтернативу."
+      title="Chaos map"
+      description="Driven by data (ChaosMapData). Horizontal from a 672px container width, vertical on a phone. “Show as list” gives a text alternative."
     >
       <ChaosMap data={chaosMap} />
 
@@ -24,12 +24,12 @@ export function ChaosSection() {
       <SpecimenGrid>
         <Specimen label="controlled mode" className="flex-col items-stretch gap-4">
           <SegmentedControl
-            label="Режим"
+            label="Mode"
             value={mode}
             onValueChange={setMode}
             options={[
-              { value: "now", label: "Зараз" },
-              { value: "ai", label: "З AI" },
+              { value: "now", label: "Now" },
+              { value: "ai", label: "With AI" },
             ]}
             className="self-start"
           />
@@ -42,10 +42,10 @@ export function ChaosSection() {
 
       <SubHeading>ShareCard</SubHeading>
       <div className="max-w-xl">
-        <ShareCard percent={38} roleTitle="Вчитель" shareUrl="https://team5-ai.vercel.app" />
+        <ShareCard percent={38} roleTitle="Teacher" shareUrl="https://team5-ai.vercel.app" />
       </div>
 
-      <SubHeading>Стани</SubHeading>
+      <SubHeading>States</SubHeading>
       <SpecimenGrid>
         <Specimen label="loading" className="flex-col items-stretch" wide>
           <ChaosMapSkeleton />

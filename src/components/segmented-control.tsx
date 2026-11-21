@@ -11,7 +11,7 @@ export type SegmentedOption<T extends string> = {
 };
 
 /**
- * Two to four mutually exclusive views (e.g. "Зараз" / "З AI" on the chaos map).
+ * Two to four mutually exclusive views (e.g. "Now" / "With AI" on the chaos map).
  * A radio group under the hood: arrow keys move the selection, one tab stop.
  */
 export function SegmentedControl<T extends string>({

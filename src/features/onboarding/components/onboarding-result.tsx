@@ -12,7 +12,7 @@ import { t } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 /**
- * Onboarding result: headline, chaos map with the "Зараз / З AI" switch, weekly hours, share card, one CTA.
+ * Onboarding result: headline, chaos map with the "Now / With AI" switch, weekly hours, share card, one CTA.
  * The mode switch drives both the map and the hours number.
  */
 export function OnboardingResult({

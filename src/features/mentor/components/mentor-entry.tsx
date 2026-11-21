@@ -13,8 +13,8 @@ import { MentorAvatar } from "./mentor-message";
 /**
  * Ways into the Mentor:
  *  - global:   floating button (phones/tablets), shows unread replies; target of the mistake hand-off
- *  - lesson:   «Запитати про цей урок»
- *  - exercise: «Не розумію завдання»
+ *  - lesson:   «Ask about this lesson»
+ *  - exercise: «I don't understand the task»
  */
 export function MentorEntry({
   variant,

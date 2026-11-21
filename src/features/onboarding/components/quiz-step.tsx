@@ -9,7 +9,7 @@ import type { QuizQuestion } from "@/lib/contracts";
 import { t } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-/** One question of the «Скільки твоєї роботи вже вміє AI?» quiz, with step progress. */
+/** One question of the «How much of your work can AI already do?» quiz, with step progress. */
 export function QuizStep({
   question,
   step,

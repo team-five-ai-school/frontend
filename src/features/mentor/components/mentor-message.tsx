@@ -22,13 +22,13 @@ export function MentorAvatar({ className }: { className?: string }) {
         className,
       )}
     >
-      М
+      M
     </span>
   );
 }
 
 /**
- * Mentor text with highlighter marks: `==ключові слова==` render as <mark> with the marker stroke.
+ * Mentor text with highlighter marks: `==key words==` render as <mark> with the marker stroke.
  * The backend sends plain strings; the marks are part of the contract (docs/api-contracts.md).
  */
 export function Marked({ text }: { text: string }) {
@@ -162,7 +162,7 @@ export function PromptBlock({ text }: { text: string }) {
   );
 }
 
-/** "Ментор думає" with three dots; static text under reduced motion (animation is disabled globally). */
+/** "Mentor is thinking" with three dots; static text under reduced motion (animation is disabled globally). */
 export function MentorThinking() {
   return (
     <div className="flex items-center gap-3" role="status">

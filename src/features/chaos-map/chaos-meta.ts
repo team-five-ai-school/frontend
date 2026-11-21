@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 import type { ChaosType, Handler } from "@/lib/contracts";
-import { t } from "@/lib/i18n";
+import { locale, t } from "@/lib/i18n";
 
 export const chaosIcon: Record<ChaosType, LucideIcon> = {
   communication: MailIcon,
@@ -28,7 +28,7 @@ export const handlerLabel: Record<Handler, string> = {
   shared: t("chaosMap.handledShared"),
 };
 
-/** Hours with one decimal max: 7.5 → "7,5". */
+/** Hours with one decimal max, in the app locale: 7.5 → "7.5". */
 export function formatHours(hours: number) {
-  return new Intl.NumberFormat("uk", { maximumFractionDigits: 1 }).format(hours);
+  return new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(hours);
 }

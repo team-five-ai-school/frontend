@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 export type VoiceState = "idle" | "recording" | "processing" | "error" | "denied";
 
 /**
- * «60 секунд голосом». Controlled: the parent owns the recorder (MediaRecorder) and passes the state.
+ * «60 seconds by voice». Controlled: the parent owns the recorder (MediaRecorder) and passes the state.
  * Always offers a text fallback, so nobody is stuck without a microphone.
  */
 export function VoiceInputButton({
