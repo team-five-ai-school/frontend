@@ -7,6 +7,11 @@ description: Use the AI inside your email, documents, spreadsheets and slides to
 skills: [ai-drafting, data-privacy, verification, spreadsheet-analysis, presentation-structuring, iteration]
 certificate: AI in Office Tools Essentials
 minutes_saved_per_week: 90
+stage: tools
+tools: [microsoft-365, google-workspace]
+recommended_for: [general, marketing, hr, teachers, lawyers, small-business]
+pains: [email, documents, data, reporting]
+prerequisites: [ai-assistants-101]
 ---
 
 # AI in Your Office Tools

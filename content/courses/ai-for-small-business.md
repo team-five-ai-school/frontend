@@ -7,6 +7,11 @@ description: Use an AI assistant to answer customers, plan marketing and make se
 skills: [customer-replies, brand-voice, promise-safety, local-marketing, content-planning, data-cleaning, number-checking, privacy]
 certificate: AI for Small Business Essentials
 minutes_saved_per_week: 150
+stage: role
+tools: [any]
+recommended_for: [small-business]
+pains: [customer-communication, content, data]
+prerequisites: [ai-assistants-101]
 ---
 
 # AI for Small Business Owners

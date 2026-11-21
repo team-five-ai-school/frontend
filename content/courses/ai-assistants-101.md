@@ -7,6 +7,11 @@ description: Use an AI assistant for everyday office tasks, write clear prompts,
 skills: [ai-limits, prompt-structure, iteration, verification]
 certificate: AI Assistants Essentials
 minutes_saved_per_week: 60
+stage: foundation
+tools: [any]
+recommended_for: [general, marketing, hr, teachers, lawyers, small-business]
+pains: [email, documents, content]
+prerequisites: []
 ---
 
 # AI Assistants 101

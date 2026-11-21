@@ -7,6 +7,11 @@ description: Use an AI assistant to draft differentiated lesson plans, quizzes, 
 skills: [lesson-planning, differentiation, prompt-structure, verification, rubric-design, student-privacy, feedback-drafting, academic-integrity]
 certificate: AI for Teachers Essentials
 minutes_saved_per_week: 120
+stage: role
+tools: [any]
+recommended_for: [teachers]
+pains: [planning, content, documents, customer-communication]
+prerequisites: [ai-assistants-101]
 ---
 
 # AI for Teachers

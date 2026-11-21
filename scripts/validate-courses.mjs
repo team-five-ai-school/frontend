@@ -13,6 +13,21 @@ import { parse } from "yaml";
 const TRACKS = ["general", "marketing", "hr", "teachers", "lawyers", "small-business"];
 const TYPES = ["single_select", "multi_select", "fill_blank", "true_false"];
 const PLACEHOLDERS = new Set(["role", "pain", "tool"]);
+const LEVELS = ["beginner", "intermediate", "advanced"];
+const STAGES = ["foundation", "tools", "role", "advanced"];
+const TOOLS = ["any", "microsoft-365", "google-workspace", "chatgpt"];
+const PAINS = [
+  "email",
+  "documents",
+  "reporting",
+  "data",
+  "content",
+  "research",
+  "customer-communication",
+  "repetitive-tasks",
+  "meetings",
+  "planning",
+];
 
 const words = (s = "") => String(s).split(/\s+/).filter(Boolean).length;
 
@@ -40,8 +55,30 @@ function validate(file, text) {
     "skills",
     "certificate",
     "minutes_saved_per_week",
+    "stage",
+    "tools",
+    "recommended_for",
+    "pains",
+    "prerequisites",
   ])
     if (meta[k] === undefined) err(`frontmatter: missing "${k}"`);
+  const oneOf = (k, allowed) =>
+    meta[k] !== undefined &&
+    !allowed.includes(meta[k]) &&
+    err(`frontmatter: ${k} "${meta[k]}" not in ${allowed.join("|")}`);
+  const allOf = (k, allowed) => {
+    if (meta[k] === undefined) return;
+    if (!Array.isArray(meta[k])) return err(`frontmatter: ${k} must be a list`);
+    for (const v of meta[k])
+      if (!allowed.includes(v)) err(`frontmatter: ${k} value "${v}" not in ${allowed.join("|")}`);
+  };
+  oneOf("level", LEVELS);
+  oneOf("stage", STAGES);
+  allOf("tools", TOOLS);
+  allOf("recommended_for", TRACKS);
+  allOf("pains", PAINS);
+  if (meta.prerequisites !== undefined && !Array.isArray(meta.prerequisites))
+    err("frontmatter: prerequisites must be a list");
   if (meta.id && path.basename(file, ".md") !== meta.id)
     err(`frontmatter: id "${meta.id}" must match file name`);
   if (meta.track && !TRACKS.includes(meta.track))
@@ -152,7 +189,7 @@ function validate(file, text) {
         if (!mentor[0][k]?.length) err(`${L} mentor: missing "${k}"`);
 
     info.push(`${L}: ~${lessonWords} words, ${cards.length} cards, ${exercises.length} exercises`);
-    if (lessonWords > 520) warn(`${L}: ~${lessonWords} learner-facing words (target 350–450)`);
+    if (lessonWords > 460) warn(`${L}: ~${lessonWords} learner-facing words (target 350–450)`);
     if (lessonWords < 300) warn(`${L}: ~${lessonWords} learner-facing words, too thin (target 350–450)`);
   });
   return { errors, warnings, info };
@@ -164,8 +201,18 @@ const files = args.length
   ? args
   : (await readdir(dir)).filter((f) => f.endsWith(".md")).map((f) => path.join(dir, f));
 let failed = false;
+const allIds = new Set(
+  (await readdir(dir)).filter((f) => f.endsWith(".md")).map((f) => f.replace(/\.md$/, "")),
+);
 for (const file of files) {
-  const { errors, warnings, info = [] } = validate(file, await readFile(file, "utf8"));
+  const text = await readFile(file, "utf8");
+  const { errors, warnings, info = [] } = validate(file, text);
+  const prereq = text.match(/^prerequisites:\s*\[(.*)\]/m)?.[1] ?? "";
+  for (const id of prereq
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean))
+    if (!allIds.has(id)) warnings.push(`prerequisite "${id}" has no course file (yet)`);
   console.log(
     `${errors.length ? "✖" : "✔"} ${file}${warnings.length ? ` (${warnings.length} warnings)` : ""}`,
   );

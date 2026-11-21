@@ -7,6 +7,11 @@ description: Use AI to summarize, compare and draft legal documents faster, whil
 skills: [confidentiality, anonymization, document-analysis, source-verification, drafting, citation-checking]
 certificate: AI for Legal Professionals
 minutes_saved_per_week: 90
+stage: role
+tools: [any]
+recommended_for: [lawyers]
+pains: [documents, research, email]
+prerequisites: [ai-assistants-101, safe-ai-at-work]
 ---
 
 # AI for Legal Professionals

@@ -7,6 +7,11 @@ description: Use an AI assistant to write fairer job ads and interview questions
 skills: [inclusive-language, structured-interviews, policy-simplification, verification, data-privacy, theme-analysis, human-decision]
 certificate: AI for HR Teams Essentials
 minutes_saved_per_week: 90
+stage: role
+tools: [any]
+recommended_for: [hr]
+pains: [documents, data, repetitive-tasks]
+prerequisites: [ai-assistants-101, safe-ai-at-work]
 ---
 
 # AI for HR Teams

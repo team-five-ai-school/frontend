@@ -23,11 +23,17 @@ Lessons are short and dense. A lesson takes **4–6 minutes**.
 id: ai-assistants-101 # kebab-case, unique, = file name
 title: AI Assistants 101
 track: general # general | marketing | hr | teachers | lawyers | small-business
-level: beginner # beginner | intermediate
+level: beginner # beginner | intermediate | advanced
 description: One sentence on what the learner can do after the course.
 skills: [prompt-structure, verification, iteration] # kebab-case skill tags used in the journal
 certificate: AI Assistants Essentials # name printed on the course certificate
 minutes_saved_per_week: 60 # estimated routine time saved after the course, used for the before/after metric
+# Roadmap fields (see "Roadmap" below)
+stage: foundation # foundation | tools | role | advanced
+tools: [any] # any | microsoft-365 | google-workspace | chatgpt
+recommended_for: [general, marketing, hr, teachers, lawyers, small-business]
+pains: [email, documents, content] # from the onboarding chaos map, see list below
+prerequisites: [] # course ids to finish first
 ---
 
 # AI Assistants 101
@@ -188,3 +194,29 @@ hint: ...
 - **Concrete over abstract.** Every card is about a real office task. No history of AI, no hype, no filler ("revolutionary", "game-changer", "unlock").
 - **Exercises test understanding, not trivia.** Wrong options are plausible mistakes a real person makes, not jokes.
 - **Plain language.** Short sentences, second person ("you"), no em-dash chains.
+
+## Roadmap
+
+The onboarding (role, tools, chaos map of routines) builds a personal roadmap from the frontmatter of all courses:
+
+1. **foundation**: everyone (`ai-assistants-101`, `safe-ai-at-work`).
+2. **tools**: the course matching the user's main tool (`tools` contains their tool).
+3. **role**: the course whose `recommended_for` matches the role.
+4. **advanced**: courses ordered by how many of the user's `pains` they cover; the next level after the first roadmap.
+
+A course is unlocked when all its `prerequisites` are completed. `recommended_for` may list several roles; `general` means any office worker.
+
+Allowed `pains` (the chaos map categories in onboarding):
+
+| Pain                     | Routine it stands for                       |
+| ------------------------ | ------------------------------------------- |
+| `email`                  | writing and answering email and messages    |
+| `documents`              | drafting, reading and summarizing documents |
+| `reporting`              | recurring reports and status updates        |
+| `data`                   | spreadsheets, exports, numbers              |
+| `content`                | posts, copy, presentations, materials       |
+| `research`               | finding and checking information            |
+| `customer-communication` | replies to customers, clients, parents      |
+| `repetitive-tasks`       | the same multi-step task every day or week  |
+| `meetings`               | preparing for and following up on meetings  |
+| `planning`               | plans, schedules, lesson or project plans   |

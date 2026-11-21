@@ -7,6 +7,11 @@ description: Write briefs that produce testable copy, turn real customer feedbac
 skills: [brief-writing, copy-variation, data-grounding, theme-extraction, hypothesis-building, verification]
 certificate: AI for Marketers Essentials
 minutes_saved_per_week: 150
+stage: role
+tools: [any]
+recommended_for: [marketing]
+pains: [content, research, reporting, data]
+prerequisites: [ai-assistants-101]
 ---
 
 # AI for Marketers
