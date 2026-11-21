@@ -11,8 +11,6 @@ import { z } from "zod";
 const schema = z.object({
   /** Base URL of the backend API, e.g. https://api.example.com */
   API_URL: z.url().optional(),
-  /** Server-to-server API key. Never expose it with a NEXT_PUBLIC_ prefix. */
-  API_KEY: z.string().min(1).optional(),
 });
 
 const parsed = schema.safeParse(process.env);
