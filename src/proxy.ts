@@ -6,8 +6,8 @@ import { SESSION_COOKIE } from "@/lib/session-cookie";
 /**
  * Browser → backend proxy: `/api/backend/<path>` → `${API_URL}/<path>`.
  *
- * - Adds `Authorization: Bearer <token>` from the httpOnly session cookie, and `X-Api-Key` if the
- *   backend needs one. Neither ever reaches client code.
+ * - Adds `Authorization: Bearer <token>` from the httpOnly session cookie. The token never reaches
+ *   client code.
  * - Does NOT forward the user's cookies to the backend.
  * - Only ever forwards to the API_URL origin, so it cannot be abused to reach other hosts.
  * - Without API_URL it does nothing, and requests fall through to the local demo handlers in
@@ -30,7 +30,6 @@ export function proxy(request: NextRequest) {
   headers.delete("host");
   const token = request.cookies.get(SESSION_COOKIE)?.value;
   if (token) headers.set("authorization", `Bearer ${token}`);
-  if (process.env.API_KEY) headers.set("x-api-key", process.env.API_KEY);
 
   return NextResponse.rewrite(target, { request: { headers } });
 }

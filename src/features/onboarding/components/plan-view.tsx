@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
@@ -23,6 +24,7 @@ import { onboardingSessionStore, useStoredSessionId } from "../session-storage";
  */
 export function PlanView() {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const storedId = useStoredSessionId();
 
   const me = useQuery({
@@ -44,6 +46,7 @@ export function PlanView() {
     onSuccess: () => {
       onboardingSessionStore.clear();
       toast.success(t("plan.saved"));
+      router.refresh(); // the header drops its "Take the onboarding" link
       return queryClient.invalidateQueries({ queryKey: onboardingKeys.myPlan });
     },
   });

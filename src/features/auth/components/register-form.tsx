@@ -10,7 +10,7 @@ import { FieldGroup } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 
 import { registerAction } from "../actions";
-import { AFTER_AUTH_PATH, registerSchema } from "../auth-schemas";
+import { afterAuthPath, registerSchema } from "../auth-schemas";
 import { AuthField, fieldErrors, type FieldErrors } from "./auth-form-fields";
 
 export function RegisterForm() {
@@ -37,7 +37,7 @@ export function RegisterForm() {
         return;
       }
       queryClient.clear(); // cached guest data (e.g. progress = null) must not outlive the login
-      router.replace(AFTER_AUTH_PATH);
+      router.replace(afterAuthPath(result.data));
       router.refresh();
     });
   }
