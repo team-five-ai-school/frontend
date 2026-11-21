@@ -59,6 +59,7 @@ src/components/          app-wide components (header, providers, theme toggle)
 src/lib/                 site config + routes, env, api (server) + api-client (browser), session cookie,
                          action result, fonts, query client
 src/proxy.ts             /api/backend/* → backend proxy (adds auth headers)
+src/components/pwa/      optional install card + service worker registration
 src/assets/              images imported statically into components
 assets/images/           raw image sources for `npm run images` (not imported by code)
 ```
@@ -121,6 +122,14 @@ writes to server-cached data      ──Server Action──api()──▶ backen
 - **`API_KEY`** is only for a backend that requires a server-to-server key. The proxy and `api()` add it server-side; it never reaches the browser. Public endpoints should not need it.
 - **Env vars:** add every variable to `src/lib/env.ts` (validated with Zod) and to `.env.example`. Read `env.X`, not `process.env.X` (exception: `src/proxy.ts`). Only `NEXT_PUBLIC_*` reaches the browser; this repo is public, so secrets live only in `.env.local` and Vercel → Settings → Environment Variables. Changing an env var on Vercel needs a redeploy.
 - **Without `API_URL`** the proxy does nothing and `/api/backend/*` falls through to local demo handlers in `src/app/api/backend/` (the tasks example). Delete them together with the example.
+
+## PWA (optional for users)
+
+The app is a web app first. Installing it to the home screen is an **optional** offer, never a requirement. No push notifications.
+
+- `src/app/manifest.ts` + icons from `npm run icons` (`scripts/generate-icons.mjs`) make it installable; `public/sw.js` is a minimal no-op service worker (no caching, no push).
+- Offer installation **once, at the end of onboarding**, with `<InstallAppCard onDone={next} />` from `src/components/pwa/install-app-card.tsx`. It always has "Not now". Skip the step when `usePwaInstall().available` is false. No install banners on other pages.
+- iOS has no install API: the card shows "Share → Add to Home Screen" instructions instead of a button.
 
 ## Server Actions
 
