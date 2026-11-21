@@ -313,6 +313,11 @@ export const en = {
     noAfter: "Fill this in after the course to see the difference",
   },
   certificate: {
+    finalTitle: "Final certificate",
+    finalLocked: "Finish every item of your learning plan to earn the final certificate.",
+    planFor: "for completing the learning plan",
+    planStamp: "Path completed",
+    planSkills: "{count} skills",
     downloadPdf: "Download PDF",
     ofCompletion: "Certificate of completion",
     awarded: "Awarded to",

@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { EmptyState, ErrorState } from "@/components/state-views";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PlanCertificateSection } from "@/features/certificates/components/plan-certificate";
 import { PlanQuest } from "@/features/quest/components/quest-progress";
 import { ApiError } from "@/lib/api-error";
 import type { LearningPlan } from "@/lib/contracts";
@@ -81,6 +82,7 @@ export function PlanView() {
   return (
     <div className="flex flex-col gap-8">
       <PlanQuest plan={plan} guest={anonymous} />
+      {!anonymous && <PlanCertificateSection />}
       {anonymous && (
         <section className="flex max-w-prose flex-col items-start gap-3 border-t pt-6">
           <p className="text-muted-foreground">{t("plan.signInHint")}</p>
