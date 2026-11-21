@@ -64,6 +64,7 @@ export const en = {
     introLead:
       "A few questions about your week, then you see a map of your tasks and a personal learning plan.",
     introStart: "Start",
+    headerLink: "Onboarding",
     introRestart: "Start over",
     describeTitle: "Describe a typical workday",
     describeLead:
