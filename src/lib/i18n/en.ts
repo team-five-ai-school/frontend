@@ -59,6 +59,7 @@ export const en = {
     resultTitle: "AI can already do {percent}% of your work",
     resultLead: "Here's your week. Switch to see it with AI.",
     resultCta: "Start the first lesson",
+    continueAsGuest: "Continue without an account",
     resultSecondary: "Share your result",
     introTitle: "How much of your work can AI already do?",
     introLead:

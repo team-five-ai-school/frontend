@@ -9,6 +9,7 @@ import { ErrorState } from "@/components/state-views";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
+import { ApiError } from "@/lib/api-error";
 import { firstLesson, RoleId, type QuizAnswer, type Role } from "@/lib/contracts";
 import { t } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
@@ -37,6 +38,13 @@ type Step =
  */
 export function OnboardingFlow() {
   const router = useRouter();
+  // Guest or signed in: GET /me/plan answers 401 for guests (same query as the plan page).
+  const me = useQuery({
+    queryKey: onboardingKeys.myPlan,
+    queryFn: onboardingApi.myPlan,
+    retry: (count, error) => !(error instanceof ApiError && error.status === 401) && count < 2,
+  });
+  const guest = me.error instanceof ApiError && me.error.status === 401;
   const [step, setStep] = useState<Step>({ kind: "boot" });
   const [session, setSession] = useState<SessionWithResult | null>(null);
   const [answers, setAnswers] = useState<QuizAnswer[]>([]);
@@ -227,6 +235,8 @@ export function OnboardingFlow() {
             const lesson = firstLesson(step.session.plan);
             router.push(lesson ? `/lessons/${lesson.lessonSlug}` : "/plan");
           }}
+          // Guests: offer an account first. After sign-up they land on /plan, which links this onboarding.
+          onSave={guest ? () => router.push("/register") : undefined}
         />
       )}
     </div>
