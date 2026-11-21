@@ -261,8 +261,22 @@ export const LessonCompletion = z.object({
   correctFirstTry: z.number().int(),
   total: z.number().int(),
   nextLessonId: z.string().nullable(),
+  /** Set when this completion finished the course: the certificate that was issued (now or earlier). */
+  certificateId: z.string().nullable(),
 });
 export type LessonCompletion = z.infer<typeof LessonCompletion>;
+
+/** GET /certificates (the learner's own) and GET /certificates/:id (public Verification link). */
+export const IssuedCertificate = z.object({
+  id: z.string(),
+  courseId: z.string(),
+  /** Live: the holder's current account name. */
+  holderName: z.string(),
+  certificateName: z.string(),
+  courseTitle: z.string(),
+  issuedAt: z.string(),
+});
+export type IssuedCertificate = z.infer<typeof IssuedCertificate>;
 
 /* ───────── Mentor ───────── */
 

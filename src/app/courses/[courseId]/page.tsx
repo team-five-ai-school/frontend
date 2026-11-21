@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { CourseCertificate } from "@/features/certificates/components/course-certificate";
 import { CourseCover } from "@/features/courses/components/course-cover";
 import { LessonList } from "@/features/courses/components/lesson-list";
 import { getCourse } from "@/features/courses/data";
@@ -57,6 +58,7 @@ async function CourseContent({ params }: Pick<PageProps<"/courses/[courseId]">, 
         </h2>
         <LessonList lessons={lessons} />
       </section>
+      <CourseCertificate courseId={course.id} />
     </>
   );
 }
