@@ -27,6 +27,8 @@ type Common = {
   onRetry: () => void;
   onOpenMentor?: () => void;
   onNext?: () => void;
+  /** Label of the «next» button (e.g. «Finish lesson» on the last step). */
+  nextLabel?: string;
   /** Passed to AnswerFeedback: the element the mistake flies from. */
   feedbackRef?: React.Ref<HTMLDivElement>;
   className?: string;
@@ -49,6 +51,7 @@ function ExerciseFrame({
   onRetry,
   onOpenMentor,
   onNext,
+  nextLabel,
   feedbackRef,
   className,
 }: Common & {
@@ -88,6 +91,7 @@ function ExerciseFrame({
           onOpenMentor={onOpenMentor}
           onRetry={onRetry}
           onNext={onNext}
+          nextLabel={nextLabel}
         />
       ) : (
         <Button

@@ -41,6 +41,7 @@ export function AnswerFeedback({
   onOpenMentor,
   onRetry,
   onNext,
+  nextLabel,
   ref,
   className,
 }: {
@@ -52,6 +53,7 @@ export function AnswerFeedback({
   onOpenMentor?: () => void;
   onRetry?: () => void;
   onNext?: () => void;
+  nextLabel?: string;
   ref?: React.Ref<HTMLDivElement>;
   className?: string;
 }) {
@@ -97,7 +99,9 @@ export function AnswerFeedback({
             {t("exercise.tryAgain")}
           </Button>
         )}
-        {(verdict === "correct" || final) && onNext && <Button onClick={onNext}>{t("exercise.next")}</Button>}
+        {(verdict === "correct" || final) && onNext && (
+          <Button onClick={onNext}>{nextLabel ?? t("exercise.next")}</Button>
+        )}
       </div>
     </div>
   );

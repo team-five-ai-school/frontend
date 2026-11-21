@@ -87,6 +87,7 @@ function PlayerBody({ detail, loggedIn }: { detail: LessonDetail; loggedIn: bool
   const complete = useCompleteLesson(lesson.id);
   const [needsLogin, setNeedsLogin] = useState(!loggedIn);
 
+  const showingSaved = loggedIn && !started && index === 0 && Boolean(savedReview.data);
   const step = steps[index];
   const finished = index >= steps.length;
   const percent = steps.length ? Math.round((Math.min(index, steps.length) / steps.length) * 100) : 100;
@@ -148,12 +149,12 @@ function PlayerBody({ detail, loggedIn }: { detail: LessonDetail; loggedIn: bool
         <h1 className="text-2xl font-bold text-balance sm:text-3xl">{lesson.title}</h1>
         <div className="flex items-center gap-3">
           <ProgressBar
-            value={percent}
+            value={showingSaved ? 100 : percent}
             className="h-1.5"
             aria-label={t("player.stepOf", { current: index + 1, total: steps.length })}
           />
           <span className="shrink-0 text-xs text-muted-foreground tabular-nums">
-            {finished
+            {finished || showingSaved
               ? `${steps.length}/${steps.length}`
               : t("player.stepOf", { current: index + 1, total: steps.length })}
           </span>
@@ -209,6 +210,7 @@ function PlayerBody({ detail, loggedIn }: { detail: LessonDetail; loggedIn: bool
           onSubmit={submit}
           onRetry={retry}
           onNext={next}
+          nextLabel={index === steps.length - 1 ? t("lesson.finish") : undefined}
           feedbackRef={feedbackRef}
           onOpenMentor={
             mentor && step.type === "exercise"
@@ -238,6 +240,7 @@ function StepView({
   onNext,
   feedbackRef,
   onOpenMentor,
+  nextLabel,
 }: {
   step: LessonStep;
   result: AnswerResult | null;
@@ -247,6 +250,7 @@ function StepView({
   onNext: () => void;
   feedbackRef: React.Ref<HTMLDivElement>;
   onOpenMentor?: () => void;
+  nextLabel?: string;
 }) {
   if (step.type === "card") {
     return (
@@ -272,6 +276,7 @@ function StepView({
     onNext,
     feedbackRef,
     onOpenMentor,
+    nextLabel,
   };
   switch (exercise.kind) {
     case "single":

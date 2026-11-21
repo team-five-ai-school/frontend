@@ -106,7 +106,15 @@ function PanelBody({
   }, [messages.length, pending]);
 
   const lastMentor = [...messages].reverse().find((m) => m.role === "mentor");
-  const suggestions = messages.length === 0 ? starterSuggestions : (lastMentor?.suggestions ?? []);
+  // Don't offer a question the learner has already asked.
+  const asked = new Set(
+    messages
+      .filter((m) => m.role === "user")
+      .flatMap((m) => m.blocks.map((b) => ("text" in b ? b.text.trim() : ""))),
+  );
+  const suggestions = (messages.length === 0 ? starterSuggestions : (lastMentor?.suggestions ?? [])).filter(
+    (s) => !asked.has(s.trim()),
+  );
 
   return (
     <>
@@ -135,10 +143,10 @@ function PanelBody({
         )}
       </div>
       <div className="flex flex-col gap-3 border-t px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-        {!pending && (
+        {(!pending || pending.error) && (
           <SuggestionChips label={t("mentor.suggestions")} suggestions={suggestions} onSelect={ask} />
         )}
-        <Composer id={composerId} disabled={Boolean(pending)} onSend={ask} />
+        <Composer id={composerId} disabled={Boolean(pending && !pending.error)} onSend={ask} />
       </div>
     </>
   );
