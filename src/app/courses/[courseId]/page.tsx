@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { CourseCover } from "@/features/courses/components/course-cover";
 import { LessonList } from "@/features/courses/components/lesson-list";
 import { getCourse } from "@/features/courses/data";
 import { t } from "@/lib/i18n";
@@ -37,10 +38,12 @@ async function CourseContent({ params }: Pick<PageProps<"/courses/[courseId]">, 
   const { course, lessons } = data;
   return (
     <>
+      <CourseCover courseId={course.id} className="rounded-xl border sm:aspect-[3/1]" />
       <header className="flex flex-col gap-3">
         <h1 className="text-3xl font-bold text-balance sm:text-4xl">{course.title}</h1>
         <p className="max-w-prose text-muted-foreground">{course.summary}</p>
         <p className="flex items-center gap-3 text-sm text-muted-foreground tabular-nums">
+          <span>{t(`course.levels.${course.level}`)}</span>
           <span>{t("course.lessonsCount", { count: course.lessonCount })}</span>
           <span className="flex items-center gap-1">
             <ClockIcon className="size-3.5" aria-hidden />

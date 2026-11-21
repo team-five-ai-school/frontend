@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { Suspense } from "react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
+import { AccountMenu, AccountMenuSkeleton } from "@/features/auth/components/account-menu";
 import { routes, siteConfig } from "@/lib/site";
 
 export function SiteHeader() {
@@ -12,7 +14,7 @@ export function SiteHeader() {
         </Link>
         <nav
           aria-label="Main"
-          className="flex min-w-0 items-center gap-3 overflow-x-auto text-sm whitespace-nowrap text-muted-foreground sm:gap-4"
+          className="flex min-w-0 [scrollbar-width:none] items-center gap-3 overflow-x-auto text-sm whitespace-nowrap text-muted-foreground sm:gap-4"
         >
           {routes
             .filter((route) => route.nav)
@@ -22,8 +24,11 @@ export function SiteHeader() {
               </Link>
             ))}
         </nav>
-        <div className="ml-auto shrink-0">
+        <div className="ml-auto flex shrink-0 items-center gap-2">
           <ThemeToggle />
+          <Suspense fallback={<AccountMenuSkeleton />}>
+            <AccountMenu />
+          </Suspense>
         </div>
       </div>
     </header>

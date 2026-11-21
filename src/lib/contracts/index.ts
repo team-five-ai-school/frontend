@@ -117,12 +117,18 @@ export type Track = z.infer<typeof Track>;
 export const Tool = z.object({ id: z.string(), name: z.string() });
 export type Tool = z.infer<typeof Tool>;
 
+export const CourseLevel = z.enum(["beginner", "intermediate", "advanced"]);
+export type CourseLevel = z.infer<typeof CourseLevel>;
+
 export const Course = z.object({
   id: z.string(),
   title: z.string(),
   summary: z.string(),
   trackId: z.string(),
   toolIds: z.array(z.string()),
+  level: CourseLevel,
+  /** Onboarding role ids (content/onboarding.json `roles[].id`) the course is meant for. */
+  roleIds: z.array(z.string()),
   lessonCount: z.number().int(),
   durationMinutes: z.number().int(),
   status: NodeStatus,
@@ -235,6 +241,8 @@ export type CourseDetail = z.infer<typeof CourseDetail>;
 /** GET /me/progress */
 export const Progress = z.object({
   completedLessonIds: z.array(z.string()),
+  /** Lessons with at least one answer that are not completed yet. */
+  startedLessonIds: z.array(z.string()),
   courses: z.record(z.string(), z.object({ progressPercent: z.number(), status: NodeStatus })),
 });
 export type Progress = z.infer<typeof Progress>;
