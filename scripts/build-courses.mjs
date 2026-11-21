@@ -55,23 +55,27 @@ const HIDDEN_EXERCISE_FIELDS = ["answer", "answers", "explanation", "hint"];
 function toPublic(course) {
   return {
     ...course,
-    lessons: course.lessons.map(({ mentor: _mentor, practice, ...lesson }) => ({
-      ...lesson,
-      blocks: lesson.blocks.map((block) => {
-        if (block.block !== "exercise") return block;
-        const safe = Object.fromEntries(
-          Object.entries(block).filter(([k]) => !HIDDEN_EXERCISE_FIELDS.includes(k)),
-        );
-        if (Array.isArray(safe.cards)) safe.cards = safe.cards.map(({ statement }) => ({ statement }));
-        return safe;
-      }),
-      practice: practice && {
-        id: practice.id,
-        skill: practice.skill,
-        instructions: practice.instructions,
-        rubric: practice.rubric,
-      },
-    })),
+    lessons: course.lessons.map(({ practice, ...rest }) => {
+      const lesson = { ...rest };
+      delete lesson.mentor;
+      return {
+        ...lesson,
+        blocks: lesson.blocks.map((block) => {
+          if (block.block !== "exercise") return block;
+          const safe = Object.fromEntries(
+            Object.entries(block).filter(([k]) => !HIDDEN_EXERCISE_FIELDS.includes(k)),
+          );
+          if (Array.isArray(safe.cards)) safe.cards = safe.cards.map(({ statement }) => ({ statement }));
+          return safe;
+        }),
+        practice: practice && {
+          id: practice.id,
+          skill: practice.skill,
+          instructions: practice.instructions,
+          rubric: practice.rubric,
+        },
+      };
+    }),
   };
 }
 
