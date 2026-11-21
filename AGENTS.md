@@ -56,7 +56,9 @@ src/features/<x>/        one folder per feature:
   components/              feature UI
 src/components/ui/       shadcn components; treat as generated, extend via variants
 src/components/          app-wide components (header, providers, theme toggle)
-src/lib/                 site config + routes, env, api client, action result, fonts, query client
+src/lib/                 site config + routes, env, api (server) + api-client (browser), session cookie,
+                         action result, fonts, query client
+src/proxy.ts             /api/backend/* → backend proxy (adds auth headers)
 src/assets/              images imported statically into components
 assets/images/           raw image sources for `npm run images` (not imported by code)
 ```
@@ -78,12 +80,12 @@ Reference implementation, copy from it and delete it once real features exist:
 
 Decide per piece of data:
 
-| Data                                                 | Where                                | How                                                                      |
-| ---------------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------ |
-| Same for every user, changes rarely                  | Server Component                     | `"use cache"` + `cacheLife(...)` + `cacheTag(...)`                       |
-| Per-request (cookies, headers, searchParams, params) | Server Component inside `<Suspense>` | read the runtime API, pass values into cached functions                  |
-| Interactive / mutated on the client / polled         | Client Component                     | TanStack Query (`useSuspenseQuery`/`useQuery`), hydrated from the server |
-| Writes                                               | Server Action (`"use server"`)       | validate with Zod, return `ActionResult`, then `updateTag(tag)`          |
+| Data                                                 | Where                                | How                                                                         |
+| ---------------------------------------------------- | ------------------------------------ | --------------------------------------------------------------------------- |
+| Same for every user, changes rarely                  | Server Component                     | `"use cache"` + `cacheLife(...)` + `cacheTag(...)`                          |
+| Per-request (cookies, headers, searchParams, params) | Server Component inside `<Suspense>` | read the runtime API, pass values into cached functions                     |
+| Interactive / mutated on the client / polled         | Client Component                     | TanStack Query + `apiClient()` via `/api/backend`, hydrated from the server |
+| Writes                                               | Server Action (`"use server"`)       | validate with Zod, return `ActionResult`, then `updateTag(tag)`             |
 
 Rules:
 
@@ -92,16 +94,33 @@ Rules:
 - `notFound()` called inside a `<Suspense>` boundary renders the not-found UI with a `noindex` tag, but the HTTP status stays `200` because streaming has started. That is expected; call it before any Suspense boundary only if a real `404` status matters.
 - Never call `Date.now()`, `Math.random()` or `new Date()` (current time) in render without `await connection()` (or inside `"use cache"`).
 - Start independent requests in parallel (`Promise.all` or sibling Suspense boundaries). No request waterfalls.
-- **Route Handlers that TanStack Query refetches must call `await connection()` first.** Otherwise they are prerendered as static responses and a refetch right after a mutation returns stale data, undoing the user's change.
+- **Our own Route Handlers that TanStack Query refetches must call `await connection()` first.** Otherwise they are prerendered as static responses and a refetch right after a mutation returns stale data, undoing the user's change.
 - TanStack Query: one cache contract per feature (`key` + `tag` + `queryOptions`, see `task-cache.ts`). Hydrate with `dehydrate()` from `@/lib/query/hydrate` (TanStack's own `dehydrate` breaks prerendering).
 - Mutations: optimistic update in `onMutate`, write the server's response in `onSuccess`, rollback + `toast.error` in `onError`, `invalidateQueries` in `onSettled`.
 - Don't use TanStack Query for data a Server Component can render directly. Don't `useEffect` + `fetch`.
 
 ## Backend, env and auth
 
-- **API calls** go through `api()` in `src/lib/api.ts` (server-only): typed fetch, Zod-validated response, `ApiError` on non-2xx. Call it from `data.ts` functions, Server Actions and Route Handlers, never from the client.
-- **Env vars:** add every variable to `src/lib/env.ts` (validated with Zod) and to `.env.example`. Read `env.X`, not `process.env.X`. Only `NEXT_PUBLIC_*` reaches the browser; this repo is public, so secrets live only in `.env.local` and Vercel → Settings → Environment Variables.
-- **Auth tokens:** store in an httpOnly, secure cookie set by a Server Action or Route Handler. Read it with `cookies()` inside a component under `<Suspense>` and pass the token as an argument to `api()` / cached functions. Never put tokens in `localStorage` or `NEXT_PUBLIC_*`.
+The backend is a separate service (`API_URL`, FastAPI on Railway; docs at `${API_URL}/docs`). We use a **hybrid** setup:
+
+```
+first render (Server Components)  ──api()──────────────────────────────▶ backend   cached with "use cache"
+browser (TanStack Query, client)  ──apiClient()──▶ /api/backend/* ──proxy──▶ backend   no server function
+writes to server-cached data      ──Server Action──api()──▶ backend, then updateTag()
+```
+
+- **Server reads** (data for the first render): `api(path, schema, { token? })` from `@/lib/api` inside cached `data.ts` functions. Data arrives in the first HTML, no spinner.
+- **Browser reads** (refetch, search-as-you-type, polling) and **client-only writes**: `apiClient(path, schema)` from `@/lib/api-client`. It calls `/api/backend/<path>` on our own domain; `src/proxy.ts` forwards it to `API_URL` in the routing layer. No CORS, no backend URL in client code.
+- **Writes that change server-cached data** go through a Server Action (calls `api()`, then `updateTag(tag)`), so the server cache and the browser cache stay consistent. Optimistic updates hide the extra hop.
+- **Never** call the backend URL directly from the browser, and never use `api()` in client code (it is `server-only`).
+- **Auth (JWT):** the token lives only in an httpOnly cookie (`src/lib/session.ts`).
+  - Login/logout are Server Actions: call the backend, then `setSessionToken(token)` / `clearSession()`.
+  - Browser calls through `/api/backend/*` get `Authorization: Bearer <token>` added by the proxy automatically.
+  - Server code reads `getSessionToken()` (request-time data: inside `<Suspense>`, a Server Action or a Route Handler) and passes it to `api(..., { token })`. Per-user data is not cached with plain `"use cache"`; pass the token as an argument or use `"use cache: private"`.
+  - Never put tokens in `localStorage`, client state or `NEXT_PUBLIC_*`.
+- **`API_KEY`** is only for a backend that requires a server-to-server key. The proxy and `api()` add it server-side; it never reaches the browser. Public endpoints should not need it.
+- **Env vars:** add every variable to `src/lib/env.ts` (validated with Zod) and to `.env.example`. Read `env.X`, not `process.env.X` (exception: `src/proxy.ts`). Only `NEXT_PUBLIC_*` reaches the browser; this repo is public, so secrets live only in `.env.local` and Vercel → Settings → Environment Variables. Changing an env var on Vercel needs a redeploy.
+- **Without `API_URL`** the proxy does nothing and `/api/backend/*` falls through to local demo handlers in `src/app/api/backend/` (the tasks example). Delete them together with the example.
 
 ## Server Actions
 

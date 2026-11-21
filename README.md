@@ -35,7 +35,7 @@ Open http://localhost:3000. Requires Node 24 (see `.nvmrc`; `nvm use` picks it u
 - **Next.js 16** with Cache Components (`"use cache"`, `cacheLife`, `cacheTag`), Partial Prefetching, React Compiler, typed routes.
 - **shadcn/ui** (Radix, Nova style): ~45 components in `src/components/ui`, light/dark theme, toasts.
 - **TanStack Query** hydrated from the server, with optimistic mutations.
-- **Backend helpers:** typed `api()` client with Zod validation, validated env vars, a result type for Server Actions.
+- **Backend wiring:** `api()` for server reads, `apiClient()` + `/api/backend/*` proxy for browser calls (auth cookie → Bearer token), validated env vars, a result type for Server Actions.
 - **Images:** `next/image` serves AVIF → WebP, SVGs pass through, a script pre-converts originals.
 - **SEO:** metadata, OG image, `robots.txt`, `sitemap.xml`, SVG favicon. Only production is indexable.
 - **UX baseline:** skip link, error/404 pages, skeletons, empty states, `prefers-reduced-motion`.
@@ -49,7 +49,7 @@ The reference for every data pattern is [`src/app/examples/tasks`](src/app/examp
 1. Install Impeccable and run `/impeccable init` in your agent (see below). It writes `PRODUCT.md` and `DESIGN.md`, so every agent builds UI in one style.
 2. `src/lib/site.ts`: product name, description, routes.
 3. `src/app/globals.css`: brand colors (`--primary` etc. in `:root` and `.dark`); font in `src/lib/fonts.ts`.
-4. Backend: set `API_URL` in `.env.local` and Vercel, call it through `src/lib/api.ts`.
+4. Backend: set `API_URL` (and `API_KEY` if the backend still requires one) in `.env.local` and in Vercel → Settings → Environment Variables, then redeploy. See AGENTS.md → Backend, env and auth.
 5. Replace `src/app/page.tsx` and delete `examples`.
 
 ## Working with AI agents

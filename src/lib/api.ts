@@ -2,35 +2,30 @@ import "server-only";
 
 import type { z } from "zod";
 
+import { ApiError } from "@/lib/api-error";
 import { env } from "@/lib/env";
 
+export { ApiError };
+
 /**
- * Typed fetch for the backend API. Server-only: use it from cached data functions
- * (`"use cache"`), Server Components, Server Actions and Route Handlers. Never from the client.
+ * Typed fetch for the backend, used on the SERVER: cached data functions (`"use cache"`),
+ * Server Components, Server Actions and Route Handlers. In the browser use `apiClient` instead.
  *
- *   const user = await api("/users/me", userSchema, { token });
- *   const created = await api("/tasks", taskSchema, { method: "POST", body: { title } });
+ *   const tasks = await api("/tasks", z.array(taskSchema));
+ *   const me = await api("/users/me", userSchema, { token: await getSessionToken() });
+ *   const task = await api("/tasks", taskSchema, { method: "POST", body: { title } });
  *
  * - Responses are validated with Zod, so a backend change fails loudly here, not deep in the UI.
- * - Auth: pass a user token explicitly (read it from an httpOnly cookie in the caller).
- *   Do not read cookies() in this file: cached functions cannot access request data.
+ * - Auth: pass the user's token explicitly (getSessionToken() from @/lib/session).
+ *   Never read cookies inside a `"use cache"` function: cached functions cannot access request data.
  */
-export class ApiError extends Error {
-  constructor(
-    readonly status: number,
-    message: string,
-  ) {
-    super(message);
-  }
-}
-
 type ApiOptions = Omit<RequestInit, "body"> & { body?: unknown; token?: string };
 
 export async function api<T>(path: string, schema: z.ZodType<T>, options: ApiOptions = {}): Promise<T> {
-  if (!env.API_URL) throw new Error("API_URL is not set. Add it to .env.local and Vercel env.");
+  if (!env.API_URL) throw new Error("API_URL is not set. Add it to .env.local and the Vercel project env.");
 
   const { body, token, headers, ...init } = options;
-  const res = await fetch(new URL(path, env.API_URL), {
+  const res = await fetch(`${env.API_URL.replace(/\/$/, "")}${path}`, {
     ...init,
     headers: {
       Accept: "application/json",
