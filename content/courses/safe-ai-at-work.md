@@ -154,7 +154,7 @@ common_mistakes:
   - Learners treat text without names as harmless. Ask who could be harmed if it leaked.
 key_points:
   - Settings and contracts differ between personal and approved tools.
-  - Use four categories: public, internal, confidential, personal data.
+  - "Use four categories: public, internal, confidential, personal data."
   - When unsure, ask before pasting.
 follow_up_tasks:
   - Pick five documents from your last week and label each with a category.
