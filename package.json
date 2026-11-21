@@ -11,7 +11,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "npm run lint && npm run typecheck && npm run format:check",
-    "images": "node scripts/optimize-images.mjs"
+    "images": "node scripts/optimize-images.mjs",
+    "icons": "node scripts/generate-icons.mjs",
+    "courses:check": "node scripts/validate-courses.mjs",
+    "courses:build": "node scripts/validate-courses.mjs && node scripts/build-courses.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.108.2",
@@ -50,7 +53,8 @@
     "sharp": "^0.35.5",
     "svgo": "^4.1.0",
     "tailwindcss": "4.3.3",
-    "typescript": "^5"
+    "typescript": "^5",
+    "yaml": "^2.9.1"
   },
   "engines": {
     "node": ">=24"

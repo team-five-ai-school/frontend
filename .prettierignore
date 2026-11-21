@@ -6,3 +6,6 @@ skills-lock.json
 .agents/skills
 src/components/ui
 public
+content/courses
+content/courses.json
+content/courses.public.json

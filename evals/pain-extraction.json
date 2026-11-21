@@ -1,0 +1,142 @@
+[
+  {
+    "id": "pe-01",
+    "role": "teachers",
+    "input_text": "My evenings disappear into answering the same parent questions on the school app, and every term I rebuild the same quizzes from scratch.",
+    "expected_pains": ["customer-communication", "content"],
+    "notes": "Parents count as customer-communication; quizzes are materials (content)."
+  },
+  {
+    "id": "pe-02",
+    "role": "marketing",
+    "input_text": "First Monday of the month I copy numbers out of four dashboards into one deck for the CMO. It eats my whole morning.",
+    "expected_pains": ["reporting", "data"],
+    "notes": "Recurring report for a manager (reporting) built from pulling numbers across sources (data). Two pains from one routine."
+  },
+  {
+    "id": "pe-03",
+    "role": "hr",
+    "input_text": "Scheduling interviews is killing me. It's endless back and forth by email with hiring managers and candidates just to find one slot.",
+    "expected_pains": ["email", "planning"],
+    "notes": "Hard case: scheduling maps to planning, the back and forth is email. Meetings is a plausible extra but not expected."
+  },
+  {
+    "id": "pe-04",
+    "role": "lawyers",
+    "input_text": "Before every partner meeting I read 80-page contracts hunting for termination and liability clauses.",
+    "expected_pains": ["documents"],
+    "notes": "Reading and summarizing long documents. Meetings is only the trigger, not the pain."
+  },
+  {
+    "id": "pe-05",
+    "role": "small-business",
+    "input_text": "My inbox is a war zone. I open it at 7am and by noon that's all I've done.",
+    "expected_pains": ["email"],
+    "notes": "Slang and indirect wording; no mention of the word email routine. Do not infer customer-communication."
+  },
+  {
+    "id": "pe-06",
+    "role": "general",
+    "input_text": "Back-to-back calls all day, then nobody remembers who agreed to what, so I type up recaps and chase people afterwards.",
+    "expected_pains": ["meetings"],
+    "notes": "Following up on meetings. Email is a possible extra but not expected."
+  },
+  {
+    "id": "pe-07",
+    "role": "marketing",
+    "input_text": "I never know what to post. Mapping out a content calendar for three channels and then writing every post takes forever.",
+    "expected_pains": ["planning", "content"],
+    "notes": "Plans and schedules (content calendar) plus the posts themselves."
+  },
+  {
+    "id": "pe-08",
+    "role": "hr",
+    "input_text": "Every new hire it's the same 12 steps: set up accounts, send the welcome pack, update the tracker, tick the checklist.",
+    "expected_pains": ["repetitive-tasks"],
+    "notes": "Classic same multi-step routine. Documents or email would be extras."
+  },
+  {
+    "id": "pe-09",
+    "role": "lawyers",
+    "input_text": "I lose days hunting for relevant case law and then checking whether a ruling is still good law.",
+    "expected_pains": ["research"],
+    "notes": "Finding and checking information."
+  },
+  {
+    "id": "pe-10",
+    "role": "small-business",
+    "input_text": "Customers DM me the same stuff all day: opening hours, delivery, returns. I'm answering on WhatsApp till midnight.",
+    "expected_pains": ["customer-communication"],
+    "notes": "Customer replies on a chat channel, not email. Repetitive-tasks would be an extra."
+  },
+  {
+    "id": "pe-11",
+    "role": "general",
+    "input_text": "The export from our system is a mess. I spend hours fixing columns and dates in Excel before I can even look at it.",
+    "expected_pains": ["data"],
+    "notes": "Spreadsheets and exports."
+  },
+  {
+    "id": "pe-12",
+    "role": "teachers",
+    "input_text": "Sundays are gone. Mapping the whole term, which unit goes when, and then the weekly lesson plans on top.",
+    "expected_pains": ["planning"],
+    "notes": "Plans and schedules (lessons). Content may appear as an extra."
+  },
+  {
+    "id": "pe-13",
+    "role": "general",
+    "input_text": "Honestly I'm not sure. I just feel busy all the time and never get to the important stuff.",
+    "expected_pains": [],
+    "notes": "No identifiable routine; model should return an empty list rather than guess."
+  },
+  {
+    "id": "pe-14",
+    "role": "marketing",
+    "input_text": "Every couple of weeks I go through competitors' sites to see what they changed and compare their prices with ours.",
+    "expected_pains": ["research"],
+    "notes": "Finding and checking information. Repetitive-tasks is a tolerable extra."
+  },
+  {
+    "id": "pe-15",
+    "role": "small-business",
+    "input_text": "Bookkeeping and tax filing take most of my weekend, and on top of that I have to write the weekly newsletter.",
+    "expected_pains": ["content"],
+    "notes": "Bookkeeping and tax filing are not covered by the product, so no pain id for them. Do not map them to data or documents; newsletter is content."
+  },
+  {
+    "id": "pe-16",
+    "role": "lawyers",
+    "input_text": "Each week I send clients a status update on every matter, same format each time, plus a billing summary.",
+    "expected_pains": ["reporting", "customer-communication"],
+    "notes": "Recurring updates (reporting) addressed to clients (customer-communication)."
+  },
+  {
+    "id": "pe-17",
+    "role": "hr",
+    "input_text": "I rewrite policies and handbook pages in plain language, and then answer the same employee questions by email all day.",
+    "expected_pains": ["documents", "email"],
+    "notes": "Employees are not customers, so the replies are email. Customer-communication would be a tolerable extra."
+  },
+  {
+    "id": "pe-18",
+    "role": "teachers",
+    "input_text": "Marking 90 essays, and I write the same remarks over and over in the comments.",
+    "expected_pains": ["repetitive-tasks"],
+    "notes": "Hard case: marking is not a listed routine; the repeated comments are the same task each cycle. Documents is a tolerable extra."
+  },
+  {
+    "id": "pe-19",
+    "role": "general",
+    "input_text": "Death by status meetings: I prep slides for the Monday sync and then lose half a day typing up the minutes.",
+    "expected_pains": ["meetings"],
+    "notes": "Slang. Prep and minutes are both meetings; content (slides) is a tolerable extra."
+  },
+  {
+    "id": "pe-20",
+    "role": "marketing",
+    "input_text": "Every Friday I paste the same campaign numbers into the same template for my boss. Same thing, every single week.",
+    "expected_pains": ["reporting", "repetitive-tasks"],
+    "notes": "One routine that fits both a recurring report and a same-every-week task. Data is a tolerable extra."
+  }
+]

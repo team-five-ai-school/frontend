@@ -20,15 +20,16 @@ Open http://localhost:3000. Requires Node 24 (see `.nvmrc`; `nvm use` picks it u
 
 ## Commands
 
-| Command                        | What it does                                        |
-| ------------------------------ | --------------------------------------------------- |
-| `npm run dev`                  | Dev server                                          |
-| `npm run check`                | Lint + typecheck + Prettier. Run before every PR    |
-| `npm run build`                | Production build                                    |
-| `npm start`                    | Serve the production build (test caching here)      |
-| `npm run format`               | Format code (also sorts Tailwind classes)           |
-| `npm run images`               | `assets/images/*` → AVIF + WebP in `public/images/` |
-| `npx shadcn@latest add <name>` | Add a shadcn component (most are already installed) |
+| Command                        | What it does                                                       |
+| ------------------------------ | ------------------------------------------------------------------ |
+| `npm run dev`                  | Dev server                                                         |
+| `npm run check`                | Lint + typecheck + Prettier. Run before every PR                   |
+| `npm run build`                | Production build                                                   |
+| `npm start`                    | Serve the production build (test caching here)                     |
+| `npm run format`               | Format code (also sorts Tailwind classes)                          |
+| `npm run icons`                | Regenerate PWA icons from the mark in `scripts/generate-icons.mjs` |
+| `npm run images`               | `assets/images/*` → AVIF + WebP in `public/images/`                |
+| `npx shadcn@latest add <name>` | Add a shadcn component (most are already installed)                |
 
 ## What's inside
 
@@ -38,6 +39,7 @@ Open http://localhost:3000. Requires Node 24 (see `.nvmrc`; `nvm use` picks it u
 - **Backend wiring:** `api()` for server reads, `apiClient()` + `/api/backend/*` proxy for browser calls (auth cookie → Bearer token), validated env vars, a result type for Server Actions.
 - **Images:** `next/image` serves AVIF → WebP, SVGs pass through, a script pre-converts originals.
 - **SEO:** metadata, OG image, `robots.txt`, `sitemap.xml`, SVG favicon. Only production is indexable.
+- **PWA (optional):** installable to the home screen; offered once in onboarding, never required.
 - **UX baseline:** skip link, error/404 pages, skeletons, empty states, `prefers-reduced-motion`.
 - **Guardrails:** ESLint fails on raw palette colors, gradients and hex values, so UI stays on theme tokens.
 - **CI:** GitHub Actions (lint, typecheck, format, build) on every PR.
@@ -51,6 +53,13 @@ The reference for every data pattern is [`src/app/examples/tasks`](src/app/examp
 3. `src/app/globals.css`: brand colors (`--primary` etc. in `:root` and `.dark`); font in `src/lib/fonts.ts`.
 4. Backend: set `API_URL` (and `API_KEY` if the backend still requires one) in `.env.local` and in Vercel → Settings → Environment Variables, then redeploy. See AGENTS.md → Backend, env and auth.
 5. Replace `src/app/page.tsx` and delete `examples`.
+
+## Product docs
+
+- [`docs/spec.md`](docs/spec.md): product spec: features, AI components, API contract, data model, screens.
+- [`docs/roadmap.md`](docs/roadmap.md): hybrid AI + code roadmap.
+- [`content/`](content/): courses, course format, onboarding data.
+- [`evals/`](evals/): test sets for every AI component.
 
 ## Working with AI agents
 

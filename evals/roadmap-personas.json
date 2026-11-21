@@ -1,0 +1,564 @@
+[
+  {
+    "id": "rp-01",
+    "persona": "Olena, marketing manager at an online store",
+    "onboarding": {
+      "role": "marketing",
+      "office_suite": "google-workspace",
+      "ai_tool": "chatgpt",
+      "ai_level": "tried",
+      "goals": ["save-time"],
+      "chaos_map": {
+        "content": 8,
+        "reporting": 4,
+        "research": 2
+      },
+      "chaos_text": "Every month I spend a full day building the campaign report, and the rest of my week goes on writing ad and newsletter copy.",
+      "placement_quiz_correct": 2
+    },
+    "expectations": {
+      "must_include": [
+        "ai-assistants-101",
+        "safe-ai-at-work",
+        "gemini-in-google-workspace",
+        "chatgpt-for-work",
+        "ai-for-marketing",
+        "automate-your-routine"
+      ],
+      "must_not_include": [
+        "microsoft-365-copilot",
+        "ai-for-hr",
+        "ai-for-teachers",
+        "ai-for-lawyers",
+        "ai-for-small-business",
+        "ai-in-office-tools"
+      ],
+      "top_pains": ["content", "reporting"],
+      "top_pains_covered_within": 6,
+      "notes": "Needs both Gemini (Google suite) and ChatGPT for Work; reporting pain should lead to automate-your-routine in advanced."
+    }
+  },
+  {
+    "id": "rp-02",
+    "persona": "Dmytro, performance marketer at a SaaS company",
+    "onboarding": {
+      "role": "marketing",
+      "office_suite": "microsoft-365",
+      "ai_tool": "copilot",
+      "ai_level": "weekly",
+      "goals": ["better-work", "learn-tool"],
+      "chaos_map": {
+        "data": 8,
+        "reporting": 4,
+        "email": 2,
+        "content": 1
+      },
+      "chaos_text": "I export numbers from five dashboards into Excel every Monday and then turn them into a weekly report for the CMO.",
+      "placement_quiz_correct": 3
+    },
+    "expectations": {
+      "must_include": [
+        "safe-ai-at-work",
+        "microsoft-365-copilot",
+        "ai-for-marketing",
+        "automate-your-routine"
+      ],
+      "must_not_include": [
+        "gemini-in-google-workspace",
+        "chatgpt-for-work",
+        "ai-for-hr",
+        "ai-for-teachers",
+        "ai-for-lawyers",
+        "ai-for-small-business",
+        "ai-in-office-tools"
+      ],
+      "top_pains": ["data", "reporting"],
+      "top_pains_covered_within": 5,
+      "notes": "Placement 3/3: skip AI Assistants 101. Emphasize Copilot in Excel and the marketing data lessons, then automating the weekly report."
+    }
+  },
+  {
+    "id": "rp-03",
+    "persona": "Marta, HR generalist (edge case: HR needs Safe AI before role course)",
+    "onboarding": {
+      "role": "hr",
+      "office_suite": "google-workspace",
+      "ai_tool": "claude",
+      "ai_level": "none",
+      "goals": ["stay-relevant"],
+      "chaos_map": {
+        "email": 8,
+        "documents": 4,
+        "customer-communication": 2
+      },
+      "chaos_text": "Candidates write to me all day with the same questions and I also rewrite job ads and policies by hand.",
+      "placement_quiz_correct": 1
+    },
+    "expectations": {
+      "must_include": ["ai-assistants-101", "safe-ai-at-work", "gemini-in-google-workspace", "ai-for-hr"],
+      "must_not_include": [
+        "microsoft-365-copilot",
+        "chatgpt-for-work",
+        "ai-for-marketing",
+        "ai-for-teachers",
+        "ai-for-lawyers",
+        "ai-for-small-business",
+        "ai-in-office-tools",
+        "research-with-sources"
+      ],
+      "top_pains": ["email", "documents"],
+      "top_pains_covered_within": 5,
+      "notes": "Edge case: safe-ai-at-work must come before ai-for-hr (prerequisite) because HR handles personal data; AI beginner so start gently."
+    }
+  },
+  {
+    "id": "rp-04",
+    "persona": "Iryna, HR operations lead (edge case: biggest pain is repetitive tasks)",
+    "onboarding": {
+      "role": "hr",
+      "office_suite": "microsoft-365",
+      "ai_tool": "chatgpt",
+      "ai_level": "daily",
+      "goals": ["save-time", "better-work"],
+      "chaos_map": {
+        "repetitive-tasks": 8,
+        "reporting": 4,
+        "meetings": 2,
+        "email": 2
+      },
+      "chaos_text": "Every week I copy the same candidate data between the ATS, Excel and email templates, then summarize it for hiring managers.",
+      "placement_quiz_correct": 3
+    },
+    "expectations": {
+      "must_include": [
+        "safe-ai-at-work",
+        "microsoft-365-copilot",
+        "chatgpt-for-work",
+        "ai-for-hr",
+        "automate-your-routine"
+      ],
+      "must_not_include": [
+        "gemini-in-google-workspace",
+        "ai-for-marketing",
+        "ai-for-teachers",
+        "ai-for-lawyers",
+        "ai-for-small-business",
+        "ai-in-office-tools",
+        "research-with-sources"
+      ],
+      "top_pains": ["repetitive-tasks", "reporting"],
+      "top_pains_covered_within": 6,
+      "notes": "Edge case: biggest pain is repetitive-tasks, so automate-your-routine is expected; ai-agents-at-work only after it. Needs both Copilot and ChatGPT for Work."
+    }
+  },
+  {
+    "id": "rp-05",
+    "persona": "Oksana, primary school teacher",
+    "onboarding": {
+      "role": "teachers",
+      "office_suite": "google-workspace",
+      "ai_tool": "gemini",
+      "ai_level": "tried",
+      "goals": ["save-time"],
+      "chaos_map": {
+        "planning": 8,
+        "content": 4,
+        "documents": 2,
+        "customer-communication": 2
+      },
+      "chaos_text": "Planning lessons and making worksheets takes my whole Sunday, and I rewrite the same messages to parents each week.",
+      "placement_quiz_correct": 2
+    },
+    "expectations": {
+      "must_include": [
+        "ai-assistants-101",
+        "safe-ai-at-work",
+        "gemini-in-google-workspace",
+        "ai-for-teachers"
+      ],
+      "must_not_include": [
+        "microsoft-365-copilot",
+        "chatgpt-for-work",
+        "ai-for-marketing",
+        "ai-for-hr",
+        "ai-for-lawyers",
+        "ai-for-small-business",
+        "ai-in-office-tools"
+      ],
+      "top_pains": ["planning", "content"],
+      "top_pains_covered_within": 5,
+      "notes": "Emphasize lesson planning and materials in ai-for-teachers and Gemini in Docs and Slides; planning is only covered by the teachers course."
+    }
+  },
+  {
+    "id": "rp-06",
+    "persona": "Pavlo, university lecturer",
+    "onboarding": {
+      "role": "teachers",
+      "office_suite": "microsoft-365",
+      "ai_tool": "chatgpt",
+      "ai_level": "weekly",
+      "goals": ["stay-relevant", "better-work"],
+      "chaos_map": {
+        "research": 8,
+        "planning": 4,
+        "content": 2,
+        "meetings": 1
+      },
+      "chaos_text": "I spend hours finding and checking sources for my lectures and then building course plans around them.",
+      "placement_quiz_correct": 3
+    },
+    "expectations": {
+      "must_include": [
+        "safe-ai-at-work",
+        "microsoft-365-copilot",
+        "chatgpt-for-work",
+        "ai-for-teachers",
+        "research-with-sources"
+      ],
+      "must_not_include": [
+        "gemini-in-google-workspace",
+        "ai-for-marketing",
+        "ai-for-hr",
+        "ai-for-lawyers",
+        "ai-for-small-business",
+        "ai-in-office-tools"
+      ],
+      "top_pains": ["research", "planning"],
+      "top_pains_covered_within": 6,
+      "notes": "Research is the biggest pain: research-with-sources expected; ChatGPT for Work with own files for source work."
+    }
+  },
+  {
+    "id": "rp-07",
+    "persona": "Andrii, junior associate at a law firm (edge case: lawyer needs Safe AI before role course)",
+    "onboarding": {
+      "role": "lawyers",
+      "office_suite": "microsoft-365",
+      "ai_tool": "copilot",
+      "ai_level": "none",
+      "goals": ["learn-tool"],
+      "chaos_map": {
+        "documents": 8,
+        "research": 4,
+        "email": 2,
+        "meetings": 2
+      },
+      "chaos_text": "I read and summarize long contracts all day and check case law by hand; I am nervous about pasting client data into AI.",
+      "placement_quiz_correct": 0
+    },
+    "expectations": {
+      "must_include": [
+        "ai-assistants-101",
+        "safe-ai-at-work",
+        "microsoft-365-copilot",
+        "ai-for-lawyers",
+        "research-with-sources"
+      ],
+      "must_not_include": [
+        "gemini-in-google-workspace",
+        "chatgpt-for-work",
+        "ai-for-marketing",
+        "ai-for-hr",
+        "ai-for-teachers",
+        "ai-for-small-business",
+        "ai-in-office-tools"
+      ],
+      "top_pains": ["documents", "research"],
+      "top_pains_covered_within": 5,
+      "notes": "Edge case: confidentiality first. safe-ai-at-work before ai-for-lawyers; research pain leads to research-with-sources."
+    }
+  },
+  {
+    "id": "rp-08",
+    "persona": "Sofia, in-house counsel",
+    "onboarding": {
+      "role": "lawyers",
+      "office_suite": "google-workspace",
+      "ai_tool": "chatgpt",
+      "ai_level": "daily",
+      "goals": ["better-work"],
+      "chaos_map": {
+        "research": 8,
+        "documents": 4,
+        "email": 2
+      },
+      "chaos_text": "I research regulations and compare contract versions, and I want to do it with my own documents without leaking anything.",
+      "placement_quiz_correct": 3
+    },
+    "expectations": {
+      "must_include": [
+        "safe-ai-at-work",
+        "gemini-in-google-workspace",
+        "chatgpt-for-work",
+        "ai-for-lawyers",
+        "research-with-sources"
+      ],
+      "must_not_include": [
+        "microsoft-365-copilot",
+        "ai-for-marketing",
+        "ai-for-hr",
+        "ai-for-teachers",
+        "ai-for-small-business",
+        "ai-in-office-tools"
+      ],
+      "top_pains": ["research", "documents"],
+      "top_pains_covered_within": 6,
+      "notes": "Experienced user: skip basics, stress verification, anonymization and source checking."
+    }
+  },
+  {
+    "id": "rp-09",
+    "persona": "Taras, owner of a small bakery chain",
+    "onboarding": {
+      "role": "small-business",
+      "office_suite": "google-workspace",
+      "ai_tool": "none",
+      "ai_level": "none",
+      "goals": ["save-time"],
+      "chaos_map": {
+        "customer-communication": 8,
+        "data": 4,
+        "content": 2,
+        "email": 2
+      },
+      "chaos_text": "I answer customers on Instagram and email all day and I never understand my sales spreadsheet.",
+      "placement_quiz_correct": 1
+    },
+    "expectations": {
+      "must_include": [
+        "ai-assistants-101",
+        "safe-ai-at-work",
+        "gemini-in-google-workspace",
+        "ai-for-small-business"
+      ],
+      "must_not_include": [
+        "microsoft-365-copilot",
+        "chatgpt-for-work",
+        "ai-for-marketing",
+        "ai-for-hr",
+        "ai-for-teachers",
+        "ai-for-lawyers",
+        "ai-in-office-tools",
+        "research-with-sources"
+      ],
+      "top_pains": ["customer-communication", "data"],
+      "top_pains_covered_within": 5,
+      "notes": "Has a suite course and no AI tool: Gemini only, NOT chatgpt-for-work. Emphasize customer replies and sales data."
+    }
+  },
+  {
+    "id": "rp-10",
+    "persona": "Natalia, owner of a small design studio (edge case: suite other, no AI tool)",
+    "onboarding": {
+      "role": "small-business",
+      "office_suite": "other",
+      "ai_tool": "none",
+      "ai_level": "none",
+      "goals": ["save-time", "stay-relevant"],
+      "chaos_map": {
+        "customer-communication": 8,
+        "content": 4,
+        "data": 2,
+        "planning": 2
+      },
+      "chaos_text": "I use whatever email and notes apps I find; clients ask the same things again and again and I write all my posts myself.",
+      "placement_quiz_correct": 0
+    },
+    "expectations": {
+      "must_include": ["ai-assistants-101", "safe-ai-at-work", "chatgpt-for-work", "ai-for-small-business"],
+      "must_not_include": [
+        "gemini-in-google-workspace",
+        "microsoft-365-copilot",
+        "ai-for-marketing",
+        "ai-for-hr",
+        "ai-for-teachers",
+        "ai-for-lawyers",
+        "ai-in-office-tools",
+        "research-with-sources"
+      ],
+      "top_pains": ["customer-communication", "content"],
+      "top_pains_covered_within": 5,
+      "notes": "Edge case: no suite and no AI tool, so chatgpt-for-work is the tools course. Total beginner; keep it simple and practical."
+    }
+  },
+  {
+    "id": "rp-11",
+    "persona": "Viktor, operations coordinator",
+    "onboarding": {
+      "role": "general",
+      "office_suite": "microsoft-365",
+      "ai_tool": "copilot",
+      "ai_level": "weekly",
+      "goals": ["learn-tool"],
+      "chaos_map": {
+        "meetings": 8,
+        "email": 4,
+        "reporting": 2,
+        "documents": 2
+      },
+      "chaos_text": "I am in meetings most of the day and spend the evening catching up on email threads and writing follow-ups.",
+      "placement_quiz_correct": 3
+    },
+    "expectations": {
+      "must_include": ["safe-ai-at-work", "microsoft-365-copilot"],
+      "must_not_include": [
+        "gemini-in-google-workspace",
+        "chatgpt-for-work",
+        "ai-for-marketing",
+        "ai-for-hr",
+        "ai-for-teachers",
+        "ai-for-lawyers",
+        "ai-for-small-business",
+        "ai-in-office-tools"
+      ],
+      "top_pains": ["meetings", "email"],
+      "top_pains_covered_within": 5,
+      "notes": "General role: no role course. Emphasize Copilot for meetings and email recap; advanced courses only by overlap."
+    }
+  },
+  {
+    "id": "rp-12",
+    "persona": "Kateryna, project assistant",
+    "onboarding": {
+      "role": "general",
+      "office_suite": "google-workspace",
+      "ai_tool": "chatgpt",
+      "ai_level": "daily",
+      "goals": ["better-work"],
+      "chaos_map": {
+        "email": 8,
+        "data": 4,
+        "reporting": 2
+      },
+      "chaos_text": "Most of my day is inbox and spreadsheets; I use ChatGPT for drafts already but it is scattered.",
+      "placement_quiz_correct": 2
+    },
+    "expectations": {
+      "must_include": [
+        "ai-assistants-101",
+        "safe-ai-at-work",
+        "gemini-in-google-workspace",
+        "chatgpt-for-work"
+      ],
+      "must_not_include": [
+        "microsoft-365-copilot",
+        "ai-for-marketing",
+        "ai-for-hr",
+        "ai-for-teachers",
+        "ai-for-lawyers",
+        "ai-for-small-business",
+        "ai-in-office-tools"
+      ],
+      "top_pains": ["email", "data"],
+      "top_pains_covered_within": 6,
+      "notes": "General role: no role course. Heavy daily user with both Gemini and ChatGPT: structure what they already do."
+    }
+  },
+  {
+    "id": "rp-13",
+    "persona": "Bohdan, content marketer at an agency",
+    "onboarding": {
+      "role": "marketing",
+      "office_suite": "other",
+      "ai_tool": "chatgpt",
+      "ai_level": "weekly",
+      "goals": ["better-work", "stay-relevant"],
+      "chaos_map": {
+        "content": 8,
+        "research": 4,
+        "planning": 2
+      },
+      "chaos_text": "I write posts, landing pages and decks for several clients and spend a lot of time researching their markets.",
+      "placement_quiz_correct": 3
+    },
+    "expectations": {
+      "must_include": ["safe-ai-at-work", "chatgpt-for-work", "ai-for-marketing"],
+      "must_not_include": [
+        "gemini-in-google-workspace",
+        "microsoft-365-copilot",
+        "ai-for-hr",
+        "ai-for-teachers",
+        "ai-for-lawyers",
+        "ai-for-small-business",
+        "ai-in-office-tools"
+      ],
+      "top_pains": ["content", "research"],
+      "top_pains_covered_within": 5,
+      "notes": "Suite is other but AI tool is ChatGPT: chatgpt-for-work is the tools course. Emphasize briefs and copy variations."
+    }
+  },
+  {
+    "id": "rp-14",
+    "persona": "Leonid, owner of a small online shop",
+    "onboarding": {
+      "role": "small-business",
+      "office_suite": "microsoft-365",
+      "ai_tool": "chatgpt",
+      "ai_level": "tried",
+      "goals": ["save-time"],
+      "chaos_map": {
+        "data": 8,
+        "customer-communication": 4,
+        "email": 2
+      },
+      "chaos_text": "Orders and stock live in Excel exports; I lose hours cleaning them and then answering customers about delays.",
+      "placement_quiz_correct": 2
+    },
+    "expectations": {
+      "must_include": [
+        "ai-assistants-101",
+        "safe-ai-at-work",
+        "microsoft-365-copilot",
+        "chatgpt-for-work",
+        "ai-for-small-business"
+      ],
+      "must_not_include": [
+        "gemini-in-google-workspace",
+        "ai-for-marketing",
+        "ai-for-hr",
+        "ai-for-teachers",
+        "ai-for-lawyers",
+        "ai-in-office-tools",
+        "research-with-sources"
+      ],
+      "top_pains": ["data", "customer-communication"],
+      "top_pains_covered_within": 6,
+      "notes": "Needs both Copilot and ChatGPT for Work; emphasize Excel data cleaning and customer reply templates."
+    }
+  },
+  {
+    "id": "rp-15",
+    "persona": "Anna, finance and admin assistant",
+    "onboarding": {
+      "role": "general",
+      "office_suite": "google-workspace",
+      "ai_tool": "gemini",
+      "ai_level": "daily",
+      "goals": ["save-time", "learn-tool"],
+      "chaos_map": {
+        "reporting": 8,
+        "research": 4,
+        "data": 2
+      },
+      "chaos_text": "Every Friday I pull numbers from several sheets into a status report, and I also look up supplier information.",
+      "placement_quiz_correct": 3
+    },
+    "expectations": {
+      "must_include": ["safe-ai-at-work", "gemini-in-google-workspace", "automate-your-routine"],
+      "must_not_include": [
+        "microsoft-365-copilot",
+        "chatgpt-for-work",
+        "ai-for-marketing",
+        "ai-for-hr",
+        "ai-for-teachers",
+        "ai-for-lawyers",
+        "ai-for-small-business",
+        "ai-in-office-tools"
+      ],
+      "top_pains": ["reporting", "research"],
+      "top_pains_covered_within": 5,
+      "notes": "Reporting is the biggest pain: automate-your-routine expected; Gemini in Sheets for the data pulls."
+    }
+  }
+]

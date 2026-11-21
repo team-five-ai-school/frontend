@@ -12,6 +12,15 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Hackathon frontend for Team Five. The product task is decided on the day, so build fast but keep the codebase coherent. When `PRODUCT.md` / `DESIGN.md` exist (created by `/impeccable init`), read them before any UI work and follow them over the defaults below.
 
+## Product docs (read before building a feature)
+
+- `docs/spec.md`: what we build: features, AI components, API contract, data model, screens.
+- `docs/roadmap.md`: the hybrid AI + code roadmap (backend).
+- `content/FORMAT.md` + `content/courses/*.md`: course content and its format; `content/onboarding.json`: onboarding questions and ids.
+- `evals/README.md`: eval sets for every AI component and how to score them.
+
+If a task conflicts with these docs, follow the docs and tell the user; if the docs are missing something, update them in the same PR.
+
 ## Setup check
 
 At the start of a session, check the items below. If one is missing, mention it to the user **once** in your first reply, then continue with their request. Skip this in subagents and non-interactive runs.
@@ -42,6 +51,7 @@ When both exist, commit them in a PR and delete this section.
 - `npm run build`: production build. Also catches Cache Components prerender errors. Some caching bugs only show up here or with `npm run build && npm start`, not in `npm run dev`.
 - `npm run format`: Prettier (sorts Tailwind classes)
 - `npx shadcn@latest add <component>`: add a UI component
+- `npm run courses:build`: after editing `content/courses/*.md`, regenerate `content/courses.json` (backend) and `content/courses.public.json` (browser, no answers). CI fails if they are stale.
 - `npm run images`: convert raw images in `assets/images/` → AVIF + WebP in `public/images/`
 
 ## Structure
@@ -59,6 +69,7 @@ src/components/          app-wide components (header, providers, theme toggle)
 src/lib/                 site config + routes, env, api (server) + api-client (browser), session cookie,
                          action result, fonts, query client
 src/proxy.ts             /api/backend/* → backend proxy (adds auth headers)
+src/components/pwa/      optional install card + service worker registration
 src/assets/              images imported statically into components
 assets/images/           raw image sources for `npm run images` (not imported by code)
 ```
@@ -101,7 +112,7 @@ Rules:
 
 ## Backend, env and auth
 
-The backend is a separate service (`API_URL`, FastAPI on Railway; docs at `${API_URL}/docs`). We use a **hybrid** setup:
+The backend is a separate service: repo `team-five-ai-school/backend`, Node 24 + Fastify + Postgres (Drizzle) + Zod on Railway (`API_URL`; Swagger at `${API_URL}/docs`). It can import `content/courses.json` and share Zod schemas with this repo. We use a **hybrid** setup:
 
 ```
 first render (Server Components)  ──api()──────────────────────────────▶ backend   cached with "use cache"
@@ -121,6 +132,14 @@ writes to server-cached data      ──Server Action──api()──▶ backen
 - **`API_KEY`** is only for a backend that requires a server-to-server key. The proxy and `api()` add it server-side; it never reaches the browser. Public endpoints should not need it.
 - **Env vars:** add every variable to `src/lib/env.ts` (validated with Zod) and to `.env.example`. Read `env.X`, not `process.env.X` (exception: `src/proxy.ts`). Only `NEXT_PUBLIC_*` reaches the browser; this repo is public, so secrets live only in `.env.local` and Vercel → Settings → Environment Variables. Changing an env var on Vercel needs a redeploy.
 - **Without `API_URL`** the proxy does nothing and `/api/backend/*` falls through to local demo handlers in `src/app/api/backend/` (the tasks example). Delete them together with the example.
+
+## PWA (optional for users)
+
+The app is a web app first. Installing it to the home screen is an **optional** offer, never a requirement. No push notifications.
+
+- `src/app/manifest.ts` + icons from `npm run icons` (`scripts/generate-icons.mjs`) make it installable; `public/sw.js` is a minimal no-op service worker (no caching, no push).
+- Offer installation **once, at the end of onboarding**, with `<InstallAppCard onDone={next} />` from `src/components/pwa/install-app-card.tsx`. It always has "Not now". Skip the step when `usePwaInstall().available` is false. No install banners on other pages.
+- iOS has no install API: the card shows "Share → Add to Home Screen" instructions instead of a button.
 
 ## Server Actions
 
