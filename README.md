@@ -51,7 +51,7 @@ The reference for the data patterns is the courses feature: [`src/app/courses`](
 1. Install Impeccable and run `/impeccable init` in your agent (see below). It writes `PRODUCT.md` and `DESIGN.md`, so every agent builds UI in one style.
 2. `src/lib/site.ts`: product name, description, routes.
 3. `src/app/globals.css`: brand colors (`--primary` etc. in `:root` and `.dark`); font in `src/lib/fonts.ts`.
-4. Backend: set `API_URL` (and `API_KEY` if the backend still requires one) in `.env.local` and in Vercel → Settings → Environment Variables, then redeploy. See AGENTS.md → Backend, env and auth.
+4. Backend: set `API_URL` in `.env.local` and in Vercel → Settings → Environment Variables, then redeploy. See AGENTS.md → Backend, env and auth.
 5. Replace `src/app/page.tsx`.
 
 ## Product docs
