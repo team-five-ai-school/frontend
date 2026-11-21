@@ -36,6 +36,11 @@ type MentorState = {
 
 const MentorCtx = React.createContext<MentorState | null>(null);
 
+/** The Mentor for this screen, or null outside <MentorProvider> (e.g. guests have no Mentor). */
+export function useOptionalMentor() {
+  return React.useContext(MentorCtx);
+}
+
 export function useMentor() {
   const ctx = React.useContext(MentorCtx);
   if (!ctx) throw new Error("useMentor must be used inside <MentorProvider>");

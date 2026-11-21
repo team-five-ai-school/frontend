@@ -13,7 +13,7 @@ export function MistakeCard({ mistake, className }: { mistake: Mistake; classNam
     { label: t("mentor.mistake.what"), text: mistake.what },
     { label: t("mentor.mistake.why"), text: mistake.why },
     { label: t("mentor.mistake.how"), text: mistake.how, marked: true },
-  ];
+  ].filter((row) => row.text.trim()); // a review can arrive with only part of the note
   return (
     <section
       aria-label={t("mentor.mistake.label")}
