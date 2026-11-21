@@ -32,7 +32,7 @@ export const roles: Role[] = [
   },
   { id: "sales_manager", title: "Sales manager", description: "Clients, emails, proposals" },
   {
-    id: "business_owner",
+    id: "small_business_owner",
     title: "Small business owner",
     description: "A bit of everything and never enough time",
   },
@@ -48,11 +48,11 @@ export const quizQuestions: QuizQuestion[] = [
     text: "Which of these do you do every week?",
     hint: "Pick everything you recognize",
     options: [
-      { id: "o1", label: "I reply to the same emails", chaosType: "communication" },
-      { id: "o2", label: "I copy data from documents into spreadsheets", chaosType: "data" },
-      { id: "o3", label: "I write reports and meeting minutes", chaosType: "documents" },
-      { id: "o4", label: "I schedule meetings", chaosType: "scheduling" },
-      { id: "o5", label: "I look for a file or an email", chaosType: "search" },
+      { id: "o1", label: "I reply to the same emails", chaosType: "repetitive_replies" },
+      { id: "o2", label: "I copy data from documents into spreadsheets", chaosType: "manual_transfer" },
+      { id: "o3", label: "I write reports and meeting minutes", chaosType: "reports" },
+      { id: "o4", label: "I schedule meetings", chaosType: "status_tracking" },
+      { id: "o5", label: "I look for a file or an email", chaosType: "scattered_channels" },
     ],
   },
   {
@@ -72,7 +72,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "f1",
       title: "Emails and messages",
-      chaosType: "communication",
+      chaosType: "repetitive_replies",
       aiSharePercent: 70,
       hoursNow: 6,
       hoursWithAi: 1.8,
@@ -82,7 +82,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "f2",
       title: "Documents and reports",
-      chaosType: "documents",
+      chaosType: "reports",
       aiSharePercent: 65,
       hoursNow: 6.5,
       hoursWithAi: 2.3,
@@ -92,7 +92,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "f3",
       title: "Spreadsheets and data",
-      chaosType: "data",
+      chaosType: "manual_transfer",
       aiSharePercent: 75,
       hoursNow: 6,
       hoursWithAi: 1.5,
@@ -102,7 +102,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "f4",
       title: "Scheduling",
-      chaosType: "scheduling",
+      chaosType: "status_tracking",
       aiSharePercent: 45,
       hoursNow: 3.5,
       hoursWithAi: 1.9,
@@ -114,7 +114,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "t1",
       title: "Reply to routine customer emails",
-      chaosType: "communication",
+      chaosType: "repetitive_replies",
       hoursPerWeek: 3,
       handler: "ai",
       flowId: "f1",
@@ -122,7 +122,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "t2",
       title: "Sort incoming mail",
-      chaosType: "communication",
+      chaosType: "repetitive_replies",
       hoursPerWeek: 2,
       handler: "ai",
       flowId: "f1",
@@ -130,7 +130,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "t3",
       title: "Approve non-standard requests",
-      chaosType: "communication",
+      chaosType: "repetitive_replies",
       hoursPerWeek: 1,
       handler: "you",
       flowId: "f1",
@@ -138,7 +138,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "t4",
       title: "Prepare the weekly report",
-      chaosType: "documents",
+      chaosType: "reports",
       hoursPerWeek: 3,
       handler: "shared",
       flowId: "f2",
@@ -146,7 +146,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "t5",
       title: "Write meeting minutes",
-      chaosType: "documents",
+      chaosType: "reports",
       hoursPerWeek: 2,
       handler: "ai",
       flowId: "f2",
@@ -154,7 +154,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "t6",
       title: "Draft internal memos",
-      chaosType: "documents",
+      chaosType: "reports",
       hoursPerWeek: 1.5,
       handler: "ai",
       flowId: "f2",
@@ -162,7 +162,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "t7",
       title: "Copy invoice data into a spreadsheet",
-      chaosType: "data",
+      chaosType: "manual_transfer",
       hoursPerWeek: 4,
       handler: "ai",
       flowId: "f3",
@@ -170,7 +170,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "t8",
       title: "Cross-check order lists",
-      chaosType: "data",
+      chaosType: "manual_transfer",
       hoursPerWeek: 2,
       handler: "shared",
       flowId: "f3",
@@ -178,7 +178,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "t9",
       title: "Agree on meeting times",
-      chaosType: "scheduling",
+      chaosType: "status_tracking",
       hoursPerWeek: 2,
       handler: "ai",
       flowId: "f4",
@@ -186,7 +186,7 @@ export const chaosMap: ChaosMapData = {
     {
       id: "t10",
       title: "Decide what to do first",
-      chaosType: "scheduling",
+      chaosType: "status_tracking",
       hoursPerWeek: 1.5,
       handler: "you",
       flowId: "f4",
@@ -204,10 +204,10 @@ export const assessment: AssessmentResult = {
 };
 
 export const tracks: Track[] = [
-  { id: "tr1", title: "Correspondence", chaosType: "communication" },
-  { id: "tr2", title: "Documents", chaosType: "documents" },
-  { id: "tr3", title: "Spreadsheets", chaosType: "data" },
-  { id: "tr4", title: "Scheduling", chaosType: "scheduling" },
+  { id: "tr1", title: "Correspondence", chaosType: "repetitive_replies" },
+  { id: "tr2", title: "Documents", chaosType: "reports" },
+  { id: "tr3", title: "Spreadsheets", chaosType: "manual_transfer" },
+  { id: "tr4", title: "Scheduling", chaosType: "status_tracking" },
 ];
 
 export const tools: Tool[] = [
@@ -527,9 +527,15 @@ function buildDays(): StreakDay[] {
 export const streak: Streak = { current: 12, best: 15, todayDone: false, days: buildDays() };
 
 export const routineEntries: RoutineTimeEntry[] = [
-  { id: "rt1", label: "Routine emails", chaosType: "communication", minutesBefore: 180, minutesAfter: 50 },
-  { id: "rt2", label: "Reports and minutes", chaosType: "documents", minutesBefore: 300, minutesAfter: 120 },
-  { id: "rt3", label: "Invoice data", chaosType: "data", minutesBefore: 240, minutesAfter: null },
+  {
+    id: "rt1",
+    label: "Routine emails",
+    chaosType: "repetitive_replies",
+    minutesBefore: 180,
+    minutesAfter: 50,
+  },
+  { id: "rt2", label: "Reports and minutes", chaosType: "reports", minutesBefore: 300, minutesAfter: 120 },
+  { id: "rt3", label: "Invoice data", chaosType: "manual_transfer", minutesBefore: 240, minutesAfter: null },
 ];
 
 export const certificate: Certificate = {
@@ -544,7 +550,7 @@ export const certificate: Certificate = {
 
 export const teamHeatmap: TeamHeatmapData = {
   minGroupSize: 5,
-  chaosTypes: ["communication", "documents", "data", "scheduling", "search"],
+  chaosTypes: ["repetitive_replies", "reports", "manual_transfer", "status_tracking", "scattered_channels"],
   departments: [
     { id: "d1", name: "Sales", headcount: 18, hours: [7.5, 3, 2, 2.5, 1.5] },
     { id: "d2", name: "Accounting", headcount: 9, hours: [3, 4.5, 8, 1, 2] },

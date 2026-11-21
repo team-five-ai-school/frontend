@@ -1,6 +1,6 @@
 /**
  * Proposed API contracts (frontend side). The backend does not have these entities yet;
- * docs/api-contracts.md describes the same shapes as endpoints + DTOs for the backend team.
+ * The backend repo's docs/api-contracts.md describes the onboarding endpoints (section "Onboarding API" below).
  * Product component props are derived from these types. Keep both files in sync.
  *
  * Conventions: ids are strings (uuid on the backend), dates are ISO 8601 strings, durations are minutes,
@@ -10,8 +10,17 @@ import { z } from "zod";
 
 /* ───────── Shared enums ───────── */
 
-/** Kinds of routine "chaos". Same keys on the chaos map, in courses and on the B2B heatmap. */
-export const ChaosType = z.enum(["communication", "documents", "data", "scheduling", "search", "content"]);
+/**
+ * Kinds of routine "chaos". Same keys on the chaos map, in skills (backend `skills.chaos_type`), courses and
+ * on the B2B heatmap.
+ */
+export const ChaosType = z.enum([
+  "scattered_channels",
+  "manual_transfer",
+  "repetitive_replies",
+  "reports",
+  "status_tracking",
+]);
 export type ChaosType = z.infer<typeof ChaosType>;
 
 /** Who does a task: the two product color roles + a shared state (AI prepares, the person decides). */
@@ -21,7 +30,7 @@ export type Handler = z.infer<typeof Handler>;
 export const RoleId = z.enum([
   "accountant",
   "sales_manager",
-  "business_owner",
+  "small_business_owner",
   "office_manager",
   "teacher",
   "other",
@@ -374,3 +383,103 @@ export const Kpi = z.object({
     .nullable(),
 });
 export type Kpi = z.infer<typeof Kpi>;
+
+/* ───────── Onboarding API (backend, see backend/docs/api-contracts.md) ───────── */
+
+/** Share of a task AI can take over: auto (AI does it), assist (AI prepares, you check), human (needs you). */
+export const AiCapability = z.enum(["auto", "assist", "human"]);
+export type AiCapability = z.infer<typeof AiCapability>;
+
+export const ApiRole = z.object({ slug: z.string(), title: z.string(), description: z.string() });
+export type ApiRole = z.infer<typeof ApiRole>;
+
+export const ApiWorkTask = z.object({
+  id: z.string(),
+  title: z.string(),
+  skillSlug: z.string(),
+  chaosType: ChaosType,
+  hoursPerWeek: z.number(),
+  aiCapability: AiCapability,
+  source: z.enum(["template", "llm", "user"]),
+});
+export type ApiWorkTask = z.infer<typeof ApiWorkTask>;
+
+export const OnboardingSession = z.object({
+  sessionId: z.string(),
+  role: ApiRole,
+  quiz: z.array(QuizQuestion),
+  answers: z.array(QuizAnswer),
+  status: z.enum(["started", "described", "completed", "claimed"]),
+  tasks: z.array(ApiWorkTask),
+});
+export type OnboardingSession = z.infer<typeof OnboardingSession>;
+
+/** Streamed by POST /onboarding/sessions/:id/describe as a growing JSON document (useObject). */
+export const DescribedTasks = z.object({
+  tasks: z.array(
+    z.object({
+      title: z.string(),
+      skillSlug: z.string(),
+      hoursPerWeek: z.number(),
+      aiCapability: AiCapability,
+    }),
+  ),
+  source: z.enum(["llm", "template"]),
+});
+export type DescribedTasks = z.infer<typeof DescribedTasks>;
+
+export const ApiChaosLane = z.object({
+  id: z.string(),
+  kind: z.enum(["skill", "human"]),
+  skillSlug: z.string().nullable(),
+  title: z.string(),
+  chaosType: ChaosType.nullable(),
+  taskIds: z.array(z.string()),
+  hoursTotal: z.number(),
+  hoursAiCan: z.number(),
+  aiSharePercent: z.number(),
+});
+export const ApiChaosMap = z.object({
+  id: z.string(),
+  version: z.number().int(),
+  lanes: z.array(ApiChaosLane),
+  totals: z.object({
+    hoursTotal: z.number(),
+    hoursAiCan: z.number(),
+    hoursHuman: z.number(),
+    aiSharePercent: z.number(),
+  }),
+  createdAt: z.string(),
+});
+export type ApiChaosMap = z.infer<typeof ApiChaosMap>;
+
+/** `slot` = the skill is planned but no lesson exists yet (lessonId null); filled when a lesson is published. */
+export const PlanItemStatus = z.enum(["slot", "ready", "in_progress", "done"]);
+export const PlanItem = z.object({
+  id: z.string(),
+  order: z.number().int(),
+  skillSlug: z.string(),
+  skillTitle: z.string(),
+  lessonId: z.string().nullable(),
+  lessonTitle: z.string().nullable(),
+  status: PlanItemStatus,
+  sourceTaskIds: z.array(z.string()),
+  estimatedHoursSaved: z.number(),
+  rationale: z.string().nullable(),
+});
+export type PlanItem = z.infer<typeof PlanItem>;
+export const LearningPlan = z.object({
+  id: z.string(),
+  version: z.number().int(),
+  status: z.enum(["active", "superseded"]),
+  items: z.array(PlanItem),
+  createdAt: z.string(),
+});
+export type LearningPlan = z.infer<typeof LearningPlan>;
+
+export const OnboardingCompletion = z.object({
+  tasks: z.array(ApiWorkTask),
+  chaosMap: ApiChaosMap,
+  plan: LearningPlan,
+});
+export type OnboardingCompletion = z.infer<typeof OnboardingCompletion>;

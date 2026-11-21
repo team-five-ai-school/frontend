@@ -17,7 +17,7 @@ import { t } from "@/lib/i18n";
 const roleIcon: Record<RoleId, LucideIcon> = {
   accountant: CalculatorIcon,
   sales_manager: BriefcaseBusinessIcon,
-  business_owner: StoreIcon,
+  small_business_owner: StoreIcon,
   office_manager: Building2Icon,
   teacher: GraduationCapIcon,
   other: UserRoundIcon,

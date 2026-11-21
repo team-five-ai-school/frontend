@@ -1,10 +1,9 @@
 import {
-  CalendarDaysIcon,
+  ArrowRightLeftIcon,
+  BellRingIcon,
   FileTextIcon,
-  MailIcon,
-  PenLineIcon,
-  SearchIcon,
-  Table2Icon,
+  InboxIcon,
+  MessagesSquareIcon,
   type LucideIcon,
 } from "lucide-react";
 
@@ -12,12 +11,11 @@ import type { ChaosType, Handler } from "@/lib/contracts";
 import { locale, t } from "@/lib/i18n";
 
 export const chaosIcon: Record<ChaosType, LucideIcon> = {
-  communication: MailIcon,
-  documents: FileTextIcon,
-  data: Table2Icon,
-  scheduling: CalendarDaysIcon,
-  search: SearchIcon,
-  content: PenLineIcon,
+  scattered_channels: InboxIcon,
+  manual_transfer: ArrowRightLeftIcon,
+  repetitive_replies: MessagesSquareIcon,
+  reports: FileTextIcon,
+  status_tracking: BellRingIcon,
 };
 
 export const chaosLabel = (type: ChaosType) => t(`chaosMap.chaos.${type}`);

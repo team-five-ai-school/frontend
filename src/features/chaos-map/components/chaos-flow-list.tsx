@@ -11,6 +11,9 @@ import type { ChaosMode } from "./chaos-map";
  */
 export function ChaosFlowList({ data, mode }: { data: ChaosMapData; mode: ChaosMode }) {
   const ai = mode === "ai";
+  // Tasks whose flow is not on the map (e.g. a skill with decisions only) are listed as the person's decisions.
+  const flowIds = new Set(data.flows.map((f) => f.id));
+  const orphans = data.tasks.filter((task) => !flowIds.has(task.flowId));
   return (
     <ul className="flex flex-col">
       {data.flows.map((flow) => {
@@ -47,6 +50,21 @@ export function ChaosFlowList({ data, mode }: { data: ChaosMapData; mode: ChaosM
           </li>
         );
       })}
+      {orphans.length > 0 && (
+        <li className="flex flex-col gap-3 border-t border-input pt-3 pb-6">
+          <h3 className="font-medium">{t("chaosMap.decisions")}</h3>
+          <ul className="flex flex-col gap-2 pl-7">
+            {orphans.map((task) => (
+              <li key={task.id} className="flex flex-wrap items-baseline justify-between gap-x-3">
+                <span className="highlight min-w-0">{task.title}</span>
+                <span className="text-sm text-muted-foreground">
+                  {formatHours(task.hoursPerWeek)} {t("hours.perWeek")}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </li>
+      )}
     </ul>
   );
 }
