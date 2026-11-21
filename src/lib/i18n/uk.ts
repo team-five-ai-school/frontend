@@ -310,6 +310,12 @@ export const uk = {
     noAfter: "Заповни після курсу, щоб побачити різницю",
   },
   certificate: {
+    lockedTitle: "Сертифікат закритий",
+    lockedLessons: "Пройдено {done} з {total} уроків",
+    lockedPlan: "Виконано {done} з {total} пунктів плану",
+    samplePlanTitle: "План навчання пройдено",
+    sampleName: "Ваше імʼя",
+    sampleLink: "Тут зʼявиться ваше посилання",
     finalTitle: "Фінальний сертифікат",
     finalLocked: "Пройдіть усі пункти свого плану навчання, щоб отримати фінальний сертифікат.",
     planFor: "за проходження плану навчання",

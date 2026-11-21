@@ -13,10 +13,11 @@ import { siteConfig } from "@/lib/site";
 import { planCertificatesQuery } from "../queries";
 import { CopyLinkButton } from "./copy-link-button";
 import { DownloadButton } from "./download-button";
+import { LockedCertificate } from "./locked-certificate";
 import { PlanCertificateSheet } from "./plan-certificate-sheet";
 
 /** The learner's final certificate, on the plan page. Shown once every plan item is done. */
-export function PlanCertificateSection() {
+export function PlanCertificateSection({ done, total }: { done: number; total: number }) {
   const { data, isPending } = useQuery(planCertificatesQuery);
   const certificate = data?.at(-1);
 
@@ -43,7 +44,22 @@ export function PlanCertificateSection() {
           </div>
         </>
       ) : (
-        <p className="text-sm text-muted-foreground">{t("certificate.finalLocked")}</p>
+        <LockedCertificate
+          preview={
+            <PlanCertificateSheet
+              certificate={{
+                holderName: t("certificate.sampleName"),
+                title: t("certificate.samplePlanTitle"),
+                skills: [],
+                issuedAt: new Date().toISOString(),
+              }}
+              verifyUrl={t("certificate.sampleLink")}
+            />
+          }
+          done={done}
+          total={total}
+          progressLabel={t("certificate.lockedPlan", { done, total })}
+        />
       )}
     </section>
   );

@@ -58,7 +58,7 @@ async function CourseContent({ params }: Pick<PageProps<"/courses/[courseId]">, 
         </h2>
         <CourseQuest courseId={course.id} lessons={lessons} />
       </section>
-      <CourseCertificate courseId={course.id} />
+      <CourseCertificate courseId={course.id} lessonIds={lessons.map((l) => l.id)} title={course.title} />
     </>
   );
 }

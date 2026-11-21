@@ -82,7 +82,12 @@ export function PlanView() {
   return (
     <div className="flex flex-col gap-8">
       <PlanQuest plan={plan} guest={anonymous} />
-      {!anonymous && <PlanCertificateSection />}
+      {!anonymous && (
+        <PlanCertificateSection
+          done={plan.items.filter((i) => i.status === "done").length}
+          total={plan.items.length}
+        />
+      )}
       {anonymous && (
         <section className="flex max-w-prose flex-col items-start gap-3 border-t pt-6">
           <p className="text-muted-foreground">{t("plan.signInHint")}</p>
