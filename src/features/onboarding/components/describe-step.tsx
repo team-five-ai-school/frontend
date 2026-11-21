@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 
 export const FREE_TEXT_MAX = 2000;
 
-/** Optional free-text step: «Опиши свій звичайний день». Empty text means skip. Voice is a disabled stub for now. */
+/** Optional free-text step: "Describe a typical workday". Empty text means skip. Voice is a disabled stub for now. */
 export function DescribeStep({
   defaultValue = "",
   onSubmit,

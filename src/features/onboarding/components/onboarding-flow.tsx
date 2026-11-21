@@ -9,7 +9,7 @@ import { ErrorState } from "@/components/state-views";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
-import { RoleId, type QuizAnswer, type Role } from "@/lib/contracts";
+import { firstLesson, RoleId, type QuizAnswer, type Role } from "@/lib/contracts";
 import { t } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
 
@@ -32,7 +32,7 @@ type Step =
   | { kind: "result"; session: SessionWithResult };
 
 /**
- * Onboarding: role → quiz → optional free text → «AI розкладає твій день» (stream) → chaos map + hours.
+ * Onboarding: role → quiz → optional free text → "AI is laying out your day" (stream) → chaos map + hours.
  * The session id lives in localStorage, so a reload resumes at the right step.
  */
 export function OnboardingFlow() {
@@ -222,7 +222,11 @@ export function OnboardingFlow() {
           )}
           roleTitle={step.session.role.title}
           shareUrl={siteConfig.url}
-          onStart={() => router.push("/plan")}
+          onStart={() => {
+            // Straight into the first lesson of the plan; the plan page if no lesson is ready yet.
+            const lesson = firstLesson(step.session.plan);
+            router.push(lesson ? `/lessons/${lesson.lessonSlug}` : "/plan");
+          }}
         />
       )}
     </div>

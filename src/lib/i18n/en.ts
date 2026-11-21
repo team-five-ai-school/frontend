@@ -86,6 +86,7 @@ export const en = {
     title: "Your learning plan",
     lead: "Each step automates one of your real tasks. Start with the one that frees up the most time.",
     hoursSaved: "frees up ~{hours} h a week",
+    start: "Start this lesson",
     slot: "Lesson in preparation",
     ready: "Ready to start",
     inProgress: "In progress",

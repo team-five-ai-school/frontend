@@ -462,6 +462,8 @@ export const PlanItem = z.object({
   skillTitle: z.string(),
   lessonId: z.string().nullable(),
   lessonTitle: z.string().nullable(),
+  /** Content lesson id: the lesson opens at /lessons/:lessonSlug. */
+  lessonSlug: z.string().nullable(),
   status: PlanItemStatus,
   sourceTaskIds: z.array(z.string()),
   estimatedHoursSaved: z.number(),
@@ -483,3 +485,8 @@ export const OnboardingCompletion = z.object({
   plan: LearningPlan,
 });
 export type OnboardingCompletion = z.infer<typeof OnboardingCompletion>;
+
+/** The first plan item with a lesson to open, if any. */
+export const firstLesson = (plan: LearningPlan | null) =>
+  plan?.items.find((item) => item.lessonSlug && (item.status === "ready" || item.status === "in_progress")) ??
+  null;
