@@ -20,8 +20,9 @@ function resolveSiteUrl() {
 }
 
 export const siteConfig = {
-  name: "Team Five",
-  description: "Hackathon project by Team Five, AI School.",
+  name: "ShiftWork AI",
+  description:
+    "Shift your routine work to AI. Short, practical courses for office teams, with a plan built around your job and an AI mentor in every lesson.",
   url: resolveSiteUrl(),
   locale: "en",
   repo: "https://github.com/team-five-ai-school/frontend",

@@ -280,6 +280,8 @@ export const LessonCompletion = z.object({
   nextLessonId: z.string().nullable(),
   /** Rewritten on every completion; also at GET /lessons/:id/review. */
   review: LessonReview.optional(),
+  /** Set when this completion finished the whole learning plan: the final certificate. */
+  planCertificateId: z.string().nullable().optional(),
   /** Set when this completion finished the course: the certificate that was issued (now or earlier). */
   certificateId: z.string().nullable(),
 });
@@ -296,6 +298,19 @@ export const IssuedCertificate = z.object({
   issuedAt: z.string(),
 });
 export type IssuedCertificate = z.infer<typeof IssuedCertificate>;
+
+/** GET /plan-certificates and GET /plan-certificates/:id (public): the final certificate for a completed learning plan. */
+export const PlanCertificate = z.object({
+  id: z.string(),
+  /** Frozen when issued. */
+  title: z.string(),
+  /** Live: the holder's current account name. */
+  holderName: z.string(),
+  /** Skill titles of the plan, flat, frozen when issued. */
+  skills: z.array(z.string()),
+  issuedAt: z.string(),
+});
+export type PlanCertificate = z.infer<typeof PlanCertificate>;
 
 /* ───────── Mentor ───────── */
 

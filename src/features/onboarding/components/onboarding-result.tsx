@@ -20,12 +20,15 @@ export function OnboardingResult({
   roleTitle,
   shareUrl,
   onStart,
+  onSave,
   className,
 }: {
   result: AssessmentResult;
   roleTitle: string;
   shareUrl: string;
   onStart: () => void;
+  /** Guests only: create an account to keep the plan. Becomes the main action; «start» turns secondary. */
+  onSave?: () => void;
   className?: string;
 }) {
   const [mode, setMode] = useState<ChaosMode>("now");
@@ -64,11 +67,25 @@ export function OnboardingResult({
         <ChaosMap data={chaosMap} mode={mode} onModeChange={setMode} showModeSwitch={false} />
       </div>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Button size="lg" onClick={onStart} className="w-full sm:w-auto">
-          {t("onboarding.resultCta")}
-        </Button>
-      </div>
+      {onSave ? (
+        <div className="flex flex-col gap-3">
+          <p className="max-w-prose text-muted-foreground">{t("plan.signInHint")}</p>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Button size="lg" onClick={onSave} className="w-full sm:w-auto">
+              {t("plan.signIn")}
+            </Button>
+            <Button size="lg" variant="outline" onClick={onStart} className="w-full sm:w-auto">
+              {t("onboarding.continueAsGuest")}
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <Button size="lg" onClick={onStart} className="w-full sm:w-auto">
+            {t("onboarding.resultCta")}
+          </Button>
+        </div>
+      )}
 
       <section aria-labelledby="share-title" className="flex max-w-xl flex-col gap-3 border-t pt-8">
         <h2 id="share-title" className="text-lg font-medium">
