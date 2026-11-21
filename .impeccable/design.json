@@ -1,218 +1,92 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-11-21T14:43:06.680821+00:00",
-  "title": "Design System: Team Five",
+  "title": "Design System: Shiftwork AI",
   "extensions": {
     "colorMeta": {
       "ballpoint": {
         "role": "primary",
         "displayName": "Ballpoint Blue",
         "canonical": "#2638c9",
-        "tonalRamp": [
-          "#171a35",
-          "#21285e",
-          "#27328b",
-          "#2939bc",
-          "#5260d6",
-          "#949cdb",
-          "#cacde8",
-          "#eeeff6"
-        ]
+        "tonalRamp": ["#171a35", "#21285e", "#27328b", "#2939bc", "#5260d6", "#949cdb", "#cacde8", "#eeeff6"]
       },
       "marker": {
         "role": "secondary",
         "displayName": "Highlighter Yellow",
         "canonical": "#ffe03d",
-        "tonalRamp": [
-          "#3c3510",
-          "#6c5e13",
-          "#a28b10",
-          "#dfbc07",
-          "#f5d633",
-          "#ecdb83",
-          "#efe8c3",
-          "#f8f6ec"
-        ]
+        "tonalRamp": ["#3c3510", "#6c5e13", "#a28b10", "#dfbc07", "#f5d633", "#ecdb83", "#efe8c3", "#f8f6ec"]
       },
       "pencil": {
         "role": "secondary",
         "displayName": "Pencil Graphite",
         "canonical": "#8c92a3",
-        "tonalRamp": [
-          "#242529",
-          "#3b3d45",
-          "#515561",
-          "#676d7f",
-          "#898f9f",
-          "#b2b5bd",
-          "#d6d8db",
-          "#f2f2f3"
-        ]
+        "tonalRamp": ["#242529", "#3b3d45", "#515561", "#676d7f", "#898f9f", "#b2b5bd", "#d6d8db", "#f2f2f3"]
       },
       "stamp": {
         "role": "tertiary",
         "displayName": "Stamp Green",
         "canonical": "#1d7a4c",
-        "tonalRamp": [
-          "#193426",
-          "#245b40",
-          "#2c865a",
-          "#30b573",
-          "#58d095",
-          "#97d8b8",
-          "#cbe6d9",
-          "#eff6f2"
-        ]
+        "tonalRamp": ["#193426", "#245b40", "#2c865a", "#30b573", "#58d095", "#97d8b8", "#cbe6d9", "#eff6f2"]
       },
       "correction": {
         "role": "tertiary",
         "displayName": "Correction Red",
         "canonical": "#cf3426",
-        "tonalRamp": [
-          "#361917",
-          "#5f2621",
-          "#8c2f27",
-          "#bd3528",
-          "#d75c51",
-          "#dc9993",
-          "#e8ccc9",
-          "#f6efee"
-        ]
+        "tonalRamp": ["#361917", "#5f2621", "#8c2f27", "#bd3528", "#d75c51", "#dc9993", "#e8ccc9", "#f6efee"]
       },
       "sticky-note": {
         "role": "tertiary",
         "displayName": "Sticky-Note Orange",
         "canonical": "#f08a24",
-        "tonalRamp": [
-          "#3a2613",
-          "#674019",
-          "#995919",
-          "#d17315",
-          "#e8943f",
-          "#e5b88a",
-          "#ecd9c5",
-          "#f7f2ed"
-        ]
+        "tonalRamp": ["#3a2613", "#674019", "#995919", "#d17315", "#e8943f", "#e5b88a", "#ecd9c5", "#f7f2ed"]
       },
       "ink": {
         "role": "neutral",
         "displayName": "Blue-Black Ink",
         "canonical": "#171b2e",
-        "tonalRamp": [
-          "#1f212e",
-          "#31364f",
-          "#414972",
-          "#4f5b97",
-          "#747fb4",
-          "#a6acc9",
-          "#d1d4e0",
-          "#f0f1f4"
-        ]
+        "tonalRamp": ["#1f212e", "#31364f", "#414972", "#4f5b97", "#747fb4", "#a6acc9", "#d1d4e0", "#f0f1f4"]
       },
       "graphite": {
         "role": "neutral",
         "displayName": "Graphite",
         "canonical": "#5f6577",
-        "tonalRamp": [
-          "#242529",
-          "#3b3d45",
-          "#515561",
-          "#676d7f",
-          "#898e9f",
-          "#b2b5bd",
-          "#d6d8db",
-          "#f2f2f3"
-        ]
+        "tonalRamp": ["#242529", "#3b3d45", "#515561", "#676d7f", "#898e9f", "#b2b5bd", "#d6d8db", "#f2f2f3"]
       },
       "desk": {
         "role": "neutral",
         "displayName": "Desk Grey",
         "canonical": "#eceee8",
-        "tonalRamp": [
-          "#272a23",
-          "#424639",
-          "#5d644e",
-          "#788363",
-          "#99a285",
-          "#babfb0",
-          "#dadcd5",
-          "#f3f3f1"
-        ]
+        "tonalRamp": ["#272a23", "#424639", "#5d644e", "#788363", "#99a285", "#babfb0", "#dadcd5", "#f3f3f1"]
       },
       "paper": {
         "role": "neutral",
         "displayName": "Paper",
         "canonical": "#fdfdfb",
-        "tonalRamp": [
-          "#2e2e1f",
-          "#4f4f31",
-          "#727241",
-          "#97974f",
-          "#b4b474",
-          "#c9c9a6",
-          "#e0e0d1",
-          "#f4f4f0"
-        ]
+        "tonalRamp": ["#2e2e1f", "#4f4f31", "#727241", "#97974f", "#b4b474", "#c9c9a6", "#e0e0d1", "#f4f4f0"]
       },
       "fog": {
         "role": "neutral",
         "displayName": "Fog",
         "canonical": "#f4f5f1",
-        "tonalRamp": [
-          "#282a23",
-          "#434738",
-          "#5f654d",
-          "#7c8561",
-          "#9ca484",
-          "#bcc0af",
-          "#dbdcd5",
-          "#f3f3f1"
-        ]
+        "tonalRamp": ["#282a23", "#434738", "#5f654d", "#7c8561", "#9ca484", "#bcc0af", "#dbdcd5", "#f3f3f1"]
       },
       "line": {
         "role": "neutral",
         "displayName": "Hairline",
         "canonical": "#d6d9d1",
-        "tonalRamp": [
-          "#272824",
-          "#41443c",
-          "#5b6052",
-          "#757d68",
-          "#969d8b",
-          "#b9bdb3",
-          "#d9dbd7",
-          "#f2f3f2"
-        ]
+        "tonalRamp": ["#272824", "#41443c", "#5b6052", "#757d68", "#969d8b", "#b9bdb3", "#d9dbd7", "#f2f3f2"]
       },
       "field-edge": {
         "role": "neutral",
         "displayName": "Field Edge",
         "canonical": "#858b98",
-        "tonalRamp": [
-          "#242628",
-          "#3c3e44",
-          "#53575f",
-          "#6a6f7c",
-          "#8c919c",
-          "#b3b6bc",
-          "#d7d8db",
-          "#f2f2f3"
-        ]
+        "tonalRamp": ["#242628", "#3c3e44", "#53575f", "#6a6f7c", "#8c919c", "#b3b6bc", "#d7d8db", "#f2f2f3"]
       },
       "grid": {
         "role": "neutral",
         "displayName": "Grid Blue",
         "canonical": "#c9d3e6",
-        "tonalRamp": [
-          "#1e242e",
-          "#2f3b50",
-          "#3e5174",
-          "#4b669a",
-          "#7089b7",
-          "#a4b2cb",
-          "#d1d6e1",
-          "#f0f2f4"
-        ]
+        "tonalRamp": ["#1e242e", "#2f3b50", "#3e5174", "#4b669a", "#7089b7", "#a4b2cb", "#d1d6e1", "#f0f2f4"]
       }
     },
     "typographyMeta": {

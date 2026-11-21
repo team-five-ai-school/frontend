@@ -1,5 +1,5 @@
 ---
-name: Team Five
+name: Shiftwork AI
 description: An AI-learning workspace built like a desk of paper sheets, where every color is a writing tool.
 colors:
   ballpoint: "#2638c9"
@@ -40,29 +40,29 @@ typography:
     fontWeight: 800
     lineHeight: 1
     letterSpacing: "-0.045em"
-    fontFeature: "\"tnum\" 1"
-    fontVariation: "\"SHRP\" 100"
+    fontFeature: '"tnum" 1'
+    fontVariation: '"SHRP" 100'
   display:
     fontFamily: "Geologica, ui-sans-serif, system-ui, sans-serif"
     fontSize: "3rem"
     fontWeight: 700
     lineHeight: "3.1rem"
     letterSpacing: "-0.035em"
-    fontVariation: "\"SHRP\" 60"
+    fontVariation: '"SHRP" 60'
   headline:
     fontFamily: "Geologica, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.875rem"
     fontWeight: 600
     lineHeight: "2.3rem"
     letterSpacing: "-0.02em"
-    fontVariation: "\"SHRP\" 60"
+    fontVariation: '"SHRP" 60'
   title:
     fontFamily: "Geologica, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.25rem"
     fontWeight: 600
     lineHeight: "1.8rem"
     letterSpacing: "-0.02em"
-    fontVariation: "\"SHRP\" 60"
+    fontVariation: '"SHRP" 60'
   body:
     fontFamily: "Geologica, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.0625rem"
@@ -176,7 +176,7 @@ components:
     rounded: "{rounded.block}"
 ---
 
-# Design System: Team Five
+# Design System: Shiftwork AI
 
 ## Overview
 
@@ -189,6 +189,7 @@ Color is not decoration here. Each hue is a writing tool with one job. Ballpoint
 Components are tactile and feel pressed into paper. The primary button has a hard 2px edge underneath that flattens when pressed. Answer cards lift a pixel on hover. Secondary actions are outlined in ink, not filled. Density is comfortable rather than compact: a 17px body, 44px minimum targets and generous sheet padding, because people are learning here, not processing a queue. At night the same desk sits under a lamp: deep blue-black paper, a lighter ballpoint, and less marker on the page.
 
 **Key Characteristics:**
+
 - Desk-and-sheet surfaces: grey desk background, paper sheets with hairline borders and short hard shadows.
 - Color as tool roles (ballpoint, marker, pencil, stamp, correction), never as decoration.
 - One variable family (Geologica), whose sharpness axis sharpens headings and numerals while body text stays soft.
@@ -201,18 +202,22 @@ Components are tactile and feel pressed into paper. The primary button has a har
 A cool, paper-and-ink palette: one saturated action blue, one reserved highlighter yellow, and a set of status inks, all on near-neutral greys with a faint green-blue cast.
 
 ### Primary
+
 - **Ballpoint Blue** (`ballpoint`): every primary action, focus rings, links, the info status and streak ticks. Its deeper shade (`ballpoint-deep`) forms the button's pressed-in bottom edge and strong info/streak text. `ballpoint-wash` is the selected and hover tint for outlined controls and chosen answer cards.
 
 ### Secondary
+
 - **Highlighter Yellow** (`marker`): the "needs you" role. It marks only work that still needs the person: a badge, a highlighted phrase in a Mentor message, the pulsing dot on a pending item. Text on it is always ink. `marker-soft` is the wash behind a needs-you row.
 - **Pencil Graphite** (`pencil`): the "AI handles it" role. Used as hatching fills, quiet badges and map strips. It is deliberately low-contrast and is never used for body text; readable AI text uses `pencil-strong` on `pencil-soft`.
 
 ### Tertiary
+
 - **Stamp Green** (`stamp`): success, progress bars and hours saved. Soft/strong pair for badges and correct answers.
 - **Correction Red** (`correction`): errors and destructive actions, always as outline or soft fill with `correction-strong` text.
 - **Sticky-Note Orange** (`sticky-note`): warnings. Chosen to sit clearly apart from the marker, so a warning never reads as "needs you".
 
 ### Neutral
+
 - **Blue-Black Ink** (`ink`): all primary text and outlines on secondary buttons. A blue-black, not a neutral near-black.
 - **Graphite** (`graphite`): secondary and muted text (6.3:1 on paper).
 - **Desk Grey** (`desk`): the page background.
@@ -225,6 +230,7 @@ A cool, paper-and-ink palette: one saturated action blue, one reserved highlight
 - **Night desk** (`desk-night`, `paper-night`, `ink-night`, `ballpoint-night`, `marker-night`): the dark-theme counterparts. Every role keeps its meaning in dark mode; only the values shift.
 
 ### Named Rules
+
 **The Highlighter Rule.** Yellow means "this still needs you" and nothing else. If an element doesn't need the person's action, it isn't yellow: no yellow decoration, illustration, chart accent or brand flourish.
 
 **The Quiet Pencil Rule.** AI-handled work is drawn in pencil (gray hatching, low contrast) so it never competes with the person's own work. AI work never takes ballpoint blue or a filled primary look.
@@ -240,7 +246,9 @@ A cool, paper-and-ink palette: one saturated action blue, one reserved highlight
 **Character:** A single variable, Cyrillic-ready family carries everything. Its sharpness axis (SHRP) is the typographic signature: headings get crisp ink-trap corners at SHRP 60, big numerals go fully sharp at SHRP 100, and body text stays soft at the default.
 
 ### Hierarchy
+
 The scale is a 1.25 modular scale on a 17px body (Tailwind `text-xs` … `text-6xl`).
+
 - **Numeral** (800, 7rem down to 3rem, line-height 1): hours, streaks and percentages, the main graphic element of a metric screen. Tabular figures and tight tracking (utility: `numeral`).
 - **Display** (700, 3rem / 4.5rem for the hero): the one headline on a page (`h1`), tracking −0.035em, balanced wrapping.
 - **Headline** (600, 1.875–2.375rem): section headings (`h2`).
@@ -250,6 +258,7 @@ The scale is a 1.25 modular scale on a 17px body (Tailwind `text-xs` … `text-6
 - **Micro** (500, 0.8125rem): timestamps and dense metadata only.
 
 ### Named Rules
+
 **The One Family Rule.** Hierarchy comes from Geologica's weight, size and sharpness, not from a second display face. Mono is for copyable text only, never for labels or decoration.
 
 **The Numbers-as-Image Rule.** When a screen has a key number, set it as a numeral and let it be the screen's main visual, instead of adding an illustration or chart.
@@ -265,6 +274,7 @@ Design and QA happen at 360, 768 and 1280px, against Tailwind's default breakpoi
 Depth is physical and shallow: sheets lie on the desk, and a few things are lifted off it. Shadows are short and hard, never soft blur clouds. Layering is mostly tonal (desk → paper → fog) with a hairline border on every sheet.
 
 ### Shadow Vocabulary
+
 - **Paper** (`box-shadow: 0 1px 0 rgb(23 27 46 / 0.06), 0 3px 0 -1px rgb(23 27 46 / 0.06)`): the default for any sheet: cards, answer cards, checked segments, the chaos map.
 - **Lifted** (`box-shadow: 0 1px 0 rgb(23 27 46 / 0.06), 0 10px 24px -10px rgb(23 27 46 / 0.28)`): popovers, menus and dialogs: a sheet picked up off the desk.
 - **Pressed edge** (`box-shadow: 0 2px 0 0 var(--info-strong)`): the primary button's ballpoint edge; it disappears on `:active` along with a 1px drop.
@@ -272,6 +282,7 @@ Depth is physical and shallow: sheets lie on the desk, and a few things are lift
 Dark theme uses the same geometry with black at 0.3–0.6 opacity.
 
 ### Named Rules
+
 **The Set-Down Rule.** A sheet at rest gets the paper shadow and nothing more. Only things that are temporarily picked up (popovers, menus, dialogs) get the lifted shadow. No glows, no colored shadows, no blur behind cards.
 
 ## Shapes
@@ -283,7 +294,9 @@ Borders are hairlines (1px) on sheets and 2px on indicators. Dashed borders carr
 ## Components
 
 ### Buttons
+
 Tactile and decisive: they feel pressed into the paper.
+
 - **Shape:** gently curved (8px), 44px tall by default (36px `sm`, 48px `lg`, 32px `xs`), label in body size at 500 weight.
 - **Primary:** ballpoint fill, white label, a 2px `ballpoint-deep` edge below. Hover lightens slightly; press removes the edge and drops the button by 1px.
 - **Outline / Secondary:** paper fill with a 70%-ink outline. Hover and open state wash to `ballpoint-wash`. Secondary actions are always outlined, never filled.
@@ -294,10 +307,12 @@ Tactile and decisive: they feel pressed into the paper.
 - **Focus:** 2px ballpoint outline with a 2px offset.
 
 ### Chips & Badges
+
 - **Badges:** 24px tall, 3px corners, label type. Role variants: `needs-you` (marker fill, ink text), `ai` (pencil hatching, pencil-strong text, half-strength pencil border), and soft/strong pairs for success, warning, info and streak.
 - **Suggestion chips** (Mentor): outlined blocks (8px, field-edge border, paper fill), 44px tall, label type; hover to fog.
 
 ### Cards / Containers
+
 - **Corner Style:** sheet (14px).
 - **Background:** paper on the desk.
 - **Shadow Strategy:** paper shadow (see Elevation).
@@ -305,26 +320,32 @@ Tactile and decisive: they feel pressed into the paper.
 - **Internal Padding:** 16px (12px for the small size), gap between parts equal to the padding.
 
 ### Inputs / Fields
+
 - **Style:** 44px tall, 3px corners, 1px field-edge outline, transparent fill (a faint field-edge tint in dark mode), body-size text, graphite placeholder.
 - **Focus:** border turns ballpoint with a 3px, 50%-ballpoint ring.
 - **Error / Disabled:** red border with a 3px, 20%-red ring; disabled fields fade to 50% with a tinted fill.
 
 ### Navigation
+
 - **Site header:** sticky, 56px, translucent desk with backdrop blur and a hairline bottom border. The wordmark is set in the heading face at 600; nav links are label-size graphite, turning ink on hover; the nav scrolls horizontally on narrow screens, with the theme toggle and account menu on the right.
 - **Segmented control:** for 2–4 views of one thing (e.g. "Now" / "With AI"). Fog track with a 15% ink border and 4px inset; the checked segment becomes a paper sheet with the paper shadow and ink text; the rest stay graphite. Arrow keys move the selection.
 
 ### Choice Cards (signature)
+
 Large tappable answer cards for quizzes, exercises and the role picker, built on native radio/checkbox inputs. Each is a paper block (8px, min 56px tall, 20%-ink border, paper shadow) that lifts 1px and darkens its border on hover. Selected: ballpoint border on `ballpoint-wash`. After checking: correct gets a stamp border on stamp-soft with a check, incorrect gets a red border on correction-soft with a cross, and a missed correct answer gets a dashed stamp border. Every mark carries an icon, never color alone.
 
 ### Chaos Map (signature)
+
 The person's work flows drawn on squared notebook paper (`squared`) inside a sheet. AI-handled steps are pencil-hatched strips; steps that need the person are marked with the highlighter. It reflows from vertical lanes to a horizontal map through container queries, and its transitions use the slow 900ms chaos duration.
 
 ### Mentor Message (signature)
+
 The AI mentor speaks in plain paper blocks: an ink avatar with a marker letter (in both themes), body text with key phrases highlighted by the marker stroke, numbered steps with bold tabular numerals, and quoted examples in a bordered paper figure. The person's own messages are right-aligned paper bubbles at max 85% width. A typing indicator pulses three dots (`mentor-dot`, 1.2s).
 
 ## Do's and Don'ts
 
 ### Do:
+
 - **Do** put content on paper sheets (`sheet`, or Card) over the desk background; the page itself is never a white canvas.
 - **Do** use role tokens (`bg-needs-you`, `text-ai-strong`, `bg-success-soft`) and add new tokens to `globals.css` and `src/lib/design-tokens.ts`, never hardcoded hex in components.
 - **Do** set ink text on marker yellow, and switch to a marker underline in dark mode so light text never sits on yellow (the `highlight` utility does this).
@@ -334,6 +355,7 @@ The AI mentor speaks in plain paper blocks: an ink avatar with a marker letter (
 - **Do** design and check at 360, 768 and 1280px, in both themes.
 
 ### Don't:
+
 - **Don't** use marker yellow for anything that doesn't need the person: no decorative yellow, no yellow chart accents, no yellow warnings (warnings are sticky-note orange).
 - **Don't** give AI-handled work ballpoint blue, a filled button or high contrast; it stays in pencil.
 - **Don't** use pencil (`pencil`) for body text; it is decorative-only contrast.
