@@ -11,6 +11,33 @@ The single source of truth for **what** we build. Read this before working on an
 | `evals/README.md` + `evals/*.json` | Test sets for every AI component and how to score them |
 | `AGENTS.md`                        | How to write the code (stack, caching, UI rules)       |
 
+## Demo today (scope until code freeze 17:50)
+
+Everything below this section is the full product. **Today we build only this path**, end to end and deployed:
+
+| Keep (live demo)                                                                                                          | Stub                                                                    | Later (say "next" in the pitch)                                                   |
+| ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Short onboarding: role, office suite, AI tool, chaos map sliders, free text                                               | User = anonymous session id in a cookie (no signup/login)               | Accounts and auth, paywall logic (paywall is a static screen), placement quiz     |
+| Roadmap reveal: code builds the plan, AI writes a personal "why" per step                                                 | Progress screen: static before/after from the chaos map                 | Journal-based replanning, progress AI summary, refresh sessions, re-run chaos map |
+| **One full lesson** (`ai-assistants-101-l2`): cards, exercises checked on the server                                      | Other lessons shown in the roadmap but locked                           | Streaks, certificates, full course catalog screens, PWA install step              |
+| **Mentor** reacts to a wrong answer and answers questions (streamed)                                                      | Practice task: `default_context` or simple placeholder fill, no AI call | AI-personalized practice task                                                     |
+| **Practice + grader**: learner prompt → model output (streamed) → scores per criterion with quotes and an improved prompt |                                                                         |                                                                                   |
+| `ai_calls` log (tokens, cost, latency) for unit economics and evals                                                       |                                                                         |                                                                                   |
+
+**Backend for the demo: 4 endpoints and 2 tables** (`sessions`, `ai_calls`):
+
+```
+POST /onboarding                     → { profile, roadmap }            (roadmap by code + AI "why", see docs/roadmap.md)
+GET  /lessons/{id}                   → lesson without answers
+POST /lessons/{id}/exercises/{exId}  → check answer (see "Exercise answers" below)
+POST /lessons/{id}/mentor            → streamed hint
+POST /lessons/{id}/practice          → streamed output, then grade
+```
+
+Course content comes from `content/courses.json` (`npm run courses:build`), not from parsing Markdown in Python.
+
+**AI is essential where the demo shows it:** the mentor and the grader. The roadmap is honest: code builds the plan, AI explains it in the person's own words.
+
 ## Product in one paragraph
 
 A subscription web app (optional PWA) that teaches office workers to use AI in their daily work. A short onboarding maps the person's routines ("chaos map"), AI builds a personal roadmap from a fixed course catalog, lessons are short and interactive, and a **lesson mentor** (the main AI feature) helps during every lesson and turns mistakes into extra practice. After each lesson AI writes a journal entry; the progress screen and the roadmap update from the journal.
@@ -48,7 +75,13 @@ The chaos map hours are the **"before"** for the time-saved metric.
 
 ### 4. Exercises (4 types)
 
-`single_select`, `multi_select`, `fill_blank` (pick the phrase that fixes a prompt), `true_false` (swipe cards). Checked **by code on the server**; correct answers never reach the client before the learner answers. Every exercise has an `explanation` (shown after answering) and a `hint` (given by the mentor).
+`single_select`, `multi_select`, `fill_blank` (pick the phrase that fixes a prompt), `true_false` (swipe cards). Checked **by code on the server**; the client gets lessons from `content/courses.public.json` (no answers, explanations, hints or mentor notes).
+
+**Exercise answers (attempt flow):**
+
+1. Learner submits. Wrong on the **first** attempt → server returns `{ correct: false, attempt: 1 }` only (no explanation, no correct answer); the mentor is triggered automatically with the learner's answer.
+2. Second attempt, or any correct answer → `{ correct, attempt, explanation }`; after a second wrong attempt also `correct_answer`.
+3. `true_false`: the learner answers each card; the server checks per card and returns per-card `correct`, with each card's explanation after that card is answered correctly or twice.
 
 ### 5. AI mentor (main AI feature)
 
@@ -56,12 +89,14 @@ A side panel (bottom sheet on mobile) inside every lesson.
 
 - Knows: the lesson content, the current block, the learner's answers so far, their profile (role, pains, tools) and the recent journal.
 - Gives hints that point toward the answer without stating it; explains a card again in other words; stays on the lesson topic; declines legal, medical or financial advice and requests to process real personal data.
-- **Mistakes go to the mentor automatically**: after a wrong answer the mentor proactively explains what to look at and offers one follow-up mini-task (from the lesson's `mentor.follow_up_tasks`, adapted to the person's role). The learner does not have to ask.
+- **Mistakes go to the mentor automatically**: after a wrong first attempt the frontend calls the mentor with `{ block_id, learner_answer }` and no message; the mentor explains what to look at (without the answer) and may offer one follow-up mini-task from `mentor.follow_up_tasks`, adapted to the person's role.
 - Uses the lesson's `mentor` block (`common_mistakes`, `key_points`, `follow_up_tasks`) as grounding.
 
 ### 6. Personalized practice
 
-At the end of each lesson: the lesson's `task_template` is filled with `{{role}}`, `{{pain}}`, `{{tool}}` from the profile (AI picks the best-fitting pain; falls back to `default_context`). The learner writes a prompt, the model runs it (streamed), and the **grader** scores it per rubric criterion (0/1/2), quoting the parts of the prompt and output it relies on, and returns an improved prompt.
+At the end of each lesson: the lesson's `task_template` is filled with `{{role}}`, `{{pain}}`, `{{tool}}` from the profile (AI picks the best-fitting pain; falls back to `default_context`). The learner writes a prompt, the model runs it (streamed) so the learner sees the result, and the **grader scores the prompt** per rubric criterion (0 missing, 1 partly, 2 fully), quoting the parts of the prompt it relies on, and returns an improved prompt. The model output is shown to the learner but is **not** a grader input: grading stays deterministic and matches `evals/practice-grading.json`.
+
+Placeholders are filled from `content/onboarding.json`: `{{role}}` ← role `noun`, `{{pain}}` ← the top pain's `phrase`, `{{tool}}` ← AI tool `phrase` (or the office suite's AI if the person uses none).
 
 ### 7. Lesson summary and journal
 
@@ -94,7 +129,7 @@ Push notifications, offline mode, team accounts, native apps, user-generated cou
 | Roadmap replanner | roadmap + journal → updated steps (JSON, validated)                    | 1 per lesson          | `evals/roadmap-personas.json`                   |
 | Practice task     | lesson template + profile → personalized task                          | 1 per lesson (cached) | rubric-checked by judge                         |
 | Practice run      | learner's prompt → model output (streamed)                             | 1 per attempt         | n/a                                             |
-| Practice grader   | task + prompt + output + rubric → scores, quotes, improved prompt      | 1 per attempt         | `evals/practice-grading.json`                   |
+| Practice grader   | task + prompt + rubric → scores, quotes, improved prompt (JSON)        | 1 per attempt         | `evals/practice-grading.json`                   |
 | Mentor            | lesson context + question/mistake → hint or explanation (streamed)     | 0–3 per lesson        | `evals/mentor.json`                             |
 | Lesson summary    | exercise results + grade → journal entry (JSON)                        | 1 per lesson          | recommendations cite real mistakes (code check) |
 | Progress summary  | skill levels + journal → short text                                    | 1 per journal entry   | text agrees with numbers (judge)                |
@@ -108,10 +143,10 @@ Rules for every component:
 
 ## API contract (backend)
 
-Browser calls go through the frontend proxy `/api/backend/*` (see `AGENTS.md` → Backend). Auth: JWT in an httpOnly cookie.
+Browser calls go through the frontend proxy `/api/backend/*` (see `AGENTS.md` → Backend). Demo: an anonymous session id in an httpOnly cookie. Later: accounts with JWT in an httpOnly cookie.
 
 ```
-POST /onboarding                    { role, office_suite, ai_tool, ai_level, goals, chaos_map, chaos_text, placement_answers }
+POST /onboarding                    { role, office_suite, ai_tool, ai_level, goals, chaos_map, chaos_text, placement_quiz_correct }
                                     → { profile, roadmap }
 GET  /roadmap                       → latest roadmap version
 POST /roadmap/replan                → new roadmap version (also called internally after /lessons/{id}/complete)
@@ -119,10 +154,10 @@ POST /roadmap/replan                → new roadmap version (also called interna
 GET  /courses                       → catalog with lock state and progress
 GET  /courses/{id}                  → course with lessons and progress
 GET  /lessons/{id}                  → cards and exercises WITHOUT answers
-POST /lessons/{id}/exercises/{exId} { answer } → { correct, explanation, mentor_followup? }
-POST /lessons/{id}/mentor           { block_id, message } → streamed text
+POST /lessons/{id}/exercises/{exId} { answer } → { correct, attempt, explanation?, correct_answer? }   (see Exercise answers)
+POST /lessons/{id}/mentor           { block_id, learner_answer?, message? } → streamed text   (no message = proactive help after a mistake)
 GET  /lessons/{id}/practice         → personalized task (cached per user)
-POST /lessons/{id}/practice         { prompt } → streamed model output, then { scores, quotes, feedback, improved_prompt, passed }
+POST /lessons/{id}/practice         { prompt } → streamed model output, then { scores, quotes, feedback, improved_prompt, passed }   (prompt max 2,000 chars)
 POST /lessons/{id}/complete         → { journal_entry, progress, roadmap }
 
 GET  /me/progress                   → skills, streak, certificates, hours saved, AI summary
@@ -131,6 +166,18 @@ POST /me/chaos-map                  { chaos_map } → updated before/after
 GET  /me/refresh                    → today's refresh exercises
 GET  /certificates/{id}             → public certificate data
 ```
+
+## Security and safety (what we can claim)
+
+| Done in the MVP                                                                                                  | Next (say so if asked)                                                  |
+| ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Model keys only on the backend; the browser talks to our domain through the proxy                                | Accounts, roles, per-user data isolation                                |
+| Answers checked on the server; the app ships lessons without answers (`courses.public.json`)                     | Moving course content to a private repo or CMS                          |
+| Practice and mentor input capped (2,000 chars) and rate-limited per session                                      | Abuse detection, per-account quotas                                     |
+| Simple personal-data filter (emails, phone numbers, card-like numbers) before any model call; mentor refuses PII | Proper PII detection, data-processing agreement with the model provider |
+| Mentor and grader prompts resist "ignore your instructions" (covered by eval cases)                              | Red-team set                                                            |
+
+Course Markdown, including answers, is in a public repo: say that content is open by design for the hackathon and would move to a private CMS.
 
 ## Data model
 

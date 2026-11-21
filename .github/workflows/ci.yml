@@ -23,6 +23,8 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run format:check
+      - name: Course JSON is up to date
+        run: npm run courses:build && git diff --exit-code content/courses.json content/courses.public.json
       - name: Cache Next.js build
         uses: actions/cache@v4
         with:

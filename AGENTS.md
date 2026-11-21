@@ -51,6 +51,7 @@ When both exist, commit them in a PR and delete this section.
 - `npm run build`: production build. Also catches Cache Components prerender errors. Some caching bugs only show up here or with `npm run build && npm start`, not in `npm run dev`.
 - `npm run format`: Prettier (sorts Tailwind classes)
 - `npx shadcn@latest add <component>`: add a UI component
+- `npm run courses:build`: after editing `content/courses/*.md`, regenerate `content/courses.json` (backend) and `content/courses.public.json` (browser, no answers). CI fails if they are stale.
 - `npm run images`: convert raw images in `assets/images/` → AVIF + WebP in `public/images/`
 
 ## Structure

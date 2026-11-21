@@ -1,8 +1,10 @@
 # Personal roadmap: hybrid AI + code
 
-**AI writes the plan, code guarantees it is valid.** The model understands the person (free text, priorities, explanations); code owns the rules (which courses exist, prerequisites, stage order). If the model returns something invalid, code repairs it or falls back to a deterministic plan, so the user always gets a working roadmap.
+**Code builds the plan, AI makes it personal.** Code owns the rules (which courses exist, prerequisites, stage order) and can produce a complete plan on its own (the fallback in step 4). AI adds what code cannot: it reads the person's own words, picks focus lessons inside each course, and writes a "why" for every step that refers to what this person said. Whatever the model returns is validated; if it is invalid, the code plan is used. Say exactly this in the pitch: the strong AI claims are the mentor and the grader.
 
-Lives in the **backend**: `POST /roadmap` (after onboarding) and `POST /roadmap/replan` (after each journal entry). Inputs come from `content/onboarding.json` answers; courses come from the frontmatter of `content/courses/*.md` (see `content/FORMAT.md` → Roadmap).
+**Demo build order:** implement the code plan (steps 2 and 4 fallback) first, then add the AI "why" and focus lessons (step 3), then pain extraction (step 1) if time allows. Replanning (step 5) is not in the demo.
+
+Lives in the **backend**: built inside `POST /onboarding` (returns `{ profile, roadmap }`); later `POST /roadmap/replan` after each journal entry. Inputs come from `content/onboarding.json` answers; courses come from the frontmatter of `content/courses/*.md` (see `content/FORMAT.md` → Roadmap).
 
 ```
 onboarding answers
@@ -43,7 +45,7 @@ Read all course frontmatter. Candidates:
 
 | Stage        | Rule                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `foundation` | `ai-assistants-101` and `safe-ai-at-work`. Mark `ai-assistants-101` as **skippable** if `placement_quiz_correct` is 3.                                                                                                                                                                                                                                                                                                                                  |
+| `foundation` | `ai-assistants-101` and `safe-ai-at-work`. If `placement_quiz_correct` is 3, `ai-assistants-101` is **marked completed** (not removed), so every course that lists it as a prerequisite stays valid and unlocked.                                                                                                                                                                                                                                       |
 | `tools`      | `microsoft-365-copilot` if the office suite is Microsoft 365; `gemini-in-google-workspace` if Google Workspace; `chatgpt-for-work` if the AI tool is ChatGPT. If none of these applies (suite "other" and AI tool other than ChatGPT, including "none"), use `chatgpt-for-work` so the tools stage is never empty. Other AI tools (Claude, Gemini, Copilot) do not add a course on their own. `ai-in-office-tools` is never a candidate (catalog only). |
 | `role`       | stage `role` courses whose `recommended_for` contains the role. Role `general` has no role course.                                                                                                                                                                                                                                                                                                                                                      |
 | `advanced`   | all stage `advanced` courses whose `recommended_for` contains the role (or `general`).                                                                                                                                                                                                                                                                                                                                                                  |
@@ -57,7 +59,7 @@ Also compute for each candidate: `pain_overlap` = sum of the person's hours for 
 Prompt the model with: the profile (role, tools, level, goals, ranked pains with hours, the person's own words), the candidate list (id, title, stage, description, pains, prerequisites, `pain_overlap`, lessons with titles and goals), and these rules:
 
 - Foundation first, then tools, then role, then advanced.
-- Keep every foundation, tools and role candidate (skippable `ai-assistants-101` may be dropped).
+- Keep every foundation, tools and role candidate. A course already marked completed is listed as done, not planned.
 - Order advanced courses by `pain_overlap`, highest first (prerequisites always before the course that needs them). Drop an advanced course only if its `pain_overlap` is 0. Always keep at least one: if every advanced course has 0 overlap, keep `automate-your-routine`. If `automate-your-routine` is dropped, `ai-agents-at-work` is dropped too (it is a prerequisite).
 - `why`: one sentence, max 200 characters, that refers to what **this** person said (a routine, the hours, their role or tool). No generic text.
 - `focus_lessons`: 1–3 lesson ids from that course that match their pains best.
@@ -86,7 +88,7 @@ A plan is valid when:
 1. Every `course_id` is a candidate; no duplicates.
 2. Every course's `prerequisites` are completed or appear earlier in `steps`.
 3. Stages never go backwards (foundation → tools → role → advanced).
-4. All non-skippable foundation, tools and role candidates are present.
+4. All foundation, tools and role candidates are present (completed ones as done).
 5. Every `focus_lessons` id belongs to its course.
 6. `expected_minutes_saved_per_week` is clamped to `0 … course.minutes_saved_per_week`, and to the person's hours in the course's pains × 60 (if that is 0, cap at 30 minutes instead).
 
@@ -110,4 +112,4 @@ The same validation applies (refresh steps may only reference completed lessons)
 
 ## Evals
 
-`evals/roadmap-personas.json`: 15 personas with expectations. Checks are listed in `evals/README.md`. Report on the slide: "15/15 valid plans, N/15 covered top pains in the first 5 courses, fallback used X times".
+`evals/roadmap-personas.json`: 15 personas with expectations. Checks are listed in `evals/README.md`. The structural checks also pass for the pure code plan, so they test our rules, not the model. **Report on the slide what the AI adds:** "why" grounded in the person's words in N/15 plans (judge), focus lessons matching their top pains in N/15, AI plan accepted without retry in N/15 (fallback used X times).

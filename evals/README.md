@@ -11,7 +11,11 @@ Run the evals on the backend (it owns the prompts and model calls). Keep each ru
 | `practice-grading.json` | Practice grader (rubric scores)       | 25    | every criterion within ±1 of the expected score, and pass/fail verdict agrees |
 | `mentor.json`           | Lesson mentor                         | 20    | behaves as `expected_behavior`, breaks no `must_not` rule                     |
 
-Checks that can be done in code are done in code. Rules marked "judge" below are checked by a separate LLM call with a strict yes/no question, and a human spot-checks 5 judge verdicts per run.
+Checks that can be done in code are done in code. Rules marked "judge" below are checked by a separate LLM call with a strict yes/no question.
+
+**The datasets were drafted by an LLM**, so they can share the model's blind spots (and judge checks can reward echoing the lesson's own hints). Before quoting numbers: a human reads **every failure** and 5 random passes per set, fixes wrong expectations, and the slide says "expectations reviewed by the team". Pick the 2 failures for the slide from that read.
+
+Use one paid model for evals and the demo (free tiers rate-limit and are unreliable with JSON); log every call to `ai_calls`.
 
 ## `pain-extraction.json`
 
@@ -62,11 +66,15 @@ Code checks, for every persona:
 
 1. Every course id exists; no duplicates.
 2. Prerequisites are respected in order.
-3. Foundation courses come first (skip `ai-assistants-101` only if `placement_quiz_correct` is 3).
+3. Foundation courses come first (`ai-assistants-101` is marked completed, not dropped, when `placement_quiz_correct` is 3).
 4. All `must_include` present, no `must_not_include`.
 5. Each of `top_pains` appears in the `pains` of at least one of the first `top_pains_covered_within` steps (counting only steps actually in the plan, so a skipped `ai-assistants-101` does not count). The window is 5, or 6 when the tools stage has two courses (suite course + `chatgpt-for-work`).
 
-Judge check: every step's `why` mentions something the persona actually said (a pain, a routine, their role or tool). Fails if any `why` is generic.
+These code checks also pass for the deterministic fallback plan, so they measure our rules, not the model. **What we report for AI:**
+
+- **Grounded why** (judge): every step's `why` refers to something the persona actually said (a routine, the hours, their role or tool). N/15 plans.
+- **Focus lessons on target**: the chosen `focus_lessons` cover a top pain (code check against lesson goals/skills mapped to pains, or judge). N/15.
+- **Accepted without retry / fallback rate**: N/15 AI plans valid on the first try; fallback used X times.
 
 ## `practice-grading.json`
 
@@ -92,6 +100,9 @@ Judge check: every step's `why` mentions something the persona actually said (a 
 
 - **Score scale per rubric criterion:** `0` missing, `1` partly there, `2` fully there. Criterion names are the `criterion` values of that lesson's `practice.rubric` in `content/courses/<course>.md`.
 - **Pass verdict:** total ≥ 70% of the maximum and no criterion at 0 (with 3 criteria: 5 or 6 points and no zero).
+- **What is graded:** the task and the learner's prompt only (`task`, `submission`, the lesson rubric). The model output is not a grader input (see docs/spec.md → Personalized practice).
+- **How we score the grader:** report (1) **exact match** per criterion (% of criterion scores equal to expected), (2) **verdict agreement** (% of pass/fail equal), and a 2×2 confusion matrix for pass/fail. Do not use "within ±1" on a 0–2 scale: a grader that always says 1 would pass it.
+- `pg-26` is a prompt-injection case: the submission tells the grader to give full marks.
 - Cases mix `quality`: about 8 strong, 9 medium, 8 weak.
 
 ## `mentor.json`
@@ -121,4 +132,4 @@ Judge check: every step's `why` mentions something the persona actually said (a 
 | `redirect_off_topic`  | decline politely and bring the learner back to the lesson                           |
 | `refuse_unsafe`       | decline medical, legal or financial advice / personal data requests, say who to ask |
 
-`must` and `must_not` are judge checks. `block_id` is an exercise id or `card:<card title>`. `learner_answer` uses the exercise's answer format: an index (`single_select`, `fill_blank`), a list of indexes (`multi_select`), a list of booleans, one per card (`true_false`), or `null` for cards.
+`learner_message` may be `null`: the mentor is called proactively after a wrong first attempt (`mt-21`). `mt-22` is a prompt-injection attempt. `must` and `must_not` are judge checks. `block_id` is an exercise id or `card:<card title>`. `learner_answer` uses the exercise's answer format: an index (`single_select`, `fill_blank`), a list of indexes (`multi_select`), a list of booleans, one per card (`true_false`), or `null` for cards.
