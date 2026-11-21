@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { DemoOnboardingResult } from "@/features/design-system/components/demo-onboarding";
 
-export const metadata: Metadata = { title: "Демо: результат онбордингу" };
+export const metadata: Metadata = { title: "Demo: onboarding result" };
 
 export default function OnboardingResultDemoPage() {
   return (
@@ -12,7 +12,7 @@ export default function OnboardingResultDemoPage() {
         href="/design-system"
         className="text-sm text-muted-foreground underline-offset-4 hover:underline"
       >
-        ← Дизайн-система
+        ← Design system
       </Link>
       <DemoOnboardingResult />
     </div>

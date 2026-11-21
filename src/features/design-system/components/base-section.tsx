@@ -45,8 +45,8 @@ export function BaseSection() {
   return (
     <PreviewSection
       id="base"
-      title="Базові компоненти"
-      description="shadcn/ui, перефарбовані токенами. Цілі натискання від 44px, фокус видно завжди: натисни Tab, щоб побачити."
+      title="Base components"
+      description="shadcn/ui, recolored with tokens. Tap targets from 44px, focus always visible: press Tab to see it."
     >
       <SubHeading>Button</SubHeading>
       <SpecimenGrid>
@@ -58,9 +58,9 @@ export function BaseSection() {
           ))}
         </Specimen>
         <Specimen label="sizes: sm, default, lg">
-          <Button size="sm">Малий</Button>
-          <Button>Почати урок</Button>
-          <Button size="lg">Почати урок</Button>
+          <Button size="sm">Small</Button>
+          <Button>Start lesson</Button>
+          <Button size="lg">Start lesson</Button>
         </Specimen>
         <Specimen label="states: hover, focus, active">
           <Button className="bg-primary/80">Hover</Button>
@@ -68,73 +68,73 @@ export function BaseSection() {
           <Button className="translate-y-px">Active</Button>
         </Specimen>
         <Specimen label="disabled, loading">
-          <Button disabled>Недоступно</Button>
-          <Button loading>Зберігаю</Button>
+          <Button disabled>Unavailable</Button>
+          <Button loading>Saving</Button>
           <Button variant="outline" loading>
-            Завантажую
+            Uploading
           </Button>
         </Specimen>
         <Specimen label="danger">
           <Button variant="destructive">
-            <Trash2Icon data-icon="inline-start" aria-hidden /> Видалити файл
+            <Trash2Icon data-icon="inline-start" aria-hidden /> Delete file
           </Button>
         </Specimen>
-        <Specimen label="IconButton (label обовʼязковий)">
-          <IconButton label="Налаштування">
+        <Specimen label="IconButton (label is required)">
+          <IconButton label="Settings">
             <SettingsIcon aria-hidden />
           </IconButton>
-          <IconButton label="Сповіщення" variant="outline">
+          <IconButton label="Notifications" variant="outline">
             <BellIcon aria-hidden />
           </IconButton>
-          <IconButton label="Зберегти в обране" variant="secondary" size="icon-lg">
+          <IconButton label="Add to favorites" variant="secondary" size="icon-lg">
             <HeartIcon aria-hidden />
           </IconButton>
-          <IconButton label="Недоступно" disabled>
+          <IconButton label="Unavailable" disabled>
             <SettingsIcon aria-hidden />
           </IconButton>
         </Specimen>
       </SpecimenGrid>
 
-      <SubHeading>Поля вводу</SubHeading>
+      <SubHeading>Inputs</SubHeading>
       <SpecimenGrid>
         <Specimen label="Input, default" className="flex-col items-stretch">
           <Field>
-            <FieldLabel htmlFor="ds-name">Як до тебе звертатися?</FieldLabel>
-            <Input id="ds-name" placeholder="Наприклад, Олена" />
-            <FieldDescription>Імʼя буде на сертифікаті.</FieldDescription>
+            <FieldLabel htmlFor="ds-name">What should we call you?</FieldLabel>
+            <Input id="ds-name" placeholder="For example, Emma" />
+            <FieldDescription>Your name will appear on the certificate.</FieldDescription>
           </Field>
         </Specimen>
         <Specimen label="Input, error" className="flex-col items-stretch">
           <Field data-invalid>
-            <FieldLabel htmlFor="ds-hours">Годин на тиждень</FieldLabel>
+            <FieldLabel htmlFor="ds-hours">Hours per week</FieldLabel>
             <Input id="ds-hours" defaultValue="200" aria-invalid aria-describedby="ds-hours-err" />
-            <FieldError id="ds-hours-err">У тижні лише 168 годин. Перевір число.</FieldError>
+            <FieldError id="ds-hours-err">A week has only 168 hours. Check the number.</FieldError>
           </Field>
         </Specimen>
         <Specimen label="Input, disabled" className="flex-col items-stretch">
           <Field data-disabled>
-            <FieldLabel htmlFor="ds-dis">Компанія</FieldLabel>
-            <Input id="ds-dis" disabled defaultValue="Задає адміністратор" />
+            <FieldLabel htmlFor="ds-dis">Company</FieldLabel>
+            <Input id="ds-dis" disabled defaultValue="Set by an admin" />
           </Field>
         </Specimen>
         <Specimen label="Textarea" className="flex-col items-stretch">
           <Field>
-            <FieldLabel htmlFor="ds-ta">Що забирає найбільше часу?</FieldLabel>
-            <Textarea id="ds-ta" placeholder="Опиши своїми словами" />
+            <FieldLabel htmlFor="ds-ta">What takes the most time?</FieldLabel>
+            <Textarea id="ds-ta" placeholder="Describe in your own words" />
           </Field>
         </Specimen>
         <Specimen label="Select" className="flex-col items-stretch">
           <Field>
-            <FieldLabel htmlFor="ds-select">Професія</FieldLabel>
+            <FieldLabel htmlFor="ds-select">Profession</FieldLabel>
             <Select defaultValue="office_manager">
               <SelectTrigger id="ds-select" className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="accountant">Бухгалтер</SelectItem>
-                <SelectItem value="sales_manager">Менеджер з продажу</SelectItem>
-                <SelectItem value="office_manager">Офіс-менеджер</SelectItem>
-                <SelectItem value="teacher">Вчитель</SelectItem>
+                <SelectItem value="accountant">Accountant</SelectItem>
+                <SelectItem value="sales_manager">Sales manager</SelectItem>
+                <SelectItem value="office_manager">Office manager</SelectItem>
+                <SelectItem value="teacher">Teacher</SelectItem>
               </SelectContent>
             </Select>
           </Field>
@@ -142,108 +142,108 @@ export function BaseSection() {
         <Specimen label="Checkbox, Radio, Switch" className="flex-col items-stretch gap-4">
           <Field orientation="horizontal">
             <Checkbox id="ds-cb" defaultChecked />
-            <FieldLabel htmlFor="ds-cb">Нагадувати про урок</FieldLabel>
+            <FieldLabel htmlFor="ds-cb">Remind me about lessons</FieldLabel>
           </Field>
           <Field orientation="horizontal" data-disabled>
             <Checkbox id="ds-cb2" disabled />
-            <FieldLabel htmlFor="ds-cb2">Недоступно</FieldLabel>
+            <FieldLabel htmlFor="ds-cb2">Unavailable</FieldLabel>
           </Field>
-          <RadioGroup defaultValue="week" aria-label="Період">
+          <RadioGroup defaultValue="week" aria-label="Period">
             <Field orientation="horizontal">
               <RadioGroupItem value="week" id="ds-r1" />
-              <FieldLabel htmlFor="ds-r1">Щотижня</FieldLabel>
+              <FieldLabel htmlFor="ds-r1">Weekly</FieldLabel>
             </Field>
             <Field orientation="horizontal">
               <RadioGroupItem value="month" id="ds-r2" />
-              <FieldLabel htmlFor="ds-r2">Щомісяця</FieldLabel>
+              <FieldLabel htmlFor="ds-r2">Monthly</FieldLabel>
             </Field>
           </RadioGroup>
           <Field orientation="horizontal">
             <Switch id="ds-sw" defaultChecked />
-            <FieldLabel htmlFor="ds-sw">Темна тема як у системі</FieldLabel>
+            <FieldLabel htmlFor="ds-sw">Dark theme follows the system</FieldLabel>
           </Field>
         </Specimen>
       </SpecimenGrid>
 
-      <SubHeading>Навігація і вибір</SubHeading>
+      <SubHeading>Navigation and selection</SubHeading>
       <SpecimenGrid>
         <Specimen label="SegmentedControl" className="flex-col items-stretch">
           <SegmentedControl
-            label="Режим карти"
+            label="Map mode"
             value={segment}
             onValueChange={setSegment}
             options={[
-              { value: "now", label: "Зараз" },
-              { value: "ai", label: "З AI" },
+              { value: "now", label: "Now" },
+              { value: "ai", label: "With AI" },
             ]}
           />
         </Specimen>
         <Specimen label="Tabs" className="flex-col items-stretch" wide>
           <Tabs defaultValue="all">
             <TabsList>
-              <TabsTrigger value="all">Усі курси</TabsTrigger>
-              <TabsTrigger value="mine">Мої</TabsTrigger>
+              <TabsTrigger value="all">All courses</TabsTrigger>
+              <TabsTrigger value="mine">Mine</TabsTrigger>
               <TabsTrigger value="done" disabled>
-                Завершені
+                Completed
               </TabsTrigger>
             </TabsList>
             <TabsContent value="all" className="pt-2 text-base text-muted-foreground">
-              Тут список усіх курсів.
+              The list of all courses goes here.
             </TabsContent>
             <TabsContent value="mine" className="pt-2 text-base text-muted-foreground">
-              Курси, які ти почав.
+              Courses you have started.
             </TabsContent>
           </Tabs>
         </Specimen>
       </SpecimenGrid>
 
-      <SubHeading>Відображення</SubHeading>
+      <SubHeading>Display</SubHeading>
       <SpecimenGrid>
         <Specimen label="Card" className="flex-col items-stretch">
           <Card>
             <CardHeader>
-              <CardTitle>Листи клієнтам</CardTitle>
-              <CardDescription>3 уроки, 25 хвилин</CardDescription>
+              <CardTitle>Emails to clients</CardTitle>
+              <CardDescription>3 lessons, 25 minutes</CardDescription>
             </CardHeader>
-            <CardContent className="text-base">Відповідай на типові питання вдвічі швидше.</CardContent>
+            <CardContent className="text-base">Answer routine questions twice as fast.</CardContent>
             <CardFooter>
               <Button size="sm" variant="outline">
-                Відкрити курс
+                Open course
               </Button>
             </CardFooter>
           </Card>
         </Specimen>
         <Specimen label="Badge / Tag">
-          <Badge variant="needs-you">Потребує тебе</Badge>
-          <Badge variant="ai">Робить AI</Badge>
-          <Badge variant="success">Завершено</Badge>
-          <Badge variant="warning">Майже</Badge>
-          <Badge variant="destructive">Помилка</Badge>
-          <Badge variant="info">Новий урок</Badge>
-          <Badge variant="streak">7 днів</Badge>
+          <Badge variant="needs-you">Needs you</Badge>
+          <Badge variant="ai">AI does it</Badge>
+          <Badge variant="success">Completed</Badge>
+          <Badge variant="warning">Almost</Badge>
+          <Badge variant="destructive">Error</Badge>
+          <Badge variant="info">New lesson</Badge>
+          <Badge variant="streak">7 days</Badge>
           <Badge variant="outline">Excel</Badge>
-          <Badge variant="secondary">Чернетка</Badge>
+          <Badge variant="secondary">Draft</Badge>
         </Specimen>
         <Specimen label="Avatar, Tooltip">
           <Avatar size="lg">
-            <AvatarFallback>ОК</AvatarFallback>
+            <AvatarFallback>EC</AvatarFallback>
           </Avatar>
           <Avatar>
-            <AvatarFallback>ІП</AvatarFallback>
+            <AvatarFallback>JP</AvatarFallback>
           </Avatar>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="outline">Наведи або сфокусуй</Button>
+              <Button variant="outline">Hover or focus</Button>
             </TooltipTrigger>
-            <TooltipContent>Підказка працює і з клавіатури</TooltipContent>
+            <TooltipContent>The tooltip also works with the keyboard</TooltipContent>
           </Tooltip>
         </Specimen>
         <Specimen label="ProgressBar" className="flex-col items-stretch gap-4">
-          <Progress value={0} aria-label="Прогрес курсу: 0%" />
-          <Progress value={45} aria-label="Прогрес курсу: 45%" />
-          <Progress value={100} aria-label="Прогрес курсу: 100%" />
+          <Progress value={0} aria-label="Course progress: 0%" />
+          <Progress value={45} aria-label="Course progress: 45%" />
+          <Progress value={100} aria-label="Course progress: 100%" />
         </Specimen>
-        <Specimen label="Skeleton (форма кінцевого стану)" className="flex-col items-stretch">
+        <Specimen label="Skeleton (shape of the final state)" className="flex-col items-stretch">
           <div className="flex items-center gap-3">
             <Skeleton className="size-11 rounded-full" />
             <div className="flex flex-1 flex-col gap-2">
@@ -255,37 +255,37 @@ export function BaseSection() {
         </Specimen>
         <Specimen label="Modal / BottomSheet">
           <Button variant="outline" onClick={() => setSheetOpen(true)}>
-            Відкрити вікно
+            Open dialog
           </Button>
           <ResponsiveSheet
             open={sheetOpen}
             onOpenChange={setSheetOpen}
-            title="Перервати урок?"
-            description="Прогрес збережеться. Можна повернутися будь-коли."
+            title="Leave the lesson?"
+            description="Your progress is saved. You can come back any time."
             footer={
               <>
                 <Button variant="outline" onClick={() => setSheetOpen(false)}>
-                  Продовжити урок
+                  Continue lesson
                 </Button>
-                <Button onClick={() => setSheetOpen(false)}>Вийти з уроку</Button>
+                <Button onClick={() => setSheetOpen(false)}>Leave lesson</Button>
               </>
             }
           />
-          <p className="w-full text-sm text-muted-foreground">На телефоні відкривається знизу.</p>
+          <p className="w-full text-sm text-muted-foreground">On a phone it opens from the bottom.</p>
         </Specimen>
         <Specimen label="Toast">
-          <Button variant="outline" onClick={() => toast.success("Зміни збережено")}>
-            Успіх
+          <Button variant="outline" onClick={() => toast.success("Changes saved")}>
+            Success
           </Button>
           <Button
             variant="outline"
             onClick={() =>
-              toast.error("Не вдалося зберегти", {
-                description: "Перевір інтернет і спробуй ще раз.",
+              toast.error("Couldn't save", {
+                description: "Check your connection and try again.",
               })
             }
           >
-            Помилка
+            Error
           </Button>
           <Button variant="outline" onClick={() => toast.custom(() => <MilestoneToastContent days={7} />)}>
             Milestone
@@ -294,9 +294,9 @@ export function BaseSection() {
         <Specimen label="EmptyState" className="flex-col items-stretch" wide>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <EmptyState
-              title="Ще немає завершених курсів"
-              description="Почни з короткого уроку на 10 хвилин."
-              action={<Button>Обрати урок</Button>}
+              title="No completed courses yet"
+              description="Start with a short 10-minute lesson."
+              action={<Button>Choose a lesson</Button>}
             />
             <ErrorState
               onRetry={() => {
@@ -306,7 +306,7 @@ export function BaseSection() {
               retrying={retrying}
             />
           </div>
-          <ErrorState compact title="Не вдалося завантажити відповідь" onRetry={() => undefined} />
+          <ErrorState compact title="Couldn't load the answer" onRetry={() => undefined} />
         </Specimen>
       </SpecimenGrid>
     </PreviewSection>

@@ -73,7 +73,7 @@ export function FileDropzone({
             </>
           ) : (
             <span className="text-sm text-muted-foreground tabular-nums">
-              {new Intl.NumberFormat("uk", { maximumFractionDigits: 1 }).format(value.size / MB)} МБ
+              {new Intl.NumberFormat("en", { maximumFractionDigits: 1 }).format(value.size / MB)} MB
             </span>
           )}
         </div>

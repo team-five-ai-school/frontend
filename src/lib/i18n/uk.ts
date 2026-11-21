@@ -255,4 +255,7 @@ export const uk = {
   },
 } as const;
 
-export type Messages = typeof uk;
+type Widen<T> = T extends string ? string : { -readonly [K in keyof T]: Widen<T[K]> };
+
+/** Shape of a dictionary: same keys as uk, plain string values so other languages can satisfy it. */
+export type Messages = Widen<typeof uk>;

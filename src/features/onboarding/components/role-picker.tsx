@@ -23,7 +23,7 @@ const roleIcon: Record<RoleId, LucideIcon> = {
   other: UserRoundIcon,
 };
 
-/** First onboarding step: «Чим ти займаєшся на роботі?» */
+/** First onboarding step: «What do you do at work?» */
 export function RolePicker({
   roles,
   value,

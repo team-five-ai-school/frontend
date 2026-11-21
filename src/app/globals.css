@@ -9,13 +9,13 @@
  * Raw values live in :root (light) and .dark below; @theme maps them to Tailwind utilities;
  * src/lib/design-tokens.ts mirrors them for JS (charts, animations).
  *
- * Concept: «Канцелярія». The app is a desk; content sits on paper sheets. Every color is a tool:
+ * Concept: “Stationery”. The app is a desk; content sits on paper sheets. Every color is a tool:
  *   ballpoint (blue)   = actions: the person signs off, presses, moves on
  *   marker (yellow)    = needs-you: ONLY work that still needs the person. Never decoration.
  *   pencil (graphite)  = ai: work AI already handles. Light, quiet, done.
  *   stamp (green)      = done, progress, hours saved
  *   correction (red)   = errors
- *   squared paper      = the chaos map (a school «зошит у клітинку»)
+ *   squared paper      = the chaos map (a school “squared notebook”)
  */
 
 /* Static scale tokens (theme-independent). */

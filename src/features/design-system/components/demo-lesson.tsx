@@ -51,7 +51,7 @@ export function DemoLesson() {
             setSimulateFailure(v);
           }}
         />
-        <FieldLabel htmlFor="demo-fail">Демо: Ментор не відповідає</FieldLabel>
+        <FieldLabel htmlFor="demo-fail">Demo: Mentor does not respond</FieldLabel>
       </Field>
       <LessonContent />
       <MentorEntry variant="global" />
@@ -77,8 +77,8 @@ function LessonContent() {
       exerciseId: exerciseSingle.id,
       verdict: correct ? "correct" : "incorrect",
       feedback: correct
-        ? "Саме так: роль, факти і формат. AI нічого не доведеться вигадувати."
-        : "У цьому промпті AI не знає номера замовлення і дати.",
+        ? "Exactly: role, facts and format. AI won't have to invent anything."
+        : "In this prompt, AI doesn't know the order number or the date.",
       correctOptionIds: [CORRECT],
       mistakeId: correct ? null : mistake.id,
     });
@@ -100,26 +100,29 @@ function LessonContent() {
       }}
       mentor={
         <MentorPanel
-          starterSuggestions={["Що таке контекст у промпті?", "Покажи приклад"]}
-          onExtraTaskStart={() => toast("Тут відкриється додаткове завдання")}
+          starterSuggestions={["What is context in a prompt?", "Show an example"]}
+          onExtraTaskStart={() => toast("The extra task opens here")}
         />
       }
     >
       {step === "theory" && (
         <section className="flex max-w-prose flex-col gap-4">
           <p>
-            AI не бачить твоєї пошти, таблиць і домовленостей. Усе, що він знає про ситуацію, це текст твого
-            промпту. Тому відповідь буде настільки точною, наскільки точно описано задачу.
+            AI can&apos;t see your email, spreadsheets or agreements. All it knows about the situation is the
+            text of your prompt. So the answer is only as accurate as the task description.
           </p>
-          <p>Добрий промпт має три частини: хто пише (роль), що відомо (факти), що потрібно (формат).</p>
+          <p>
+            A good prompt has three parts: who is writing (role), what is known (facts), what is needed
+            (format).
+          </p>
           <MentorEntry variant="lesson" className="self-start" />
         </section>
       )}
       {step === "example" && (
         <section className="flex max-w-prose flex-col gap-4">
-          <p>Порівняй два промпти для однієї і тієї ж відповіді клієнту.</p>
-          <PromptBlock text="Напиши відповідь клієнту про замовлення." />
-          <PromptBlock text="Ти офіс-менеджер. Клієнт питає про замовлення №214. Воно буде готове в четвер. Напиши теплу відповідь на 3 речення." />
+          <p>Compare two prompts for the same reply to a customer.</p>
+          <PromptBlock text="Write a reply to the customer about the order." />
+          <PromptBlock text="You are an office manager. The customer asks about order #214. It will be ready on Thursday. Write a warm reply in 3 sentences." />
         </section>
       )}
       {step === "exercise" && (
@@ -146,9 +149,10 @@ function LessonContent() {
       {step === "mentor" && (
         <section className="flex max-w-prose flex-col gap-3">
           <p>
-            Ментор знає, на якому ти кроці, і бачить твої помилки у вправах. Запитай його про будь-що з уроку.
+            The Mentor knows which step you are on and sees your mistakes in exercises. Ask it anything about
+            the lesson.
           </p>
-          <p className="text-muted-foreground lg:hidden">Ментор відкривається знизу екрана.</p>
+          <p className="text-muted-foreground lg:hidden">The Mentor opens from the bottom of the screen.</p>
         </section>
       )}
     </LessonLayout>
@@ -162,18 +166,21 @@ function answerFor(text: string): MentorMessage {
     createdAt: new Date().toISOString(),
     status: "complete",
     blocks: [
-      { type: "text", text: `Добре питання: «${text}». Коротко: дай AI факти, яких він не може знати сам.` },
+      {
+        type: "text",
+        text: `Good question: "${text}". In short: give AI the facts it can't know on its own.`,
+      },
       {
         type: "steps",
         items: [
-          "Хто пише і кому.",
-          "Що відомо: номери, дати, імена.",
-          "Який потрібен результат і якої довжини.",
+          "Who is writing and to whom.",
+          "What is known: numbers, dates, names.",
+          "What result you need and how long.",
         ],
       },
     ],
     mistake: null,
     extraTasks: [],
-    suggestions: ["Покажи ще приклад", "Як перевірити відповідь AI?"],
+    suggestions: ["Show another example", "How do I check an AI answer?"],
   };
 }

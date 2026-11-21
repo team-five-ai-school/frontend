@@ -3,10 +3,11 @@
  * To add a language: create src/lib/i18n/<lang>.ts with the same shape (`satisfies Messages`)
  * and switch `messages` by locale.
  */
-import { uk, type Messages } from "./uk";
+import { en } from "./en";
+import type { Messages } from "./uk";
 
-export const locale = "uk" as const;
-const messages: Messages = uk;
+export const locale = "en" as const;
+const messages: Messages = en;
 
 type PluralForms = { one: string; few: string; many: string };
 
@@ -53,7 +54,7 @@ export function t(key: MessageKey, vars?: Vars): string {
 
 const pluralRules = new Intl.PluralRules(locale);
 
-/** tp("common.hours", 5) → "5 годин". Ukrainian "other" (fractions) uses the "few" form. */
+/** tp("common.hours", 5) → "5 hours". English "other" (including fractions) uses the "few" form, same text as "many". */
 export function tp(key: PluralKey, count: number, vars?: Vars): string {
   const forms = lookup(key) as PluralForms;
   const rule = pluralRules.select(count);

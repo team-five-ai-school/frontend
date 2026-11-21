@@ -10,7 +10,7 @@ import type { ChaosMode } from "./chaos-map";
 
 /**
  * The big weekly-hours number next to the chaos map.
- * "Зараз": hours of routine (needs-you color). "З AI": hours left + hours freed.
+ * "Now": hours of routine (needs-you color). "With AI": hours left + hours freed.
  */
 export function HoursMetric({
   hoursNow,

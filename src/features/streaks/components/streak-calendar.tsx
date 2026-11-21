@@ -4,7 +4,7 @@ import type { StreakDay } from "@/lib/contracts";
 import { formatDate, t } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-const weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
+const weekdays = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
 const stateLabel: Record<StreakDay["state"], string> = {
   active: t("streak.active"),

@@ -8,7 +8,7 @@ import { t } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 /**
- * Shareable result card («AI вміє 38% моєї роботи»). The visual itself is the bar split into the two roles.
+ * Shareable result card («AI can do 38% of my work»). The visual itself is the bar split into the two roles.
  * Share uses the Web Share API, falls back to copying the link.
  */
 export function ShareCard({
