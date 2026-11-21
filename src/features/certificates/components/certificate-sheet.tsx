@@ -36,7 +36,12 @@ export function CertificateSheet({
             </p>
             <p
               className="border-b-ballpoint font-semibold text-foreground"
-              style={{ fontSize: "5.4cqw", lineHeight: 1.15, borderBottomWidth: "0.25cqw", paddingBottom: "0.6cqw" }}
+              style={{
+                fontSize: "5.4cqw",
+                lineHeight: 1.15,
+                borderBottomWidth: "0.25cqw",
+                paddingBottom: "0.6cqw",
+              }}
             >
               {certificate.holderName}
             </p>

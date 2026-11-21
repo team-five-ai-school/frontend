@@ -29,7 +29,10 @@ export function CourseCertificate({ courseId }: { courseId: string }) {
         <Skeleton className="aspect-[1.414/1] w-full rounded-lg" />
       ) : certificate ? (
         <>
-          <CertificateSheet certificate={certificate} verifyUrl={`${siteConfig.url}/certificates/${certificate.id}`} />
+          <CertificateSheet
+            certificate={certificate}
+            verifyUrl={`${siteConfig.url}/certificates/${certificate.id}`}
+          />
           <div className="flex flex-wrap gap-2">
             <Link href={`/certificates/${certificate.id}` as Route} className={buttonVariants()}>
               <ExternalLinkIcon aria-hidden />
