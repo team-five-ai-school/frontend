@@ -129,7 +129,6 @@ writes to server-cached data      ──Server Action──api()──▶ backen
   - Browser calls through `/api/backend/*` get `Authorization: Bearer <token>` added by the proxy automatically.
   - Server code reads `getSessionToken()` (request-time data: inside `<Suspense>`, a Server Action or a Route Handler) and passes it to `api(..., { token })`. Per-user data is not cached with plain `"use cache"`; pass the token as an argument or use `"use cache: private"`.
   - Never put tokens in `localStorage`, client state or `NEXT_PUBLIC_*`.
-- **`API_KEY`** is only for a backend that requires a server-to-server key. The proxy and `api()` add it server-side; it never reaches the browser. Public endpoints should not need it.
 - **Env vars:** add every variable to `src/lib/env.ts` (validated with Zod) and to `.env.example`. Read `env.X`, not `process.env.X` (exception: `src/proxy.ts`). Only `NEXT_PUBLIC_*` reaches the browser; this repo is public, so secrets live only in `.env.local` and Vercel → Settings → Environment Variables. Changing an env var on Vercel needs a redeploy.
 - **`API_URL` is required** for every page that reads backend data (courses, auth). Locally put it in `.env.local` (`http://localhost:8000` for a local backend).
 
