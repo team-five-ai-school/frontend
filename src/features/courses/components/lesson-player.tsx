@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowLeftIcon, PartyPopperIcon } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowLeftIcon, PartyPopperIcon, RotateCcwIcon } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
@@ -18,11 +19,26 @@ import { MentorEntry } from "@/features/mentor/components/mentor-entry";
 import { MentorPanel } from "@/features/mentor/components/mentor-panel";
 import { MentorProvider, useOptionalMentor } from "@/features/mentor/mentor-context";
 import { createMentorTransport } from "@/features/mentor/mentor-transport";
-import type { AnswerResult, Exercise, LessonDetail, LessonStep, Mistake } from "@/lib/contracts";
+import { Skeleton } from "@/components/ui/skeleton";
+import type {
+  AnswerResult,
+  Exercise,
+  LessonDetail,
+  LessonReview,
+  LessonStep,
+  Mistake,
+} from "@/lib/contracts";
 import { ApiError } from "@/lib/api-error";
 import { t } from "@/lib/i18n";
 
-import { useCheckAnswer, useCompleteLesson, type AnswerInput } from "../progress";
+import {
+  lessonReviewQuery,
+  useCheckAnswer,
+  useCompleteLesson,
+  useRetakeLesson,
+  type AnswerInput,
+} from "../progress";
+import { LessonReviewCard } from "./lesson-review";
 
 /**
  * Lesson page: the player plus, for logged-in learners, the Mentor (side panel on desktop, bottom sheet
@@ -61,6 +77,10 @@ function PlayerBody({ detail, loggedIn }: { detail: LessonDetail; loggedIn: bool
   const { lesson, steps, courseId, courseTitle } = detail;
   const mentor = useOptionalMentor();
   const feedbackRef = useRef<HTMLDivElement>(null);
+  // A finished lesson opens on its saved review; «Retake» clears the answers and starts over.
+  const savedReview = useQuery({ ...lessonReviewQuery(detail.lesson.id), enabled: loggedIn });
+  const retake = useRetakeLesson(detail.lesson.id);
+  const [started, setStarted] = useState(false);
   const [index, setIndex] = useState(0);
   const [results, setResults] = useState<Record<string, AnswerResult>>({});
   const check = useCheckAnswer(lesson.id);
@@ -150,13 +170,32 @@ function PlayerBody({ detail, loggedIn }: { detail: LessonDetail; loggedIn: bool
         </div>
       )}
 
-      {finished ? (
+      {loggedIn && !started && index === 0 && savedReview.isPending ? (
+        <Skeleton className="h-64 rounded-xl" />
+      ) : loggedIn && !started && index === 0 && savedReview.data ? (
+        <SavedReview
+          review={savedReview.data}
+          courseId={courseId}
+          retaking={retake.isPending}
+          onRetake={() =>
+            retake.mutate(undefined, {
+              onSuccess: () => {
+                setResults({});
+                setIndex(0);
+                setStarted(true);
+              },
+              onError: () => toast.error(t("player.answerFailed")),
+            })
+          }
+        />
+      ) : finished ? (
         <Completion
           detail={detail}
           pending={complete.isPending}
           failed={complete.isError}
           onRetry={() => complete.mutate()}
           score={complete.data ?? null}
+          review={complete.data?.review ?? null}
           loggedIn={loggedIn}
         />
       ) : step?.type === "exercise" && needsLogin ? (
@@ -278,6 +317,7 @@ function Completion({
   failed,
   onRetry,
   score,
+  review,
   loggedIn,
 }: {
   detail: LessonDetail;
@@ -285,6 +325,7 @@ function Completion({
   failed: boolean;
   onRetry: () => void;
   score: { correctFirstTry: number; total: number } | null;
+  review: LessonReview | null;
   loggedIn: boolean;
 }) {
   return (
@@ -302,10 +343,11 @@ function Completion({
         ) : (
           <p className="text-muted-foreground tabular-nums" aria-live="polite">
             {pending || !score
-              ? t("player.saving")
+              ? t("player.writingReview")
               : t("player.completeScore", { correct: score.correctFirstTry, total: score.total })}
           </p>
         ))}
+      {loggedIn && review && <LessonReviewCard review={review} />}
       <div className="flex flex-wrap gap-2">
         {detail.nextLessonId && (
           <Button asChild>
@@ -332,6 +374,40 @@ function LoginGate() {
         </Button>
         <Button asChild variant="outline">
           <Link href="/login">{t("player.login")}</Link>
+        </Button>
+      </div>
+    </section>
+  );
+}
+
+/** A finished lesson: the saved review, with a way to retake the lesson (which rewrites the review). */
+function SavedReview({
+  review,
+  courseId,
+  retaking,
+  onRetake,
+}: {
+  review: LessonReview;
+  courseId: string;
+  retaking: boolean;
+  onRetake: () => void;
+}) {
+  return (
+    <section className="flex flex-col items-start gap-4 rounded-xl border bg-card p-6">
+      <div className="flex flex-col gap-1">
+        <h2 className="text-2xl font-bold">{t("player.lastResult")}</h2>
+        <p className="text-muted-foreground tabular-nums">
+          {t("player.completeScore", { correct: review.correctFirstTry, total: review.total })}
+        </p>
+      </div>
+      <LessonReviewCard review={review} />
+      <div className="flex flex-wrap gap-2">
+        <Button onClick={onRetake} loading={retaking}>
+          <RotateCcwIcon data-icon="inline-start" aria-hidden />
+          {t("player.retake")}
+        </Button>
+        <Button asChild variant="outline">
+          <Link href={`/courses/${courseId}`}>{t("player.backToCourse")}</Link>
         </Button>
       </div>
     </section>

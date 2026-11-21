@@ -257,10 +257,29 @@ export const Progress = z.object({
 export type Progress = z.infer<typeof Progress>;
 
 /** POST /lessons/:lessonId/complete */
+/** End-of-lesson review saved to the journal: numbers by code, summary and recommendations by AI. */
+export const LessonReview = z.object({
+  lessonId: z.string(),
+  courseId: z.string(),
+  lessonTitle: z.string(),
+  correctFirstTry: z.number().int(),
+  total: z.number().int(),
+  skills: z.array(z.object({ skill: z.string(), correct: z.number().int(), total: z.number().int() })),
+  strengths: z.array(z.string()),
+  weakSpots: z.array(z.object({ exerciseId: z.string(), question: z.string(), skill: z.string() })),
+  summary: z.string(),
+  recommendations: z.array(z.string()),
+  source: z.enum(["llm", "fallback"]),
+  createdAt: z.string(),
+});
+export type LessonReview = z.infer<typeof LessonReview>;
+
 export const LessonCompletion = z.object({
   correctFirstTry: z.number().int(),
   total: z.number().int(),
   nextLessonId: z.string().nullable(),
+  /** Rewritten on every completion; also at GET /lessons/:id/review. */
+  review: LessonReview.optional(),
 });
 export type LessonCompletion = z.infer<typeof LessonCompletion>;
 
