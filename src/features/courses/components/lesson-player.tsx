@@ -4,6 +4,7 @@ import { ArrowLeftIcon, PartyPopperIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Progress as ProgressBar } from "@/components/ui/progress";
@@ -36,7 +37,7 @@ export function LessonPlayer({ detail, loggedIn }: { detail: LessonDetail; logge
 
   const step = steps[index];
   const finished = index >= steps.length;
-  const percent = Math.round((Math.min(index, steps.length) / steps.length) * 100);
+  const percent = steps.length ? Math.round((Math.min(index, steps.length) / steps.length) * 100) : 100;
 
   function next() {
     const nextIndex = index + 1;
@@ -52,6 +53,7 @@ export function LessonPlayer({ detail, loggedIn }: { detail: LessonDetail; logge
         onSuccess: (result) => setResults((r) => ({ ...r, [exerciseId]: result })),
         onError: (error) => {
           if (error instanceof ApiError && error.status === 401) setNeedsLogin(true);
+          else toast.error(t("player.answerFailed"));
         },
       },
     );
@@ -90,7 +92,8 @@ export function LessonPlayer({ detail, loggedIn }: { detail: LessonDetail; logge
         </div>
       </header>
 
-      {needsLogin && !finished && (
+      {/* Guests read the cards; exercises are checked on the server, so they need an account. */}
+      {needsLogin && !finished && step?.type !== "exercise" && (
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border bg-card p-4 text-sm">
           <span>{t("player.loginToSave")}</span>
           <Button asChild size="sm">
@@ -103,9 +106,13 @@ export function LessonPlayer({ detail, loggedIn }: { detail: LessonDetail; logge
         <Completion
           detail={detail}
           pending={complete.isPending}
+          failed={complete.isError}
+          onRetry={() => complete.mutate()}
           score={complete.data ?? null}
           loggedIn={loggedIn}
         />
+      ) : step?.type === "exercise" && needsLogin ? (
+        <LoginGate />
       ) : step ? (
         <StepView
           key={step.id}
@@ -195,11 +202,15 @@ function StepView({
 function Completion({
   detail,
   pending,
+  failed,
+  onRetry,
   score,
   loggedIn,
 }: {
   detail: LessonDetail;
   pending: boolean;
+  failed: boolean;
+  onRetry: () => void;
   score: { correctFirstTry: number; total: number } | null;
   loggedIn: boolean;
 }) {
@@ -207,13 +218,21 @@ function Completion({
     <section className="flex flex-col items-start gap-4 rounded-xl border bg-card p-6">
       <PartyPopperIcon className="size-8 text-primary" aria-hidden />
       <h2 className="text-2xl font-bold">{t("player.completeTitle")}</h2>
-      {loggedIn && (
-        <p className="text-muted-foreground tabular-nums" aria-live="polite">
-          {pending || !score
-            ? t("player.saving")
-            : t("player.completeScore", { correct: score.correctFirstTry, total: score.total })}
-        </p>
-      )}
+      {loggedIn &&
+        (failed ? (
+          <div className="flex flex-wrap items-center gap-3" role="alert">
+            <p className="text-muted-foreground">{t("player.saveFailed")}</p>
+            <Button size="sm" variant="outline" onClick={onRetry}>
+              {t("common.retry")}
+            </Button>
+          </div>
+        ) : (
+          <p className="text-muted-foreground tabular-nums" aria-live="polite">
+            {pending || !score
+              ? t("player.saving")
+              : t("player.completeScore", { correct: score.correctFirstTry, total: score.total })}
+          </p>
+        ))}
       <div className="flex flex-wrap gap-2">
         {detail.nextLessonId && (
           <Button asChild>
@@ -222,6 +241,24 @@ function Completion({
         )}
         <Button asChild variant="outline">
           <Link href={`/courses/${detail.courseId}`}>{t("player.backToCourse")}</Link>
+        </Button>
+      </div>
+    </section>
+  );
+}
+
+/** Shown instead of an exercise to a guest: answers are checked and saved on the server. */
+function LoginGate() {
+  return (
+    <section className="flex flex-col items-start gap-4 rounded-xl border bg-card p-6">
+      <h2 className="text-xl font-bold">{t("player.loginGateTitle")}</h2>
+      <p className="text-muted-foreground">{t("player.loginToSave")}</p>
+      <div className="flex flex-wrap gap-2">
+        <Button asChild>
+          <Link href="/register">{t("player.signUp")}</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link href="/login">{t("player.login")}</Link>
         </Button>
       </div>
     </section>

@@ -23,7 +23,7 @@ export default function LessonPage({ params }: PageProps<"/lessons/[lessonId]">)
 async function Lesson({ params }: Pick<PageProps<"/lessons/[lessonId]">, "params">) {
   const [detail, token] = await Promise.all([getLessonDetail((await params).lessonId), getSessionToken()]);
   if (!detail) notFound();
-  return <LessonPlayer detail={detail} loggedIn={Boolean(token)} />;
+  return <LessonPlayer key={detail.lesson.id} detail={detail} loggedIn={Boolean(token)} />;
 }
 
 function PlayerSkeleton() {

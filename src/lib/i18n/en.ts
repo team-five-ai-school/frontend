@@ -170,6 +170,10 @@ export const en = {
     loginToSave: "Log in to check answers and save your progress.",
     login: "Log in",
     saving: "Saving…",
+    loginGateTitle: "Exercises need an account",
+    signUp: "Create an account",
+    answerFailed: "Couldn't check your answer. Try again.",
+    saveFailed: "Couldn't save your result.",
   },
   lesson: {
     steps: { theory: "Theory", example: "Example", exercise: "Exercise", mentor: "Mentor" },

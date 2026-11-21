@@ -1,6 +1,7 @@
 "use client";
 
 import { BookOpenIcon, LogOutIcon } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -24,6 +25,7 @@ function initials(name: string) {
 
 /** Profile button in the header. The profile page (progress, journal) plugs in here as the first item. */
 export function ProfileMenu({ name, email }: { name: string; email: string }) {
+  const queryClient = useQueryClient();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -47,14 +49,16 @@ export function ProfileMenu({ name, email }: { name: string; email: string }) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <form action={logoutAction}>
-          <DropdownMenuItem asChild>
-            <button type="submit" className="w-full">
-              <LogOutIcon aria-hidden />
-              Log out
-            </button>
-          </DropdownMenuItem>
-        </form>
+        <DropdownMenuItem
+          onSelect={async () => {
+            // Drop the previous user's cached data before the next user logs in on this device.
+            queryClient.clear();
+            await logoutAction();
+          }}
+        >
+          <LogOutIcon aria-hidden />
+          Log out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
