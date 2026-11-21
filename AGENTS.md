@@ -74,11 +74,11 @@ src/assets/              images imported statically into components
 assets/images/           raw image sources for `npm run images` (not imported by code)
 ```
 
-Reference implementation, copy from it and delete it once real features exist:
+Reference implementation (real feature, copy the patterns):
 
-- `src/app/examples/tasks`: list with server cache → TanStack hydration, optimistic mutations, filter in `searchParams`.
-- `src/app/examples/tasks/[id]`: dynamic route with `params`, `generateMetadata`, `notFound()`.
-- `src/features/tasks`: data, actions, cache contract, mutations, components.
+- `src/app/courses`, `src/app/courses/[courseId]`, `src/app/lessons/[lessonId]`: server-rendered pages with `"use cache"` data, `<Suspense>` + skeletons, `params`/`searchParams` read inside the boundary, `generateMetadata`, `notFound()`.
+- `src/features/courses/data.ts`: cached server reads via `api()`.
+- `src/features/courses/progress.ts`: per-user data and writes in the browser via TanStack Query + `apiClient()` through the proxy.
 
 ## Working in parallel (5 people)
 
@@ -106,7 +106,7 @@ Rules:
 - Never call `Date.now()`, `Math.random()` or `new Date()` (current time) in render without `await connection()` (or inside `"use cache"`).
 - Start independent requests in parallel (`Promise.all` or sibling Suspense boundaries). No request waterfalls.
 - **Our own Route Handlers that TanStack Query refetches must call `await connection()` first.** Otherwise they are prerendered as static responses and a refetch right after a mutation returns stale data, undoing the user's change.
-- TanStack Query: one cache contract per feature (`key` + `tag` + `queryOptions`, see `task-cache.ts`). Hydrate with `dehydrate()` from `@/lib/query/hydrate` (TanStack's own `dehydrate` breaks prerendering).
+- TanStack Query: one cache contract per feature (`key` + `queryOptions`, see `src/features/courses/progress.ts`). Hydrate with `dehydrate()` from `@/lib/query/hydrate` (TanStack's own `dehydrate` breaks prerendering).
 - Mutations: optimistic update in `onMutate`, write the server's response in `onSuccess`, rollback + `toast.error` in `onError`, `invalidateQueries` in `onSettled`.
 - Don't use TanStack Query for data a Server Component can render directly. Don't `useEffect` + `fetch`.
 
@@ -129,9 +129,8 @@ writes to server-cached data      ──Server Action──api()──▶ backen
   - Browser calls through `/api/backend/*` get `Authorization: Bearer <token>` added by the proxy automatically.
   - Server code reads `getSessionToken()` (request-time data: inside `<Suspense>`, a Server Action or a Route Handler) and passes it to `api(..., { token })`. Per-user data is not cached with plain `"use cache"`; pass the token as an argument or use `"use cache: private"`.
   - Never put tokens in `localStorage`, client state or `NEXT_PUBLIC_*`.
-- **`API_KEY`** is only for a backend that requires a server-to-server key. The proxy and `api()` add it server-side; it never reaches the browser. Public endpoints should not need it.
 - **Env vars:** add every variable to `src/lib/env.ts` (validated with Zod) and to `.env.example`. Read `env.X`, not `process.env.X` (exception: `src/proxy.ts`). Only `NEXT_PUBLIC_*` reaches the browser; this repo is public, so secrets live only in `.env.local` and Vercel → Settings → Environment Variables. Changing an env var on Vercel needs a redeploy.
-- **Without `API_URL`** the proxy does nothing and `/api/backend/*` falls through to local demo handlers in `src/app/api/backend/` (the tasks example). Delete them together with the example.
+- **`API_URL` is required** for every page that reads backend data (courses, auth). Locally put it in `.env.local` (`http://localhost:8000` for a local backend).
 
 ## PWA (optional for users)
 
