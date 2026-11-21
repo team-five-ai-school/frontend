@@ -16,9 +16,10 @@ export async function AccountMenu() {
   const user = await getCurrentUser();
   if (!user) {
     // Guests can take the onboarding before signing up; it is linked to the account afterwards.
+    // On phones only «Log in» fits next to the logo; the landing's «Get started» leads to the onboarding.
     return (
       <div className="flex items-center gap-2">
-        <Button asChild size="sm" variant="outline">
+        <Button asChild size="sm" variant="outline" className="hidden sm:inline-flex">
           <Link href="/onboarding">
             <OnboardingLinkLabel />
           </Link>

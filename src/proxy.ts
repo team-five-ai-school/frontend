@@ -4,7 +4,11 @@ import { API_PROXY_PREFIX } from "@/lib/api-client";
 import { SESSION_COOKIE } from "@/lib/session-cookie";
 
 /**
- * Browser → backend proxy: `/api/backend/<path>` → `${API_URL}/<path>`.
+ * 1. Home: a logged-in user's home is their plan, so `/` with a session cookie redirects to `/plan`
+ *    before anything renders. Guests get the landing page. (An expired cookie lands on /plan, which
+ *    handles signed-out users.)
+ *
+ * 2. Browser → backend proxy: `/api/backend/<path>` → `${API_URL}/<path>`.
  *
  * - Adds `Authorization: Bearer <token>` from the httpOnly session cookie. The token never reaches
  *   client code.
@@ -16,6 +20,11 @@ import { SESSION_COOKIE } from "@/lib/session-cookie";
  * Reads process.env directly: keep this file small and free of heavy imports.
  */
 export function proxy(request: NextRequest) {
+  if (request.nextUrl.pathname === "/") {
+    if (!request.cookies.has(SESSION_COOKIE)) return NextResponse.next();
+    return NextResponse.redirect(new URL("/plan", request.url));
+  }
+
   const apiUrl = process.env.API_URL;
   if (!apiUrl) return NextResponse.next();
 
@@ -35,5 +44,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/api/backend/:path*",
+  matcher: ["/", "/api/backend/:path*"],
 };
